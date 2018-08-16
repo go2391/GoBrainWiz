@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#fcb540</color>
+    <color name="colorPrimaryDark">#fdb540</color>
+    <color name="colorAccent">#fcb540</color>
+    <color name="colorPrimaryText">#333333</color>
+    <color name="colorSecondaryText">#666666</color>
+
+    <color name="background">#EAEAE9</color>
+    <color name="light_background">#FCFCFB</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="nameBackground">#58585B</color>
+    <color name="divider">#cccccc</color>
+    <color name="hint">#ffe6e6e9</color>
+    <color name="gray">#818181</color>
+    <color name="blue">#ff4882de</color>
+    <color name="tabs_bg">#f1f1f1</color>
+    <color name="leica_red">#ffb30205</color>
+    <color name="saved">#48c451</color>
+</resources>

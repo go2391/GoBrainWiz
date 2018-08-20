@@ -3,7 +3,8 @@ package brainwiz.gobrainwiz.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.apshutters.salesperson.api.ApiStringConstants;
+import brainwiz.gobrainwiz.api.ApiStringConstants;
+
 
 public class SharedPrefUtils {
     public static String PREF_NAME = "GoBrainWizPref";
@@ -13,7 +14,7 @@ public class SharedPrefUtils {
     }
 
     public static void putData(Context context, String key, String value) {
-        getSharedPref(context).edit().putString(key, value).commit();
+        getSharedPref(context).edit().putString(key, value).apply();
     }
 
 

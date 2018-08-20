@@ -11,9 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.apshutters.salesperson.R;
 
 import org.json.JSONObject;
+
+import brainwiz.gobrainwiz.R;
 
 /**
  */

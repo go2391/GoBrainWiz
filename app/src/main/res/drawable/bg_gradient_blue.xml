@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/gradient_radios" />
+    <gradient
+        android:endColor="@color/blueSecondary"
+        android:startColor="@color/bluePrimary" />
+
+    <padding
+        android:bottom="@dimen/gradient_padding"
+        android:left="@dimen/gradient_padding"
+        android:right="@dimen/gradient_padding"
+        android:top="@dimen/gradient_padding" />
+
+
+</shape>

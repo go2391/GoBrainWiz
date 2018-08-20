@@ -13,8 +13,5 @@ public class UserUtils {
     }
 
 
-    @Nullable
-    public static String getActivationCode(Context context) {
-        return SharedPrefUtils.getActivationCode(context);
-    }
+
 }

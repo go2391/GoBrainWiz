@@ -24,6 +24,7 @@
     <dimen name="font_14">14sp</dimen>
     <dimen name="font_12">12sp</dimen>
     <dimen name="font_10">10sp</dimen>
+    <dimen name="font_8">8sp</dimen>
     <dimen name="font_36">36dp</dimen>
     <dimen name="btn_radius">5dp</dimen>
     <dimen name="field_radius">2dp</dimen>
@@ -32,4 +33,12 @@
     <dimen name="switch_height">25dp</dimen>
     <dimen name="circle_radius">24dp</dimen>
     <dimen name="dimen_15">15dp</dimen>
+    <dimen name="dimen_90">90dp</dimen>
+    <dimen name="dimen_60">40dp</dimen>
+
+
+    <dimen name="gradient_padding">6dp</dimen>
+    <dimen name="gradient_radios">8dp</dimen>
+
+    <dimen name="dimen_40">40dp</dimen>
 </resources>

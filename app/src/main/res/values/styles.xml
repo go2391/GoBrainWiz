@@ -53,21 +53,6 @@
 
     </style>
 
-    <style name="RegistrationFieldsStyle" parent="EditTextStyle">
-        <item name="mandatory">true</item>
-    </style>
-
-    <style name="ProfileFieldsStyle" parent="EditTextStyle">
-        <item name="mandatory">true</item>
-    </style>
-
-    <style name="NonEditFields" parent="ProfileFieldsStyle">
-        <item name="android:textColor">@color/colorSecondaryText</item>
-        <item name="android:inputType">none</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:enabled">false</item>
-    </style>
-
 
     <style name="HeaderLayoutStyle" parent="MatchWrap">
         <item name="android:background">@color/hint</item>
@@ -89,24 +74,14 @@
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="HeaderTextStyle" parent="MatchWrap">
+    <style name="HeaderTextStyle" parent="WrapWrap">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:cacheColorHint">@color/colorSecondaryText</item>
         <item name="android:textSize">@dimen/dimen_16</item>
-        <item name="android:layout_marginLeft">@dimen/dimen_10</item>
-        <item name="android:layout_marginRight">@dimen/dimen_10</item>
-        <item name="android:layout_marginTop">@dimen/dimen_5</item>
-        <item name="android:layout_marginBottom">0dp</item>
         <item name="android:singleLine">true</item>
     </style>
 
-
-    <style name="OrderConfirmationTextStyle" parent="HeaderTextStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">@color/colorPrimaryText</item>
-        <item name="android:textSize">@dimen/font_20</item>
-    </style>
 
     <style name="HomeGridHeaderTextStyle" parent="HeaderTextStyle">
         <item name="android:textSize">@dimen/font_10</item>
@@ -116,6 +91,17 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:gravity">center</item>
         <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="HomeGridTextStyle" parent="WrapWrap">
+        <item name="android:textSize">@dimen/font_12</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:layout_margin">@dimen/dimen_10</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">start</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:fontFamily">@font/raleway_medium</item>
     </style>
 
 

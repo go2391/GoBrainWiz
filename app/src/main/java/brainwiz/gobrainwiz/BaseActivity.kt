@@ -1,18 +1,13 @@
 package brainwiz.gobrainwiz
 
 import android.app.Activity
-import android.app.NotificationManager
 import android.app.ProgressDialog
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentTransaction
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -50,6 +45,13 @@ open class BaseActivity : AppCompatActivity() {
     fun fragmentTransaction(newFragment: Fragment, container: Int) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(container, newFragment)
+        transaction.commit()
+    }
+
+
+    fun fragmentTransaction(newFragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.content_frame, newFragment)
         transaction.commit()
     }
 

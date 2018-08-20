@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_gravity="center">
+
+    <TextView
+        style="@style/HeaderTextStyle"
+        android:layout_margin="@dimen/dimen_10"
+        android:gravity="center"
+
+        android:id="@+id/alert_title"
+        android:textSize="@dimen/font_20" />
+
+
+    <TextView
+        style="@style/TextStyle"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:id="@+id/alert_message"
+        android:layout_margin="@dimen/dimen_16"
+        android:singleLine="false"
+        android:text="asdasda adasdasdasd  asdasdasdasdad asdasdadsadad  asdsdasdasdas  adsasdadasdada
+        " />
+
+    <LinearLayout
+        style="@style/MatchWrap"
+        android:weightSum="2"
+        android:padding="@dimen/dimen_16">
+
+        <Button
+            android:id="@+id/alert_positive"
+            style="@style/ButtonStyle"
+            android:layout_weight="1"
+            android:text="@string/ok"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/alert_negative"
+            style="@style/ButtonBlackStyle"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+</LinearLayout>

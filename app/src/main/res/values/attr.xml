@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundishImageView">
+        <attr name="cornerRadius" format="dimension"/>
+        <attr name="roundedCorners" format="enum">
+        <enum name="ALL" value="15"/>
+        </attr>
+    </declare-styleable>
+</resources>

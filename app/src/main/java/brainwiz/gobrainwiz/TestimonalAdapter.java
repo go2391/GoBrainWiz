@@ -2,28 +2,30 @@ package brainwiz.gobrainwiz;
 
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import brainwiz.gobrainwiz.api.NetworkImageView;
 import brainwiz.gobrainwiz.api.model.DashBoardModel;
 
 
-public class SlidingImageAdapter extends PagerAdapter {
+public class TestimonalAdapter extends PagerAdapter {
 
 
-    private List<DashBoardModel.Banner> images;
+    private List<DashBoardModel.Testinomial> testimoniels;
     private LayoutInflater inflater;
 
 
-    public SlidingImageAdapter(Context context, List<DashBoardModel.Banner> images) {
-        this.images = images;
+    public TestimonalAdapter(Context context, List<DashBoardModel.Testinomial> testimoniels) {
+        this.testimoniels = testimoniels;
         inflater = LayoutInflater.from(context);
     }
 
@@ -34,19 +36,25 @@ public class SlidingImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return images != null ? images.size() : 0;
+        return testimoniels != null ? testimoniels.size() : 0;
     }
 
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
-        View imageLayout = inflater.inflate(R.layout.slidingimages_layout, view, false);
+        View imageLayout = inflater.inflate(R.layout.inflate_home_test, view, false);
 
         assert imageLayout != null;
         final NetworkImageView imageView = (NetworkImageView) imageLayout
-                .findViewById(R.id.image);
+                .findViewById(R.id.testimonials_image);
+        DashBoardModel.Testinomial testinomial = testimoniels.get(position);
+        imageView.setUrl(testinomial.getVoiceImage());
 
+        ((TextView) imageLayout.findViewById(R.id.test_title)).setText(testinomial.getStudentName());
 
-        imageView.setUrl(images.get(position).getBannerLocation());
+        ((TextView) imageLayout.findViewById(R.id.test_sub_title)).setText(testinomial.getCompany());
+
+        ((TextView) imageLayout.findViewById(R.id.test_content)).setText(testinomial.getVoiceDescription());
+
 
         view.addView(imageLayout, 0);
 

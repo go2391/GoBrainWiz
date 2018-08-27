@@ -44,6 +44,8 @@
     <string name="testimonials">Testimonials</string>
     <string name="share_this_app">Share this app</string>
     <string name="cancel">Cancel</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
 
 
 </resources>

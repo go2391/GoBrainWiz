@@ -41,4 +41,5 @@
     <dimen name="gradient_radios">8dp</dimen>
 
     <dimen name="dimen_40">40dp</dimen>
+    <dimen name="dimen_2">2dp</dimen>
 </resources>

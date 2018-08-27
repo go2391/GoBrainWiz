@@ -5,7 +5,7 @@ package brainwiz.gobrainwiz.api;
 public interface UrlConstants {
 
 
-    String BASE_URL = "http://apshutters.justfordemo.biz/Services/Admin/Admin.svc/";
+    String BASE_URL = "https://itsbiz.000webhostapp.com";
 
     String LOGIN = BASE_URL + "Salesman.svc/login?";
     String REGISTRATION = BASE_URL + "Cust_Registration.svc/custreg";

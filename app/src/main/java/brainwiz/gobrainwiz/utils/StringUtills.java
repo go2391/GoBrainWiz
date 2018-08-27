@@ -6,12 +6,11 @@ import android.util.Log;
 import org.jetbrains.annotations.NotNull;
 
 public class StringUtills {
-public static String getUrlString(String url, String[] values)
-    {
+    public static String getUrlString(String url, String[] values) {
         String urlResult = url;
         for (int i = 0; i < values.length; i++) {
             String value = values[i];
-            if(value!=null){
+            if (value != null) {
                 urlResult = urlResult.replaceFirst("~", value);
             }
             Log.i("string", url.indexOf("~") + "" + urlResult);
@@ -20,10 +19,11 @@ public static String getUrlString(String url, String[] values)
     }
 
     public static String formatDecimal(float f) {
-        return String.format("%.2f",f);
+        return String.format("%.2f", f);
     }
+
     public static String formatDecimal(double f) {
-        return String.format("%.2f",f);
+        return String.format("%.2f", f);
     }
 
     @NonNull

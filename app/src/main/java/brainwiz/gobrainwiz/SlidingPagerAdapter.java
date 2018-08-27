@@ -7,22 +7,19 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import brainwiz.gobrainwiz.api.NetworkImageView;
-import brainwiz.gobrainwiz.api.model.DashBoardModel;
+
+public class SlidingPagerAdapter extends PagerAdapter {
 
 
-public class SlidingImageAdapter extends PagerAdapter {
-
-
-    private List<DashBoardModel.Banner> images;
+    private int[] images;
     private LayoutInflater inflater;
 
 
-    public SlidingImageAdapter(Context context, List<DashBoardModel.Banner> images) {
+    public SlidingPagerAdapter(Context context, int[] images) {
         this.images = images;
         inflater = LayoutInflater.from(context);
     }
@@ -34,7 +31,7 @@ public class SlidingImageAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return images != null ? images.size() : 0;
+        return images != null ? images.length : 0;
     }
 
     @Override
@@ -42,11 +39,11 @@ public class SlidingImageAdapter extends PagerAdapter {
         View imageLayout = inflater.inflate(R.layout.slidingimages_layout, view, false);
 
         assert imageLayout != null;
-        final NetworkImageView imageView = (NetworkImageView) imageLayout
+        final ImageView imageView = (ImageView) imageLayout
                 .findViewById(R.id.image);
 
 
-        imageView.setUrl(images.get(position).getBannerLocation());
+        imageView.setImageResource(images[position]);
 
         view.addView(imageLayout, 0);
 

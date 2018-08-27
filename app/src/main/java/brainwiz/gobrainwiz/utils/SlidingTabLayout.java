@@ -96,7 +96,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     /**
      * Set the custom {@link TabColorizer} to be used.
-     *
+     * <p>
      * If you only require simple custmisation then you can use
      * {@link #setSelectedIndicatorColors(int...)} and {@link #setDividerColors(int...)} to achieve
      * similar effects.
@@ -136,7 +136,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * Set the custom layout to be inflated for the tab views.
      *
      * @param layoutResId Layout id to be inflated
-     * @param textViewId id of the {@link TextView} in the inflated view
+     * @param textViewId  id of the {@link TextView} in the inflated view
      */
     public void setCustomTabView(int layoutResId, int textViewId) {
         mTabViewLayoutId = layoutResId;
@@ -209,7 +209,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
                 LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) tabView.getLayoutParams();
                 lp.width = 0;
                 lp.weight = 1;
-            }else {
+            } else {
                 LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) tabView.getLayoutParams();
                 lp.width = LinearLayout.LayoutParams.WRAP_CONTENT;
                 lp.weight = 0;
@@ -274,7 +274,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
             scrollToTab(position, extraOffset);
 
             for (int i = 0; i < mTabStrip.getChildCount(); i++) {
-                    mTabStrip.getChildAt(i).setSelected(position==i);
+                mTabStrip.getChildAt(i).setSelected(position == i);
             }
             if (mViewPagerPageChangeListener != null) {
                 mViewPagerPageChangeListener.onPageScrolled(position, positionOffset,

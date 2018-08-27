@@ -1,6 +1,7 @@
 package brainwiz.gobrainwiz.api;
 
 import android.app.Activity;
+import android.util.Log;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +30,7 @@ public abstract class ApiCallback<T> implements Callback<T> {
                 if (response.code() == 400) {
                     onApiFailure(false, "Server not responding");
                 } else {
+                    Log.i("API Response", response.toString());
                     onApiResponse(response, true, "");
                 }
             }

@@ -84,12 +84,13 @@ public class InputValidation {
 
     // validating card no
     public static boolean isValidCardCvv(String cvv) {
-        return cvv != null && cvv.length() >= 3 && Integer.parseInt(cvv) > 0 ;
+        return cvv != null && cvv.length() >= 3 && Integer.parseInt(cvv) > 0;
     }
 
     public static boolean isValidZip(String zip) {
-        return zip != null && zip.length() == 5 && Integer.parseInt(zip) > 0 ;
+        return zip != null && zip.length() == 5 && Integer.parseInt(zip) > 0;
     }
+
     public static boolean isValidAddress(String zip) {
         return zip != null && zip.length() >= 3;
     }

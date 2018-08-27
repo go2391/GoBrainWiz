@@ -1,76 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/white_fill_bg"
-    app:cardCornerRadius="@dimen/dimen_10"
-    app:cardElevation="@dimen/dimen_5"
-    app:cardUseCompatPadding="true">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/dimen_10"
-        android:weightSum="5">
+        android:background="@drawable/white_fill_bg"
+        app:cardCornerRadius="@dimen/dimen_10"
+        app:cardElevation="@dimen/dimen_5"
+        app:cardUseCompatPadding="true">
 
-        <LinearLayout
-            android:id="@+id/layout"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="vertical"
-            android:padding="@dimen/dimen_16">
+            android:padding="@dimen/dimen_10"
+            android:weightSum="5">
 
-            <ImageView
-                android:id="@+id/share_icon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="@dimen/dimen_5"
-                android:elevation="@dimen/dimen_5"
-                android:scaleType="centerInside"
-                android:src="@drawable/circle_gray_bg" />
-
-
-            <TextView
-                android:id="@+id/share_title"
+            <LinearLayout
+                android:id="@+id/layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:fontFamily="@font/raleway_regular"
-                android:gravity="start"
-                android:text="Samiksha S.Pingi"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/font_10" />
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_16">
+
+                <brainwiz.gobrainwiz.api.NetworkImageView
+                    android:id="@+id/testimonials_image"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="@dimen/dimen_5"
+                    android:elevation="@dimen/dimen_5"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/circle_gray_bg" />
+
+
+                <TextView
+                    android:id="@+id/test_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:fontFamily="@font/raleway_regular"
+                    android:gravity="start"
+                    android:text="Samiksha S.Pingi"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/font_10" />
+
+                <TextView
+                    android:id="@+id/test_sub_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:fontFamily="@font/raleway_regular"
+                    android:gravity="start"
+                    android:text="Placed in TCS"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/font_10" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/share_sub_title"
+                android:id="@+id/test_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_5"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/layout"
                 android:fontFamily="@font/raleway_regular"
-                android:gravity="start"
-                android:text="Placed in TCS"
+                android:gravity="center"
+                android:padding="@dimen/dimen_16"
+                android:text="I Have been placed in TCS.Awesome Experience!! Pavan sir's techniques for solving problems are easy to understand and the way he teaches is truly Mind -Blowing!!\nThanks to Brainwiz for my success."
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/font_10" />
 
-        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/layout"
-            android:fontFamily="@font/raleway_regular"
-            android:gravity="center"
-            android:padding="@dimen/dimen_16"
-            android:text="I Have been placed in TCS.Awesome Experience!! Pavan sir's techniques for solving problems are easy to understand and the way he teaches is truly Mind -Blowing!!\nThanks to Brainwiz for my success."
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="@dimen/font_10" />
+        </RelativeLayout>
 
-
-    </RelativeLayout>
-
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</layout>

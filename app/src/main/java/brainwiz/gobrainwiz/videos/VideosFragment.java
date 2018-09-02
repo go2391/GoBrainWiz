@@ -58,8 +58,9 @@ public class VideosFragment extends BaseFragment {
     private void initViews() {
         bind.recycleVideosList.setLayoutManager(new LinearLayoutManager(activity));
         videosAdapter = new VideosAdapter(context);
+        videosAdapter.setListener(videoSelectedListener);
         bind.recycleVideosList.setAdapter(videosAdapter);
-        playVideo(null);
+//        playVideo(null);
     }
 
     private void getVideos() {
@@ -90,7 +91,18 @@ public class VideosFragment extends BaseFragment {
 
     private void playVideo(VideoListModel.VideosList videosList) {
 
-        getChildFragmentManager().beginTransaction().replace(R.id.video_frame, VideoPlayFragment.newInstance("Nju4GPd1xw8"), "").commit();
+
+        String youtubeLink = videosList.getYoutubeLink();
+        youtubeLink = youtubeLink.substring(youtubeLink.lastIndexOf("/")+1, youtubeLink.length());
+
+        getChildFragmentManager().beginTransaction().replace(R.id.video_frame, VideoPlayFragment.newInstance(youtubeLink), "").commit();
 //        getChildFragmentManager().beginTransaction().replace(R.id.video_frame, VideoPlayFragment.newInstance(videosList.getYoutubeLink()), "");
     }
+
+    VideosAdapter.VideoSelectedListener videoSelectedListener = new VideosAdapter.VideoSelectedListener() {
+        @Override
+        public void onVideoSelected(int position) {
+            playVideo(videosAdapter.getVideosLists().get(position));
+        }
+    };
 }

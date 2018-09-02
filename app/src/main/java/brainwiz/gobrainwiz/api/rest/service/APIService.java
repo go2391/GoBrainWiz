@@ -4,6 +4,7 @@ package brainwiz.gobrainwiz.api.rest.service;
 import java.util.HashMap;
 
 import brainwiz.gobrainwiz.api.model.DashBoardModel;
+import brainwiz.gobrainwiz.api.model.LoginModel;
 import brainwiz.gobrainwiz.api.model.VideoListModel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,7 +19,7 @@ public interface APIService {
     Call<DashBoardModel> getDashBoard();
 
     @POST("/login")
-    Call<DashBoardModel> login(@Body HashMap<String, String> hashMap);
+    Call<LoginModel> login(@Body HashMap<String, String> hashMap);
 
 
     @POST("/register")

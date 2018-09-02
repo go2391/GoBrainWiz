@@ -19,6 +19,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoViewH
 
     Context context;
     List<VideoListModel.VideosList> videosLists = new ArrayList<>();
+    private VideoSelectedListener listener;
 
 
     public List<VideoListModel.VideosList> getVideosLists() {
@@ -53,17 +54,32 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoViewH
         return videosLists.size();
     }
 
+    public void setListener(VideoSelectedListener listener) {
+        this.listener = listener;
+    }
+
+    public VideoSelectedListener getListener() {
+        return listener;
+    }
+
     class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         InflateVideoItemBinding bind;
 
         public VideoViewHolder(View itemView) {
             super(itemView);
             bind = DataBindingUtil.bind(itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
+            if (listener != null) {
+                listener.onVideoSelected(getAdapterPosition());
+            }
         }
+    }
+
+    interface VideoSelectedListener {
+        void onVideoSelected(int position);
     }
 }

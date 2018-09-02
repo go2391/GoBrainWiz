@@ -16,7 +16,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+
+import brainwiz.gobrainwiz.api.ApiCallback;
+import brainwiz.gobrainwiz.api.RetrofitManager;
+import brainwiz.gobrainwiz.api.model.LoginModel;
 import brainwiz.gobrainwiz.databinding.FragmentLoginBinding;
+import brainwiz.gobrainwiz.utils.DDAlerts;
+import brainwiz.gobrainwiz.utils.NetWorkUtil;
+import retrofit2.Response;
 
 import static brainwiz.gobrainwiz.R.color.colorAccent;
 
@@ -59,13 +67,42 @@ public class LoginFragment extends BaseFragment {
                     ((LoginActivity) activity).fragmentTransaction(new RegistrationFragment(), R.id.login_frame, true);
                     break;
                 case R.id.login_arrow:
-                    activity.finish();
-                    startActivity(new Intent(activity, MainActivity.class));
+
+                    userLogin();
+//                    activity.finish();
+//                    startActivity(new Intent(activity, MainActivity.class));
                     break;
 
             }
         }
     };
+
+    private void userLogin() {
+        if (NetWorkUtil.isConnected(context)) {
+//            "user_name" : "6785435787",
+//             "password" : "alex1234"
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("user_name", bind.mobile.getText().toString().trim());
+            hashMap.put("password", bind.password.getText().toString().trim());
+            RetrofitManager.getRestApiMethods().login(hashMap).enqueue(new ApiCallback<LoginModel>(activity) {
+                @Override
+                public void onApiResponse(Response<LoginModel> response, boolean isSuccess, String message) {
+
+                    if (isSuccess) {
+                        activity.finish();
+                        startActivity(new Intent(activity, MainActivity.class));
+                    }
+                }
+
+                @Override
+                public void onApiFailure(boolean isSuccess, String message) {
+
+                }
+            });
+        } else {
+            DDAlerts.showNetworkAlert(activity);
+        }
+    }
 
 
 }

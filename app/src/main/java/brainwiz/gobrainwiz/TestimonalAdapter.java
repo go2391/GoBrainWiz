@@ -6,6 +6,11 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +57,11 @@ public class TestimonalAdapter extends PagerAdapter {
         ((TextView) imageLayout.findViewById(R.id.test_title)).setText(testinomial.getStudentName());
 
         ((TextView) imageLayout.findViewById(R.id.test_sub_title)).setText(testinomial.getCompany());
+
+        SpannableString spannableStringBuilder = new SpannableString("\"" + testinomial.getVoiceDescription() + ",,");
+
+        spannableStringBuilder.setSpan(new RelativeSizeSpan(2f), 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableStringBuilder.setSpan(new RelativeSizeSpan(2f), spannableStringBuilder.length() - 1, spannableStringBuilder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         ((TextView) imageLayout.findViewById(R.id.test_content)).setText(testinomial.getVoiceDescription());
 

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<layout>
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -16,53 +15,67 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <RelativeLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/tv_test_series_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dimen_5"
                 android:layout_weight="1"
-                android:background="@drawable/bg_gradient_blue"
-                android:elevation="@dimen/dimen_5"
-                android:padding="@dimen/gradient_padding">
+                app:cardElevation="@dimen/dimen_5">
 
-                <TextView
-                    android:id="@+id/tv_test_series"
-                    style="@style/HomeGridTextStyle"
-                    android:layout_centerInParent="true"
-                    android:text="@string/test_series" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@id/tv_test_series"
-                    android:src="@drawable/test_series" />
+                    android:background="@drawable/bg_gradient_blue"
+                    android:elevation="@dimen/dimen_5"
+                    android:padding="@dimen/gradient_padding">
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_test_series"
+                        style="@style/HomeGridTextStyle"
+                        android:layout_centerInParent="true"
+                        android:text="@string/test_series" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/tv_test_series"
+                        android:src="@drawable/test_series" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
 
-            <RelativeLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/tv_video_gallery_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_5"
                 android:layout_weight="1"
-                android:background="@drawable/bg_gradient_orange"
-                android:elevation="@dimen/dimen_5"
-                android:padding="@dimen/gradient_padding">
+                app:cardElevation="@dimen/dimen_5">
 
-
-                <TextView
-                    android:id="@+id/tv_video_gallery"
-                    style="@style/HomeGridTextStyle"
-                    android:layout_centerInParent="true"
-                    android:text="@string/video_gallery" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@id/tv_video_gallery"
-                    android:src="@drawable/video_gallery" />
+                    android:background="@drawable/bg_gradient_orange"
+                    android:padding="@dimen/gradient_padding">
 
-            </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_video_gallery"
+                        style="@style/HomeGridTextStyle"
+                        android:layout_centerInParent="true"
+                        android:text="@string/video_gallery" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/tv_video_gallery"
+                        android:src="@drawable/video_gallery" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 
@@ -72,59 +85,70 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-
-            <RelativeLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/tv_online_tests_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dimen_5"
                 android:layout_weight="1"
-                android:background="@drawable/bg_gradient_pink"
-                android:elevation="@dimen/dimen_5"
-                android:padding="@dimen/gradient_padding">
+                app:cardElevation="@dimen/dimen_5">
 
-                <TextView
-                    android:id="@+id/tv_online_tests"
-                    style="@style/HomeGridTextStyle"
-                    android:layout_centerInParent="true"
-                    android:text="@string/online_tests" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@id/tv_online_tests"
-                    android:src="@drawable/online_tests" />
+                    android:background="@drawable/bg_gradient_pink"
+                    android:padding="@dimen/gradient_padding">
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_online_tests"
+                        style="@style/HomeGridTextStyle"
+                        android:layout_centerInParent="true"
+                        android:text="@string/online_tests" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/tv_online_tests"
+                        android:src="@drawable/online_tests" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
 
-            <RelativeLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/tv_practice_tests_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_5"
                 android:layout_weight="1"
-                android:background="@drawable/bg_gradient_green"
-                android:elevation="@dimen/dimen_5"
-                android:padding="@dimen/gradient_padding">
+                app:cardElevation="@dimen/dimen_5">
 
-
-                <TextView
-                    android:id="@+id/tv_practice_tests"
-                    style="@style/HomeGridTextStyle"
-                    android:layout_centerInParent="true"
-                    android:text="@string/practice_tests" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@id/tv_practice_tests"
-                    android:src="@drawable/practice_tests" />
+                    android:background="@drawable/bg_gradient_green"
+                    android:padding="@dimen/gradient_padding">
 
-            </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_practice_tests"
+                        style="@style/HomeGridTextStyle"
+                        android:layout_centerInParent="true"
+                        android:text="@string/practice_tests" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/tv_practice_tests"
+                        android:src="@drawable/practice_tests" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
 
         </LinearLayout>
 
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>

@@ -12,6 +12,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
+/*
 public class YoutubeVideoActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
 
     private static final int RECOVERY_DIALOG_REQUEST = 1;
@@ -60,7 +61,7 @@ public class YoutubeVideoActivity extends YouTubeBaseActivity implements YouTube
             player.loadVideo(mVideoId);
 
             // Hiding player controls
-            player.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
+            player.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
         }
     }
 
@@ -72,4 +73,4 @@ public class YoutubeVideoActivity extends YouTubeBaseActivity implements YouTube
         }
     }
 
-}
+}*/

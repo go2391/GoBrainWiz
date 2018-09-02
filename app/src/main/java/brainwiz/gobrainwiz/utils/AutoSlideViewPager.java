@@ -17,7 +17,7 @@ public class AutoSlideViewPager extends ViewPager {
     private boolean mShouldRunTicker;
     private boolean mHasSeconds;
     private boolean mShowCurrentUserTime;
-    private int DELAY = 3 * 1000;//3 milli seconds delay
+    private int DELAY = 8 * 1000;//3 milli seconds delay
     private int secCounter;
 
     public AutoSlideViewPager(Context context) {
@@ -55,7 +55,7 @@ public class AutoSlideViewPager extends ViewPager {
 
     private void startSlide() {
 
-        new Timer().scheduleAtFixedRate(timerTask, 500, DELAY);
+        new Timer().scheduleAtFixedRate(timerTask, 1000, DELAY);
     }
 
 
@@ -80,7 +80,7 @@ public class AutoSlideViewPager extends ViewPager {
                 if (adapter != null) {
                     int count = adapter.getCount();
 
-                    setCurrentItem(currentItem == count -1 ? 0 : ++currentItem, true);
+                    setCurrentItem(currentItem == count -1 ? 0 : ++currentItem, false);
                 }
 
             }

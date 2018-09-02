@@ -27,7 +27,7 @@ public class LandingActivity extends BaseActivity {
 
     private void initViews() {
         viewPager = (ViewPager) findViewById(R.id.landing_viewpager);
-        int[] images = new int[]{ R.drawable.slide1, R.drawable.slide2, R.drawable.slide3, R.drawable.slide4, R.drawable.slide5};
+        int[] images = new int[]{R.drawable.slide1, R.drawable.slide2, R.drawable.slide3, R.drawable.slide4, R.drawable.slide5};
         viewPager.setAdapter(new SlidingPagerAdapter(this, images));
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.image_indicator);
@@ -43,7 +43,7 @@ public class LandingActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.skip:
-                    startActivity(new Intent(LandingActivity.this, MainActivity.class));
+                    startActivity(new Intent(LandingActivity.this, LoginActivity.class));
                     finish();
                     break;
                 case R.id.next:

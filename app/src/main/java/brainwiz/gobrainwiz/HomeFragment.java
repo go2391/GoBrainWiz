@@ -1,7 +1,10 @@
 package brainwiz.gobrainwiz;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +21,9 @@ import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.DashBoardModel;
 import brainwiz.gobrainwiz.databinding.FragmentHomeBinding;
+import brainwiz.gobrainwiz.practicetest.PracticeTestCategoryFragment;
+import brainwiz.gobrainwiz.videos.VideoCategoryFragment;
+import brainwiz.gobrainwiz.videos.VideosFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,21 +47,50 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_home, container, false);
         bind = DataBindingUtil.bind(inflate);
-        initViews();
+        initViews(inflate);
         getDashboardData();
         return inflate;
     }
 
 
-    private void initViews() {
+    private void initViews(View inflate) {
+
+        inflate.findViewById(R.id.tv_online_tests_layout).setOnClickListener(clickListener);
+        inflate.findViewById(R.id.tv_practice_tests_layout).setOnClickListener(clickListener);
+        inflate.findViewById(R.id.tv_test_series_layout).setOnClickListener(clickListener);
+        inflate.findViewById(R.id.tv_video_gallery_layout).setOnClickListener(clickListener);
+
 
 //        bind.homeAutoSlideViewpager.setAdapter(new SlidingImageAdapter(context, bannerList));
 
-        bind.homeImageIndicator.setupWithViewPager(bind.homeAutoSlideViewpager, true);
+//Location of Media File
 
-        bind.homeTestimonialsIndicator.setupWithViewPager(bind.homeTestimonialsViewpager, true);
+        playVideo();
+//        activity.getSupportFragmentManager().beginTransaction().replace(R.id.youtubeView_frame, new VideoPlayFragment(), VideoPlayFragment.class.getSimpleName()).commit();
+        bind.youtubeViewImage.setUrl("http://i3.ytimg.com/vi/HL32sd9J9X0/maxresdefault.jpg");
 
-        bind.youtubeViewImage.setUrl("http://i3.ytimg.com/vi/HL32sd9J9X0/hqdefault.jpg");
+        bind.youtubeViewImage.setOnClickListener(clickListener);
+    }
+
+    private void playVideo() {
+        bind.videoView.setVideoURI(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.demo));
+        bind.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer m) {
+                try {
+                    if (m.isPlaying()) {
+                        m.stop();
+                        m.release();
+                        m = new MediaPlayer();
+                    }
+                    m.setVolume(0f, 0f);
+                    m.setLooping(true);
+                    m.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void getDashboardData() {
@@ -78,4 +113,27 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+    View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.tv_video_gallery_layout:
+                    ((MainActivity) activity).fragmentTransaction(new VideosFragment());
+                    break;
+
+                case R.id.tv_online_tests_layout:
+                    break;
+
+                case R.id.tv_practice_tests_layout:
+                    ((MainActivity) activity).fragmentTransaction(new PracticeTestCategoryFragment());
+                    break;
+
+                case R.id.tv_test_series_layout:
+                    break;
+            }
+//                startActivity(new Intent(getActivity(), YoutubeVideoActivity.class));
+        }
+    };
+
 }

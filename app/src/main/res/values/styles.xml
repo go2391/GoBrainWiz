@@ -43,10 +43,6 @@
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:cacheColorHint">@color/colorSecondaryText</item>
         <item name="android:textSize">@dimen/dimen_14</item>
-        <item name="android:layout_marginLeft">@dimen/dimen_10</item>
-        <item name="android:layout_marginRight">@dimen/dimen_10</item>
-        <item name="android:layout_marginTop">@dimen/dimen_5</item>
-        <item name="android:layout_marginBottom">@dimen/dimen_5</item>
         <item name="android:singleLine">true</item>
         <item name="android:maxLength">50</item>
         <item name="android:longClickable">false</item>
@@ -94,7 +90,7 @@
     </style>
 
     <style name="HomeGridTextStyle" parent="WrapWrap">
-        <item name="android:textSize">@dimen/font_12</item>
+        <item name="android:textSize">@dimen/font_14</item>
         <item name="android:singleLine">false</item>
         <item name="android:layout_margin">@dimen/dimen_10</item>
         <item name="android:textColor">@color/white</item>
@@ -238,10 +234,10 @@
 
     <style name="CardViewStyle">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:layout_alignParentStart">true</item>
-        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardCornerRadius">@dimen/dimen_10</item>
+        <item name="cardElevation">@dimen/dimen_5</item>
+        <item name="cardUseCompatPadding">true</item>
     </style>
 
 </resources>

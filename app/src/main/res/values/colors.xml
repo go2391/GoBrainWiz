@@ -7,6 +7,8 @@
     <color name="colorPrimaryText">#333333</color>
     <color name="colorSecondaryText">#666666</color>
 
+    <color name="red">#f44336</color>
+
     <color name="background">#EAEAE9</color>
     <color name="light_background">#FCFCFB</color>
 
@@ -23,7 +25,7 @@
 
 
     <color name="blueSecondary">#5e7ff9</color>
-    <color name="bluePrimary">#2d54e2</color>
+    <color name="bluePrimary">#1a4186</color>
 
     <color name="orangeSecondary">#f2b658</color>
     <color name="orangePrimary">#e18309</color>

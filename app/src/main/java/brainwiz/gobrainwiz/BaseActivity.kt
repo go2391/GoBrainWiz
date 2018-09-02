@@ -42,6 +42,17 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+
+    fun fragmentTransaction(newFragment: Fragment, container: Int, addToStack: Boolean) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(container, newFragment)
+        if (addToStack) {
+            transaction.addToBackStack(newFragment.javaClass.simpleName)
+        }
+
+        transaction.commit()
+    }
+
     fun fragmentTransaction(newFragment: Fragment, container: Int) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(container, newFragment)
@@ -52,6 +63,7 @@ open class BaseActivity : AppCompatActivity() {
     fun fragmentTransaction(newFragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.content_frame, newFragment)
+        transaction.addToBackStack(newFragment.javaClass.simpleName);
         transaction.commit()
     }
 

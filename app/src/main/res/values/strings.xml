@@ -48,7 +48,7 @@
     <string name="next">Next</string>
     <string name="name">Name</string>
     <string name="mobile">Mobile</string>
-    <string name="don_t_you_have_an_account_please_register">Don\'t you have an account? Please Register</string>
+    <string name="don_t_you_have_an_account_please_register">Don\'t have an account? Sign up</string>
     <string name="welcome_back">Welcome back,</string>
     <string name="it_s_great_pleasure_to_see_you_again">It\'s great pleasure to see you again</string>
     <string name="login">Login</string>
@@ -59,12 +59,39 @@
     <string name="registration">Registration</string>
     <string name="trained_thousands_of_students_across_india">Trained Thousands of students across INDIA</string>
     <string name="arithmetic">Arithmetic</string>
-    <string name="topics">Topics</string>
+    <string name="topics">%s Topics</string>
     <string name="videos">Videos</string>
-    <string name="tests">Tests</string>
+    <string name="tests">%s Tests</string>
+    <string name="tests_label">Tests</string>
     <string name="logical_reasoning">Logical Reasoning</string>
     <string name="verbal_ability">Verbal Ability</string>
     <string name="password">password</string>
+    <string name="start">Start</string>
+    <string name="questions">%s Questions</string>
+    <string name="mins">%s Mins</string>
+    <string name="instructions">Instructions : </string>
+    <string name="instructions_text">
+        1. Test consists of 3 sections i.e. Verbal, Arithmatic, reasoning,\n
+2. After finishing each section you will have a break time of 1 min.\n
+3. Once the section is completed you cannot go back to that section.\n
+4. You can chose the section you want to attempt from Instruction
+page(current).\n
+5. Section can be selected from the top navigation tab.\n
+6. Once you click on compete button a confirmation will be asked whether
+you want to complete the section or not.\n
+7. Each question will be of 1 mark.\n
+8. You will not have multiple choice questions.\n
+9. You need to click on "Next/ Save " button on order to save your marked
+answer.\n
+10. Result will be displayed immediately after you complete all the three
+sections
+    </string>
+    <string name="call">Call</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="weekly_schedule">Weekly\nSchedule</string>
 
 
 </resources>

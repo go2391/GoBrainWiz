@@ -33,11 +33,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen_5"
             android:layout_toEndOf="@id/review_star"
-            android:fontFamily="@font/raleway_medium"
+            android:fontFamily="@font/raleway_bold"
             android:gravity="start"
             android:text="@string/reviews_this_app"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/font_14" />
+            android:textColor="@color/bluePrimary"
+            android:textSize="@dimen/font_16" />
 
 
         <TextView

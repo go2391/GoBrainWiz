@@ -12,58 +12,64 @@ import java.util.ArrayList;
 import java.util.List;
 
 import brainwiz.gobrainwiz.R;
-import brainwiz.gobrainwiz.api.model.VideoListModel;
+import brainwiz.gobrainwiz.api.model.PracticeTestModel;
 import brainwiz.gobrainwiz.databinding.InflateTestTopicItemBinding;
-import brainwiz.gobrainwiz.databinding.InflateVideoItemBinding;
 
-public class PracticeTestTopicAdapter extends RecyclerView.Adapter<PracticeTestTopicAdapter.VideoViewHolder> {
+public class PracticeTestTopicAdapter extends RecyclerView.Adapter<PracticeTestTopicAdapter.TopicViewHolder> {
 
     Context context;
-    List<VideoListModel.VideosList> videosLists = new ArrayList<>();
+    private List<PracticeTestModel.SubList> subLists = new ArrayList<>();
+
+    private TopicSelectionListener topicSelectionListener;
 
 
-    public List<VideoListModel.VideosList> getVideosLists() {
-        return videosLists;
-    }
-
-    public void setVideosLists(List<VideoListModel.VideosList> videosLists) {
-        this.videosLists = videosLists;
-    }
-
-    public PracticeTestTopicAdapter(Context context) {
+    public PracticeTestTopicAdapter(Context context, List<PracticeTestModel.SubList> subLists) {
 
         this.context = context;
+        this.subLists = subLists;
+    }
+
+    public void setTopicSelectionListener(TopicSelectionListener topicSelectionListener) {
+        this.topicSelectionListener = topicSelectionListener;
     }
 
     @NonNull
     @Override
-    public VideoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new VideoViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.inflate_test_topic_item, parent, false));
+    public TopicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new TopicViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.inflate_test_topic_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VideoViewHolder holder, int position) {
-//        VideoListModel.VideosList video = videosLists.get(position);
-//        holder.bind.testTopicItemTitle.set(video.getVImage());
-//        holder.bind.videoItemTitle.setText(video.getVideoTitle());
+    public void onBindViewHolder(@NonNull TopicViewHolder holder, int position) {
+        PracticeTestModel.SubList subList = subLists.get(position);
+        holder.bind.testTopicItemTitle.setText(subList.getTopicName());
+        holder.bind.testTopicItemDesc.setText(String.format(context.getString(R.string.tests), subList.getTestsCount()));
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return subLists.size();
     }
 
-    class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class TopicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         InflateTestTopicItemBinding bind;
 
-        public VideoViewHolder(View itemView) {
+        public TopicViewHolder(View itemView) {
             super(itemView);
             bind = DataBindingUtil.bind(itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
+            int adapterPosition = getAdapterPosition();
+            if (topicSelectionListener != null && adapterPosition != RecyclerView.NO_POSITION) {
+                topicSelectionListener.onTopicSelect(subLists.get(adapterPosition));
+            }
         }
+    }
+
+    interface TopicSelectionListener {
+        void onTopicSelect(PracticeTestModel.SubList subList);
     }
 }

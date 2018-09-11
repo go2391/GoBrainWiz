@@ -78,11 +78,12 @@
                         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
                     <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/arrow_arithmetic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/recycle_arithmetic"
                         android:layout_centerHorizontal="true"
-                        app:srcCompat="@drawable/ic_arrow_down" />
+                        app:srcCompat="@drawable/arrow_selector" />
 
                 </RelativeLayout>
 
@@ -155,11 +156,12 @@
                         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
                     <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/arrow_logical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/recycle_logical"
                         android:layout_centerHorizontal="true"
-                        app:srcCompat="@drawable/ic_arrow_down" />
+                        app:srcCompat="@drawable/arrow_selector" />
 
                 </RelativeLayout>
 
@@ -232,11 +234,12 @@
                         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
                     <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/arrow_verbal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/recycle_verbal"
                         android:layout_centerHorizontal="true"
-                        app:srcCompat="@drawable/ic_arrow_down" />
+                        app:srcCompat="@drawable/arrow_selector" />
 
 
                 </RelativeLayout>

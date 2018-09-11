@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,18 +16,18 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.DashBoardModel;
 import brainwiz.gobrainwiz.databinding.FragmentHomeBinding;
 import brainwiz.gobrainwiz.practicetest.PracticeTestCategoryFragment;
-import brainwiz.gobrainwiz.videos.VideoCategoryFragment;
+import brainwiz.gobrainwiz.utils.DDAlerts;
+import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import brainwiz.gobrainwiz.videos.VideosFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
     private Context context;
     private FragmentHomeBinding bind;
@@ -57,7 +56,7 @@ public class HomeFragment extends Fragment {
 
         inflate.findViewById(R.id.tv_online_tests_layout).setOnClickListener(clickListener);
         inflate.findViewById(R.id.tv_practice_tests_layout).setOnClickListener(clickListener);
-        inflate.findViewById(R.id.tv_test_series_layout).setOnClickListener(clickListener);
+        inflate.findViewById(R.id.tv_weekly_schedule_layout).setOnClickListener(clickListener);
         inflate.findViewById(R.id.tv_video_gallery_layout).setOnClickListener(clickListener);
 
 
@@ -65,11 +64,10 @@ public class HomeFragment extends Fragment {
 
 //Location of Media File
 
+        bind.videoPlayIcon.setOnClickListener(clickListener);
         playVideo();
 //        activity.getSupportFragmentManager().beginTransaction().replace(R.id.youtubeView_frame, new VideoPlayFragment(), VideoPlayFragment.class.getSimpleName()).commit();
-        bind.youtubeViewImage.setUrl("http://i3.ytimg.com/vi/HL32sd9J9X0/maxresdefault.jpg");
 
-        bind.youtubeViewImage.setOnClickListener(clickListener);
     }
 
     private void playVideo() {
@@ -94,6 +92,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void getDashboardData() {
+        if (!NetWorkUtil.isConnected(context)) {
+            DDAlerts.showNetworkAlert(activity);
+            return;
+        }
+
+        showProgress();
         RetrofitManager.getRestApiMethods().getDashBoard().enqueue(new Callback<DashBoardModel>() {
             @Override
             public void onResponse(Call<DashBoardModel> call, Response<DashBoardModel> response) {
@@ -104,12 +108,14 @@ public class HomeFragment extends Fragment {
 
                 bind.homeTestimonialsViewpager.setAdapter(new TestimonalAdapter(context, data.getTestinomials()));
 
+                dismissProgress();
 
             }
 
             @Override
             public void onFailure(Call<DashBoardModel> call, Throwable t) {
                 Log.e("", call.toString());
+                dismissProgress();
             }
         });
     }
@@ -129,10 +135,13 @@ public class HomeFragment extends Fragment {
                     ((MainActivity) activity).fragmentTransaction(new PracticeTestCategoryFragment());
                     break;
 
-                case R.id.tv_test_series_layout:
+                case R.id.tv_weekly_schedule_layout:
+                    startActivity(new Intent(activity, FullscreenActivity.class));
+                    break;
+                case R.id.video_play_icon:
+                    startActivity(new Intent(getActivity(), YoutubeVideoActivity.class));
                     break;
             }
-//                startActivity(new Intent(getActivity(), YoutubeVideoActivity.class));
         }
     };
 

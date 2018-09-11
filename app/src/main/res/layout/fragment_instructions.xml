@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_16">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_bold"
+                android:text="@string/instructions"
+                android:textColor="@color/black"
+                android:layout_marginBottom="@dimen/dimen_16"
+                android:textSize="@dimen/font_20" />
+
+            <TextView
+                android:lineSpacingExtra="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:fontFamily="@font/raleway_semibold"
+                android:gravity="start"
+                android:text="@string/instructions_text"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/font_16" />
+
+            <android.support.v7.widget.AppCompatCheckedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="@drawable/check_selector"
+                android:drawablePadding="@dimen/dimen_5"
+                android:fontFamily="@font/raleway_bold"
+                android:gravity="center"
+                android:padding="@dimen/dimen_10"
+                android:text="@string/arithmetic"
+                android:textColor="@color/blueSecondary"
+                android:textSize="@dimen/font_24" />
+
+            <android.support.v7.widget.AppCompatCheckedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="@drawable/check_selector"
+                android:drawablePadding="@dimen/dimen_5"
+                android:fontFamily="@font/raleway_bold"
+                android:gravity="center"
+                android:padding="@dimen/dimen_10"
+                android:text="@string/logical_reasoning"
+                android:textColor="@color/blueSecondary"
+                android:textSize="@dimen/font_24" />
+
+            <android.support.v7.widget.AppCompatCheckedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="@drawable/check_selector"
+                android:drawablePadding="@dimen/dimen_5"
+                android:fontFamily="@font/raleway_bold"
+                android:gravity="center"
+                android:padding="@dimen/dimen_10"
+                android:text="@string/verbal_ability"
+                android:textColor="@color/blueSecondary"
+                android:textSize="@dimen/font_24" />
+
+
+            <Button
+                android:id="@+id/login_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:background="@drawable/button_bg_green"
+                android:fontFamily="@font/raleway_bold"
+                android:padding="@dimen/dimen_5"
+                android:text="@string/start"
+                android:textColor="@color/white"
+                android:translationZ="@dimen/dimen_5" />
+
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+</layout>

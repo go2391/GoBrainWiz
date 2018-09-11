@@ -11,17 +11,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dimen_10"
             android:orientation="horizontal"
             android:weightSum="2">
 
             <android.support.v7.widget.CardView
-                android:id="@+id/tv_test_series_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_5"
-                android:layout_weight="1"
-                app:cardElevation="@dimen/dimen_5">
+                android:id="@+id/tv_weekly_schedule_layout"
+                style="@style/CardViewStyle"
+                android:layout_weight="1">
 
 
                 <RelativeLayout
@@ -32,16 +28,19 @@
                     android:padding="@dimen/gradient_padding">
 
                     <TextView
-                        android:id="@+id/tv_test_series"
+                        android:id="@+id/tv_weekly_schedule"
                         style="@style/HomeGridTextStyle"
                         android:layout_centerInParent="true"
-                        android:text="@string/test_series" />
+                        android:text="@string/weekly_schedule" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toStartOf="@id/tv_test_series"
-                        android:src="@drawable/test_series" />
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/tv_weekly_schedule"
+                        android:padding="@dimen/dimen_5"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_calendar" />
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -49,11 +48,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/tv_video_gallery_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_5"
-                android:layout_weight="1"
-                app:cardElevation="@dimen/dimen_5">
+                style="@style/CardViewStyle"
+                android:layout_weight="1">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -87,11 +83,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/tv_online_tests_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_5"
-                android:layout_weight="1"
-                app:cardElevation="@dimen/dimen_5">
+                style="@style/CardViewStyle"
+                android:layout_weight="1">
 
 
                 <RelativeLayout
@@ -118,11 +111,8 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/tv_practice_tests_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_5"
-                android:layout_weight="1"
-                app:cardElevation="@dimen/dimen_5">
+                style="@style/CardViewStyle"
+                android:layout_weight="1">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

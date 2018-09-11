@@ -10,17 +10,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
 import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.VideoPlayFragment;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
-import brainwiz.gobrainwiz.api.model.DashBoardModel;
 import brainwiz.gobrainwiz.api.model.VideoListModel;
-import brainwiz.gobrainwiz.databinding.FragmentVideoCategoryBinding;
 import brainwiz.gobrainwiz.databinding.FragmentVideosBinding;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
@@ -31,6 +37,9 @@ public class VideosFragment extends BaseFragment {
     private FragmentActivity activity;
     private Context context;
     private VideosAdapter videosAdapter;
+    private HashMap<String, List<VideoListModel.VideosList>> categories = new LinkedHashMap<>();
+    private ArrayAdapter adapter;
+    private List<String> categoryNames = new ArrayList<>();
 
     @Override
     public void onAttach(Context context) {
@@ -60,7 +69,22 @@ public class VideosFragment extends BaseFragment {
         videosAdapter = new VideosAdapter(context);
         videosAdapter.setListener(videoSelectedListener);
         bind.recycleVideosList.setAdapter(videosAdapter);
-//        playVideo(null);
+
+
+        bind.videosCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                loadList(categories.get(categoryNames.get(position)));
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
     }
 
     private void getVideos() {
@@ -69,31 +93,62 @@ public class VideosFragment extends BaseFragment {
             DDAlerts.showNetworkAlert(activity);
             return;
         }
+        showProgress();
         RetrofitManager.getRestApiMethods().getVideos().enqueue(new ApiCallback<VideoListModel>(activity) {
             @Override
             public void onApiResponse(Response<VideoListModel> response, boolean isSuccess, String message) {
                 if (isSuccess) {
                     List<VideoListModel.Video> videos = response.body().getData().getVideos();
-                    videosAdapter.setVideosLists(videos.get(0).getVideosList());
-                    videosAdapter.notifyDataSetChanged();
-                    playVideo(videos.get(0).getVideosList().get(0));
+
+                    categories = getCategories(videos);
+                    categoryNames = new ArrayList<>(categories.keySet());
+                    adapter = new ArrayAdapter<>(activity, R.layout.inflate_spinner_item, R.id.spinner_title, categoryNames);
+                    bind.videosCategories.setAdapter(adapter);
+
+                    if (!videos.isEmpty()) {
+                        loadList(videos.get(0).getVideosList());
+                    }
+
                 } else {
 
                 }
+                dismissProgress();
             }
 
             @Override
             public void onApiFailure(boolean isSuccess, String message) {
-
+                dismissProgress();
             }
         });
+    }
+
+    private void loadList(List<VideoListModel.VideosList> videosList) {
+
+        videosAdapter.setVideosLists(videosList);
+        videosAdapter.notifyDataSetChanged();
+
+        if (!videosList.isEmpty()) {
+            playVideo(videosList.get(0));
+        }
+
+
+    }
+
+    private HashMap<String, List<VideoListModel.VideosList>> getCategories(List<VideoListModel.Video> videos) {
+        HashMap<String, List<VideoListModel.VideosList>> listHashMap = new LinkedHashMap<>();
+        for (VideoListModel.Video video : videos) {
+            listHashMap.put(video.getTopicName(), video.getVideosList());
+        }
+        return listHashMap;
+
+
     }
 
     private void playVideo(VideoListModel.VideosList videosList) {
 
 
         String youtubeLink = videosList.getYoutubeLink();
-        youtubeLink = youtubeLink.substring(youtubeLink.lastIndexOf("/")+1, youtubeLink.length());
+        youtubeLink = youtubeLink.substring(youtubeLink.lastIndexOf("/") + 1, youtubeLink.length());
 
         getChildFragmentManager().beginTransaction().replace(R.id.video_frame, VideoPlayFragment.newInstance(youtubeLink), "").commit();
 //        getChildFragmentManager().beginTransaction().replace(R.id.video_frame, VideoPlayFragment.newInstance(videosList.getYoutubeLink()), "");

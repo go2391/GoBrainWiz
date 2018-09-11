@@ -25,35 +25,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_10" />
 
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:visibility="gone"
-                app:cardCornerRadius="@dimen/dimen_10"
-                app:cardUseCompatPadding="true">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <brainwiz.gobrainwiz.RoundishImageView
-                        android:id="@+id/youtubeView_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_centerInParent="true"
-                        android:scaleType="fitXY"
-                        app:cornerRadius="@dimen/dimen_10"
-                        app:roundedCorners="ALL" />
-
-                    <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="@dimen/dimen_40"
-                        android:layout_height="@dimen/dimen_40"
-                        android:layout_centerInParent="true"
-                        app:srcCompat="@drawable/ic_play_circle_outline" />
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
 
             <TextView
                 android:layout_width="wrap_content"
@@ -65,20 +36,42 @@
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/font_16" />
 
+
+
+           <!-- <VideoView
+                android:elevation="@dimen/dimen_5"
+                android:id="@+id/video_view"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />-->
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:visibility="visible"
                 app:cardCornerRadius="@dimen/dimen_10"
+                app:cardElevation="@dimen/dimen_5"
                 app:cardUseCompatPadding="true">
 
-                <VideoView
-                    android:id="@+id/video_view"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" />
-            </android.support.v7.widget.CardView>
+                    android:layout_height="200dp">
 
+                    <VideoView
+                        android:id="@+id/video_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" />
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:translationZ="@dimen/dimen_10"
+                        android:id="@+id/video_play_icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/ic_play_circle_outline" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -78,30 +78,33 @@ public class LoginFragment extends BaseFragment {
     };
 
     private void userLogin() {
-        if (NetWorkUtil.isConnected(context)) {
+
+        if (!NetWorkUtil.isConnected(context)) {
+            DDAlerts.showNetworkAlert(activity);
+            return;
+        }
+
+        showProgress();
 //            "user_name" : "6785435787",
 //             "password" : "alex1234"
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("user_name", bind.mobile.getText().toString().trim());
-            hashMap.put("password", bind.password.getText().toString().trim());
-            RetrofitManager.getRestApiMethods().login(hashMap).enqueue(new ApiCallback<LoginModel>(activity) {
-                @Override
-                public void onApiResponse(Response<LoginModel> response, boolean isSuccess, String message) {
-
-                    if (isSuccess) {
-                        activity.finish();
-                        startActivity(new Intent(activity, MainActivity.class));
-                    }
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("user_name", bind.mobile.getText().toString().trim());
+        hashMap.put("password", bind.password.getText().toString().trim());
+        RetrofitManager.getRestApiMethods().login(hashMap).enqueue(new ApiCallback<LoginModel>(activity) {
+            @Override
+            public void onApiResponse(Response<LoginModel> response, boolean isSuccess, String message) {
+                dismissProgress();
+                if (isSuccess) {
+                    activity.finish();
+                    startActivity(new Intent(activity, MainActivity.class));
                 }
+            }
 
-                @Override
-                public void onApiFailure(boolean isSuccess, String message) {
-
-                }
-            });
-        } else {
-            DDAlerts.showNetworkAlert(activity);
-        }
+            @Override
+            public void onApiFailure(boolean isSuccess, String message) {
+                dismissProgress();
+            }
+        });
     }
 
 

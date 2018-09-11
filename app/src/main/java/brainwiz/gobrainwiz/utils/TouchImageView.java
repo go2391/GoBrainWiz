@@ -11,9 +11,11 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
 
+import brainwiz.gobrainwiz.api.NetworkImageView;
+
 /**
  */
-public class TouchImageView extends android.support.v7.widget.AppCompatImageView {
+public class TouchImageView extends NetworkImageView {
 
 
     Matrix matrix;

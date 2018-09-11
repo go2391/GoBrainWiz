@@ -42,10 +42,11 @@
     <style name="EditTextStyle" parent="MatchWrap">
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:cacheColorHint">@color/colorSecondaryText</item>
-        <item name="android:textSize">@dimen/dimen_14</item>
+        <item name="android:textSize">@dimen/dimen_16</item>
         <item name="android:singleLine">true</item>
         <item name="android:maxLength">50</item>
         <item name="android:longClickable">false</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_10</item>
 
     </style>
 
@@ -238,6 +239,18 @@
         <item name="cardCornerRadius">@dimen/dimen_10</item>
         <item name="cardElevation">@dimen/dimen_5</item>
         <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
     </style>
 
 </resources>

@@ -16,9 +16,19 @@ public class TestsModel {
     @SerializedName("message")
     @Expose
     private String message;
+
     @SerializedName("data")
     @Expose
-    private List<TestItem> data = new ArrayList<TestItem>();
+    private Data data = new Data();
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
 
     public boolean isStatus() {
         return status;
@@ -44,16 +54,24 @@ public class TestsModel {
         this.message = message;
     }
 
-    public List<TestItem> getData() {
-        return data;
+
+    public class Data {
+
+        @SerializedName("testList")
+        @Expose
+        private List<TestList> testList = new ArrayList<TestList>();
+
+        public List<TestList> getTestList() {
+            return testList;
+        }
+
+        public void setTestList(List<TestList> testList) {
+            this.testList = testList;
+        }
+
     }
 
-    public void setData(List<TestItem> data) {
-        this.data = data;
-    }
-
-
-    public class TestItem {
+    public class TestList {
 
         @SerializedName("test_name")
         @Expose

@@ -12,17 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import brainwiz.gobrainwiz.R;
-import brainwiz.gobrainwiz.api.model.PracticeTestModel;
 import brainwiz.gobrainwiz.api.model.TestsModel;
 import brainwiz.gobrainwiz.databinding.InflateTestItemBinding;
-import brainwiz.gobrainwiz.databinding.InflateTestTopicItemBinding;
 
 public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestTestsAdapter.TestViewHolder> {
 
     Context context;
 
     private TestListener testListener;
-    private List<TestsModel.TestItem> data = new ArrayList<>();
+    private List<TestsModel.TestList> data = new ArrayList<>();
 
 
     public PracticeTestTestsAdapter(Context context) {
@@ -43,10 +41,10 @@ public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestT
     @Override
     public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
 
-        TestsModel.TestItem testItem = data.get(position);
-        holder.bind.testItemTitle.setText(testItem.getTestName());
-        holder.bind.testQuestions.setText(String.format(context.getString(R.string.questions), testItem.getCountque()));
-        holder.bind.testMins.setText(String.format(context.getString(R.string.mins), testItem.getTestTime()));
+        TestsModel.TestList testList = data.get(position);
+        holder.bind.testItemTitle.setText(testList.getTestName());
+        holder.bind.testQuestions.setText(String.format(context.getString(R.string.questions), testList.getCountque()));
+        holder.bind.testMins.setText(String.format(context.getString(R.string.mins), testList.getTestTime()));
     }
 
     @Override
@@ -54,9 +52,13 @@ public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestT
         return data.size();
     }
 
-    public void setData(List<TestsModel.TestItem> data) {
+    public void setData(List<TestsModel.TestList> data) {
 
         this.data = data;
+    }
+
+    public List<TestsModel.TestList> getData() {
+        return data;
     }
 
     class TestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

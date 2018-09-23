@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/test_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_10"
+                android:text="@string/help_your_friends_to_know_this_app_and_make_them_so_benefices_as_you_in_case_of_crt"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/font_16" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/answer_options_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/test_question"
+                android:layout_margin="@dimen/dimen_5"
+                android:nestedScrollingEnabled="false" />
+
+
+            <LinearLayout
+                android:id="@+id/test_explanation_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_10"
+                android:background="@drawable/stroke_blue_bg"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_5">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_10"
+                    android:fontFamily="@font/bold"
+                    android:text="@string/explanation"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/font_16" />
+
+                <TextView
+                    android:id="@+id/test_explanation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_10"
+                    android:text="@string/help_your_friends_to_know_this_app_and_make_them_so_benefices_as_you_in_case_of_crt"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/font_16" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</layout>

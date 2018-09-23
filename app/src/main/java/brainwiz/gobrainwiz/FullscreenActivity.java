@@ -33,7 +33,14 @@ public class FullscreenActivity extends AppCompatActivity {
         NetworkImageView mContentView = findViewById(R.id.fullscreen_content);
 
 
-        mContentView.setUrl("http://www.gobrainwiz.in/upload/weekly/1536507865_Sep_10.jpg");
+        mContentView.setUrl(getIntent().getStringExtra("URL"));
+
+        findViewById(R.id.image_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away

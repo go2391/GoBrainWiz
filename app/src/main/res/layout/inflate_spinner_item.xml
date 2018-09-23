@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:fontFamily="@font/raleway_semibold"
+            android:fontFamily="@font/semibold"
             android:text="Topic Title"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/font_16" />

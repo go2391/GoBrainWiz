@@ -13,9 +13,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:scaleType="fitCenter"
         android:gravity="center"
-        android:keepScreenOn="true" />
+        android:keepScreenOn="true"
+        android:scaleType="fitCenter"
+        />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/image_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/dimen_16"
+        android:background="@drawable/circle_gray_bg"
+        android:padding="@dimen/dimen_10"
+        android:elevation="@dimen/dimen_5"
+        android:translationZ="5dp"
+        android:src="@drawable/ic_close" />
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->

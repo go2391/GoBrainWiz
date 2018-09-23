@@ -19,6 +19,7 @@ import java.util.List;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.DashBoardModel;
 import brainwiz.gobrainwiz.databinding.FragmentHomeBinding;
+import brainwiz.gobrainwiz.onlinetest.OnlineTestFragment;
 import brainwiz.gobrainwiz.practicetest.PracticeTestCategoryFragment;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
@@ -33,6 +34,7 @@ public class HomeFragment extends BaseFragment {
     private FragmentHomeBinding bind;
     private FragmentActivity activity;
     private List<DashBoardModel.Banner> bannerList;
+    private DashBoardModel.Data data;
 
     @Override
     public void onAttach(Context context) {
@@ -102,7 +104,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onResponse(Call<DashBoardModel> call, Response<DashBoardModel> response) {
                 Log.e("", response.toString());
-                DashBoardModel.Data data = response.body().getData();
+                data = response.body().getData();
                 bannerList = data.getBanners();
                 bind.homeAutoSlideViewpager.setAdapter(new SlidingImageAdapter(context, bannerList));
 
@@ -129,6 +131,7 @@ public class HomeFragment extends BaseFragment {
                     break;
 
                 case R.id.tv_online_tests_layout:
+                    ((MainActivity) activity).fragmentTransaction(new OnlineTestFragment());
                     break;
 
                 case R.id.tv_practice_tests_layout:
@@ -136,7 +139,9 @@ public class HomeFragment extends BaseFragment {
                     break;
 
                 case R.id.tv_weekly_schedule_layout:
-                    startActivity(new Intent(activity, FullscreenActivity.class));
+                    Intent intent = new Intent(activity, FullscreenActivity.class);
+                    intent.putExtra("URL", data.getWeekSchedule().getImage());
+                    startActivity(intent);
                     break;
                 case R.id.video_play_icon:
                     startActivity(new Intent(getActivity(), YoutubeVideoActivity.class));

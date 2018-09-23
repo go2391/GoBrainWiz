@@ -30,6 +30,10 @@ public class DashBoardModel extends BaseModel {
         @Expose
         private List<Testinomial> testinomials = new ArrayList<Testinomial>();
 
+        @SerializedName("weekSchedule")
+        @Expose
+        private WeekSchedule weekSchedule = new WeekSchedule();
+
         public List<Banner> getBanners() {
             return banners;
         }
@@ -44,6 +48,14 @@ public class DashBoardModel extends BaseModel {
 
         public void setTestinomials(List<Testinomial> testinomials) {
             this.testinomials = testinomials;
+        }
+
+        public WeekSchedule getWeekSchedule() {
+            return weekSchedule;
+        }
+
+        public void setWeekSchedule(WeekSchedule weekSchedule) {
+            this.weekSchedule = weekSchedule;
         }
     }
 
@@ -175,6 +187,55 @@ public class DashBoardModel extends BaseModel {
 
         public void setVoiceStatus(String voiceStatus) {
             this.voiceStatus = voiceStatus;
+        }
+
+    }
+
+    public static class WeekSchedule {
+
+        @SerializedName("id")
+        @Expose
+        private String id;
+        @SerializedName("title")
+        @Expose
+        private String title;
+        @SerializedName("image")
+        @Expose
+        private String image;
+        @SerializedName("status")
+        @Expose
+        private String status;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
         }
 
     }

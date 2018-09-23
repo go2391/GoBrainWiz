@@ -46,6 +46,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="brainwiz.gobrainwiz.MainActivity" />
         </activity>
+
+        <activity
+            android:name=".test.TestActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

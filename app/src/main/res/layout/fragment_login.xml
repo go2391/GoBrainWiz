@@ -25,7 +25,7 @@
               android:layout_alignParentTop="true"
               android:layout_marginStart="@dimen/dimen_20"
               android:layout_marginTop="@dimen/dimen_20"
-              android:fontFamily="@font/raleway_bold"
+              android:fontFamily="@font/bold"
               android:text="@string/login"
               android:textColor="@color/colorAccent"
               android:textSize="@dimen/font_16" />-->
@@ -96,7 +96,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/dimen_20"
             android:layout_marginTop="@dimen/dimen_20"
-            android:fontFamily="@font/raleway_medium"
+            android:fontFamily="@font/medium"
             android:text="@string/don_t_you_have_an_account_please_register"
             android:textSize="@dimen/font_10" />
     </RelativeLayout>

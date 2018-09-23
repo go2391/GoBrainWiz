@@ -26,7 +26,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@id/video_item_thumb"
                 android:layout_toStartOf="@id/video_item_play_pause"
-                android:fontFamily="@font/raleway_semibold"
+                android:fontFamily="@font/semibold"
                 android:text="Title"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/font_14" />
@@ -39,7 +39,7 @@
                 android:layout_marginTop="@dimen/dimen_5"
                 android:layout_toEndOf="@id/video_item_thumb"
                 android:layout_toStartOf="@id/video_item_play_pause"
-                android:fontFamily="@font/raleway_semibold"
+                android:fontFamily="@font/semibold"
                 android:text="Description"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/font_12" />

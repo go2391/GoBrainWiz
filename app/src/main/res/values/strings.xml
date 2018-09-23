@@ -92,6 +92,19 @@ sections
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="weekly_schedule">Weekly\nSchedule</string>
+    <string name="phone">Phone:</string>
+    <string name="_81421_23938">81421 23938</string>
+    <string name="gobrainwiz_gmail_com">gobrainwiz@gmail.com</string>
+    <string name="address">Address :</string>
+    <string name="brainwiz_address">BRAINWIZ\n# 3rd Floor \nBeside Reliance Fresh \nNear Satyam Theatre , Srinivasa Nagar ,Ameerpet , Hyderabad.</string>
+    <string name="view">view</string>
+    <string name="onlinetest">Online Tests</string>
+    <string name="explanation">Explanation</string>
+    <string name="previous">Previous</string>
+    <string name="submit">Submit</string>
+    <string name="total_questions">Total Questions</string>
+    <string name="questions_attempted">Questions Attempted</string>
+    <string name="correct">Correct</string>
 
 
 </resources>

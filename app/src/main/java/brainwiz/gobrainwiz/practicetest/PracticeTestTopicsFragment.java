@@ -1,6 +1,7 @@
 package brainwiz.gobrainwiz.practicetest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,8 @@ import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.PracticeTestModel;
 import brainwiz.gobrainwiz.api.model.TestsModel;
 import brainwiz.gobrainwiz.databinding.FragmentTestTopicBinding;
+import brainwiz.gobrainwiz.test.TestActivity;
+import brainwiz.gobrainwiz.test.TestQuestionFragment;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import retrofit2.Response;
@@ -63,7 +66,7 @@ public class PracticeTestTopicsFragment extends BaseFragment {
             public void onApiResponse(Response<TestsModel> response, boolean isSuccess, String message) {
                 dismissProgress();
                 if (isSuccess) {
-                    testTestsAdapter.setData(response.body().getData());
+                    testTestsAdapter.setData(response.body().getData().getTestList());
                     testTestsAdapter.notifyDataSetChanged();
                 }
             }
@@ -88,7 +91,16 @@ public class PracticeTestTopicsFragment extends BaseFragment {
     private final PracticeTestTestsAdapter.TestListener testListener = new PracticeTestTestsAdapter.TestListener() {
         @Override
         public void onTestStart(int position) {
-            ((MainActivity) activity).fragmentTransaction(new InstructionsFragment());
+
+            Intent intent = new Intent(getActivity(), TestActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(ID, testTestsAdapter.getData().get(position).getTestId());
+            bundle.putString(CAT_ID, "");
+            bundle.putBoolean(IS_COMPANY_TEST, false);
+            bundle.putBoolean(IS_REVIEW, true);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
         }
 
         @Override

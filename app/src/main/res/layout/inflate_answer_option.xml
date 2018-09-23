@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
+        android:id="@+id/option_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_5"
+        android:background="@drawable/answer_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/option_no"
+            android:layout_width="@dimen/dimen_20"
+            android:layout_height="@dimen/dimen_20"
+            android:layout_gravity="center"
+            android:background="@drawable/answer_selector"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/answer_text_selector"
+            android:textSize="@dimen/font_10" />
+
+        <TextView
+            android:id="@+id/option_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:gravity="center_vertical"
+            android:text="option1"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/font_10" />
+    </LinearLayout>
+</layout>

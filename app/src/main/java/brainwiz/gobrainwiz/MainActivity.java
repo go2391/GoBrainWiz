@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
-    private void call() {
+    public void call() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
 //            if (ActivityCompat.shouldShowRequestPermissionRationale(this,

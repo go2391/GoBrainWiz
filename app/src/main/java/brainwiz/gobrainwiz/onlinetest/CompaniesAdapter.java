@@ -79,11 +79,13 @@ public class CompaniesAdapter extends RecyclerView.Adapter<CompaniesAdapter.Comp
 
             if (adapter != null) {
                 bind.recycleCompanies.setAdapter(null);
+                bind.arrowCompanies.setSelected(true);
             } else {
                 final OnlineTestModle.Data data = CompaniesAdapter.this.data.get(getAdapterPosition());
                 OnlineTestTestsAdapter onlineTestTestsAdapter = new OnlineTestTestsAdapter(context, data.getList());
                 bind.recycleCompanies.setAdapter(onlineTestTestsAdapter);
                 onlineTestTestsAdapter.setTestListener(testListener);
+                bind.arrowCompanies.setSelected(false);
             }
 
 //            if (topicSelectionListener != null && adapterPosition != RecyclerView.NO_POSITION) {

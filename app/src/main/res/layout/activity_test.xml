@@ -18,7 +18,6 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:gravity="center"
-            app:collapseIcon="@drawable/ic_menu"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <RelativeLayout
@@ -35,12 +34,26 @@
                     app:srcCompat="@drawable/ic_arrow_back" />
 
                 <ImageView
+                    android:id="@+id/test_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_toEndOf="@id/back"
-                    android:padding="@dimen/dimen_16"
-                    android:scaleType="center"
-                    android:src="@drawable/full_logo" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:id="@+id/timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/test_logo"
+                    android:layout_toStartOf="@id/submit"
+                    android:fontFamily="@font/bold"
+                    android:gravity="center"
+                    android:text="00:00"
+                    android:textColor="@color/blueSecondary"
+                    android:textSize="@dimen/font_20" />
+
 
                 <TextView
                     android:id="@+id/submit"

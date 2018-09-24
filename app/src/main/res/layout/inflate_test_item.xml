@@ -17,7 +17,7 @@
                 android:id="@+id/test_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_50"
+                android:layout_marginBottom="@dimen/dimen_20"
                 android:drawablePadding="@dimen/dimen_5"
                 android:drawableStart="@drawable/ic_assignment"
                 android:fontFamily="@font/semibold"
@@ -74,7 +74,7 @@
                 android:gravity="start"
                 android:text="@string/mins"
                 android:textColor="@color/colorSecondaryText"
-                android:textSize="@dimen/font_14" />
+                android:textSize="@dimen/font_12" />
 
 
         </RelativeLayout>

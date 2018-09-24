@@ -7,32 +7,55 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="Profile" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="My Tests" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Subscribe" />
+
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Notifications" />
+
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Settings" />
     </group>
 
     <item android:title="Communicate">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Join Brainwiz" />
+
+            <item
+                android:id="@+id/nav_contact_us"
+                android:icon="@drawable/ic_call"
+                android:title="Contact Us" />
+
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share with friends" />
+
+
         </menu>
+
+
     </item>
+
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_power"
+        android:title="Logout" />
 
 </menu>

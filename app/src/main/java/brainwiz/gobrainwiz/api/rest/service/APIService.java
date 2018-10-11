@@ -1,6 +1,8 @@
 package brainwiz.gobrainwiz.api.rest.service;
 
 
+import com.apshutters.salesperson.model.BaseResponse;
+
 import java.util.HashMap;
 
 import brainwiz.gobrainwiz.api.model.DashBoardModel;
@@ -39,19 +41,22 @@ public interface APIService {
     @GET("/practice/{id}")
     Call<TestsModel> getTests(@Path("id") String id);
 
-    @GET("/company")
-    Call<OnlineTestModle> getCompanies();
+    @POST("/company")
+    Call<OnlineTestModle> getCompanies(@Body HashMap<String, String> hashMap);
 
-    @GET("/company_sets/{id}")
-    Call<OnlineTestSetModel> getCompanySets(@Path("id") String id);
+    @POST("/company_sets")
+    Call<OnlineTestSetModel> getCompanySets(@Body HashMap<String, String> hashMap);
 
 
-    @GET("/company-test/{idCatID}")
+    @GET("/company-test")
 ///21/16
     Call<TestModel> getCompanyTests(@Path(value = "idCatID", encoded = true) String id);
 
     @GET("/practise-test/{id}")
     Call<TestModel> getPracticeTests(@Path("id") String id);
+
+    @POST("/past_tests")
+    Call<BaseResponse> getPastTests();
 
 
 }

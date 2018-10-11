@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <TextView
+        android:id="@+id/option_no"
+        android:layout_width="@dimen/dimen_40"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dimen_5"
+        android:background="@drawable/question_selector"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/question_text_selector"
+        android:textSize="@dimen/font_16" />
+
+</layout>

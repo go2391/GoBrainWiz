@@ -2,33 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:layout_gravity="center"
     android:background="@color/white"
-    android:layout_gravity="center">
+    android:orientation="vertical">
 
     <TextView
-        style="@style/HeaderTextStyle"
-        android:layout_margin="@dimen/dimen_10"
-        android:gravity="center"
-
         android:id="@+id/alert_title"
+        style="@style/HeaderTextStyle"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dimen_10"
+        android:fontFamily="@font/bold"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/bluePrimary"
         android:textSize="@dimen/font_20" />
 
 
     <TextView
-        style="@style/TextStyle"
-        android:gravity="center"
-        android:layout_gravity="center"
         android:id="@+id/alert_message"
+        style="@style/TextStyle"
+        android:layout_gravity="center"
         android:layout_margin="@dimen/dimen_16"
+        android:gravity="center"
         android:singleLine="false"
         android:text="asdasda adasdasdasd  asdasdasdasdad asdasdadsadad  asdsdasdasdas  adsasdadasdada
         " />
 
     <LinearLayout
         style="@style/MatchWrap"
-        android:weightSum="2"
-        android:padding="@dimen/dimen_16">
+        android:padding="@dimen/dimen_16"
+        android:weightSum="2">
 
         <Button
             android:id="@+id/alert_positive"

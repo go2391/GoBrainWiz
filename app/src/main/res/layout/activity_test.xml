@@ -24,21 +24,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize">
 
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:padding="@dimen/dimen_10"
-                    android:tint="@color/blueSecondary"
-                    app:srcCompat="@drawable/ic_arrow_back" />
 
                 <ImageView
                     android:id="@+id/test_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="?attr/actionBarSize"
-                    android:layout_toEndOf="@id/back"
-                    android:scaleType="centerInside"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/logo" />
 
                 <TextView
@@ -66,7 +57,8 @@
                     android:padding="@dimen/dimen_10"
                     android:text="@string/submit"
                     android:textColor="@color/blueSecondary"
-                    android:textSize="@dimen/font_16" />
+                    android:textSize="@dimen/font_16"
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 

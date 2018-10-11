@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+
 import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.MainActivity;
 import brainwiz.gobrainwiz.R;
@@ -57,7 +59,9 @@ public class OnlineTestFragment extends BaseFragment {
         }
 
         showProgress();
-        RetrofitManager.getRestApiMethods().getCompanies().enqueue(new ApiCallback<OnlineTestModle>(activity) {
+        HashMap<String, String> baseBodyMap = getBaseBodyMap();
+//        baseBodyMap.put("test_id", testID);
+        RetrofitManager.getRestApiMethods().getCompanies(baseBodyMap).enqueue(new ApiCallback<OnlineTestModle>(activity) {
             @Override
             public void onApiResponse(Response<OnlineTestModle> response, boolean isSuccess, String message) {
                 dismissProgress();
@@ -89,6 +93,8 @@ public class OnlineTestFragment extends BaseFragment {
 
             Intent intent = new Intent(getActivity(), TestActivity.class);
             Bundle bundle = new Bundle();
+
+            bundle.putString(DURATION, test.getDuration());
             bundle.putString(ID, test.getBrainTestId());
             bundle.putString(CAT_ID, "");
             bundle.putBoolean(IS_COMPANY_TEST, true);

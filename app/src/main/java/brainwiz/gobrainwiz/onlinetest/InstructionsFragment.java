@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import brainwiz.gobrainwiz.BaseFragment;
@@ -79,6 +80,7 @@ public class InstructionsFragment extends BaseFragment {
                     DDAlerts.showAlert(getActivity(), "Select any one test", getString(R.string.ok));
                     return;
                 }
+                ((TestActivity) activity).startTest();
                 ((TestActivity) activity).fragmentTransaction(TestQuestionFragment.getInstance(testID, selectedCatId, true, false));
 
             }
@@ -89,7 +91,9 @@ public class InstructionsFragment extends BaseFragment {
     private void getCompanySets() {
         showProgress();
         testID = getArguments().getString(ID, "");
-        RetrofitManager.getRestApiMethods().getCompanySets(testID).enqueue(new ApiCallback<OnlineTestSetModel>(getActivity()) {
+        HashMap<String, String> baseBodyMap = getBaseBodyMap();
+        baseBodyMap.put("exam_id", testID);
+        RetrofitManager.getRestApiMethods().getCompanySets(baseBodyMap).enqueue(new ApiCallback<OnlineTestSetModel>(getActivity()) {
             @Override
             public void onApiResponse(Response<OnlineTestSetModel> response, boolean isSuccess, String message) {
                 if (isSuccess) {

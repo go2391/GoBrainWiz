@@ -47,6 +47,7 @@ public class TestModel extends BaseModel {
         @Expose
         private List<String> options = new ArrayList<String>();
         private String selectedOption = "";
+        private boolean bookMark;
 
         protected Datum(Parcel in) {
             questionId = in.readString();
@@ -140,6 +141,14 @@ public class TestModel extends BaseModel {
 
         public String getSelectedOption() {
             return selectedOption;
+        }
+
+        public void setBookMark(boolean bookMark) {
+            this.bookMark = bookMark;
+        }
+
+        public boolean isBookMark() {
+            return bookMark;
         }
     }
 

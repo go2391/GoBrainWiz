@@ -76,7 +76,7 @@
 3. Once the section is completed you cannot go back to that section.\n
 4. You can chose the section you want to attempt from Instruction
 page(current).\n
-5. Section can be selected from the top navigation tab.\n
+5. Section can be status from the top navigation tab.\n
 6. Once you click on compete button a confirmation will be asked whether
 you want to complete the section or not.\n
 7. Each question will be of 1 mark.\n
@@ -102,10 +102,12 @@ sections
     <string name="explanation">Explanation</string>
     <string name="previous">Previous</string>
     <string name="submit">Submit</string>
-    <string name="total_questions">Total Questions</string>
-    <string name="questions_attempted">Questions Attempted</string>
-    <string name="correct">Correct</string>
+    <string name="total_questions">Total Questions %d</string>
+    <string name="questions_attempted">Questions Attempted %d</string>
+    <string name="correct">Correct Answers %d</string>
     <string name="welcome">Welcome</string>
+    <string name="your_score">Your Score</string>
+    <string name="your_rank">Your Rank</string>
 
 
 </resources>

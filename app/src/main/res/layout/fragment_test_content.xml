@@ -10,15 +10,34 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/test_question"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_10"
-                android:text="@string/help_your_friends_to_know_this_app_and_make_them_so_benefices_as_you_in_case_of_crt"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/font_16" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckedTextView
+                    android:id="@+id/bookmark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/dimen_10"
+                    android:checkMark="@drawable/bookmark_selector"
+                    android:gravity="top"
+                    android:padding="@dimen/dimen_5"
+                    android:text=""
+                    android:tint="@color/blueSecondary" />
+
+                <TextView
+                    android:id="@+id/test_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_toEndOf="@id/bookmark"
+                    android:text="@string/help_your_friends_to_know_this_app_and_make_them_so_benefices_as_you_in_case_of_crt"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/font_16" />
+            </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/answer_options_recycler"

@@ -17,9 +17,11 @@ import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.databinding.FragmentTestContentBinding;
+import brainwiz.gobrainwiz.utils.UrlImageParser;
 
 public class QuestionFragment extends BaseFragment {
     private TestModel.Datum data;
+    private TestQuestionFragment.QuestionStatusListener listener;
 
     public static QuestionFragment getInstance(TestModel.Datum datum, Bundle bundle) {
         QuestionFragment questionFragment = new QuestionFragment();
@@ -37,10 +39,13 @@ public class QuestionFragment extends BaseFragment {
         View inflate = inflater.inflate(R.layout.fragment_test_content, container, false);
         contentBinding = DataBindingUtil.bind(inflate);
         init();
+//        setHasOptionsMenu(true);
         return inflate;
     }
 
     private void init() {
+
+        contentBinding.bookmark.setOnClickListener(onClickListener);
 
         data = ((TestModel.Datum) getArguments().getParcelable("object"));
         contentBinding.answerOptionsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -54,18 +59,41 @@ public class QuestionFragment extends BaseFragment {
 
         contentBinding.testExplanationLayout.setVisibility(isReviewMode ? View.VISIBLE : View.GONE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), Html.FROM_HTML_MODE_LEGACY));
-            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), Html.FROM_HTML_MODE_LEGACY));
+            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), Html.FROM_HTML_MODE_LEGACY, new UrlImageParser(contentBinding.testExplanation, getActivity()), null));
+            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), Html.FROM_HTML_MODE_LEGACY, new UrlImageParser(contentBinding.testExplanation, getActivity()), null));
         } else {
-            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion()));
-            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation()));
+            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), new UrlImageParser(contentBinding.testExplanation, getActivity()), null));
+            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), new UrlImageParser(contentBinding.testExplanation, getActivity()), null));
         }
     }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.bookmark:
+                    contentBinding.bookmark.setChecked(!contentBinding.bookmark.isChecked());
+                    data.setBookMark(contentBinding.bookmark.isChecked());
+                    listener.onMarkReview(contentBinding.bookmark.isChecked());
+                    break;
+            }
+        }
+    };
+
 
     private final OptionsAdapter.OptionListener optionListener = new OptionsAdapter.OptionListener() {
         @Override
         public void onOptionSelected(int position) {
             data.setSelectedOption(String.valueOf(position));
+            listener.onAnswer(true);
         }
     };
+
+    public void setListener(TestQuestionFragment.QuestionStatusListener listener) {
+        this.listener = listener;
+    }
+
+    public TestQuestionFragment.QuestionStatusListener getListener() {
+        return listener;
+    }
 }

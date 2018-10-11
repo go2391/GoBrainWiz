@@ -8,12 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import brainwiz.gobrainwiz.BaseFragment;
@@ -28,6 +30,9 @@ public class TestQuestionFragment extends BaseFragment {
     private ViewPager viewPager;
     private boolean isCompanyTest;
     private ViewPagerAdapter viewPagerAdapter;
+    private QuestionNoAdapter questionNoAdapter;
+    private RecyclerView indicatorRecycler;
+    private List<TestModel.Datum> data;
 
 
     public static TestQuestionFragment getInstance(String id, boolean isReview) {
@@ -58,6 +63,7 @@ public class TestQuestionFragment extends BaseFragment {
         View inflate = inflater.inflate(R.layout.fragment_test_tab, container, false);
         ViewDataBinding bind = DataBindingUtil.bind(inflate);
         init(inflate);
+
         return inflate;
     }
 
@@ -75,10 +81,8 @@ public class TestQuestionFragment extends BaseFragment {
             public void onApiResponse(Response<TestModel> response, boolean isSuccess, String message) {
                 if (isSuccess) {
                     TestModel body = response.body();
-                    List<TestModel.Datum> data = body.getData();
-                    viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-                    viewPagerAdapter.setData(data);
-                    viewPager.setAdapter(viewPagerAdapter);
+                    data = body.getData();
+                    setViews(data);
                 }
                 dismissProgress();
             }
@@ -104,17 +108,75 @@ public class TestQuestionFragment extends BaseFragment {
 
     }
 
+    private void setViews(List<TestModel.Datum> data) {
+
+        ((TestActivity) getActivity()).startTest();
+        questionNoAdapter.setOptions(getQuestionsObjects(data.size()));
+        questionNoAdapter.notifyDataSetChanged();
+        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        viewPagerAdapter.setData(data);
+        viewPager.setAdapter(viewPagerAdapter);
+    }
+
+    private List<QuestionNumber> getQuestionsObjects(int size) {
+        List<QuestionNumber> questionNumbers = new ArrayList<>();
+        for (int i = 1; i <= size; i++) {
+            questionNumbers.add(new QuestionNumber(String.valueOf(i)));
+        }
+        if (!questionNumbers.isEmpty()) {
+            questionNumbers.get(0).setSelected(true);
+        }
+        return questionNumbers;
+    }
+
     private void init(View inflate) {
+
+        indicatorRecycler = inflate.findViewById(R.id.question_no_recycler);
+        LinearLayoutManager layout = new LinearLayoutManager(getActivity());
+        layout.setOrientation(LinearLayoutManager.HORIZONTAL);
+        indicatorRecycler.setLayoutManager(layout);
+        questionNoAdapter = new QuestionNoAdapter(getActivity());
+        indicatorRecycler.setAdapter(questionNoAdapter);
+        questionNoAdapter.setListener(questionListener);
         viewPager = (ViewPager) inflate.findViewById(R.id.view_pager_questions);
 
-        PagerTabStrip pagerTabStrip = (PagerTabStrip) inflate.findViewById(R.id.pager_tab_strip);
 
         inflate.findViewById(R.id.test_next).setOnClickListener(onClickListener);
 
         inflate.findViewById(R.id.test_previous).setOnClickListener(onClickListener);
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                questionNoAdapter.setSelected(position);
+                indicatorRecycler.scrollToPosition(position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        inflate.findViewById(R.id.questions_overview).setOnClickListener(onClickListener);
+
 
     }
+
+
+    QuestionNoAdapter.QuestionListener questionListener = new QuestionNoAdapter.QuestionListener() {
+        @Override
+        public void onOptionSelected(int position) {
+            viewPager.setCurrentItem(position);
+        }
+    };
+
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -126,6 +188,12 @@ public class TestQuestionFragment extends BaseFragment {
                 case R.id.test_previous:
                     viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true);
                     break;
+                case R.id.questions_overview:
+                    OverViewFragment overViewFragment = new OverViewFragment();
+                    overViewFragment.setData(questionNoAdapter.getOptions());
+                    overViewFragment.setQuestionListener(questionListener);
+                    overViewFragment.show(getChildFragmentManager(), overViewFragment.getClass().getSimpleName());
+                    break;
             }
         }
     };
@@ -135,8 +203,21 @@ public class TestQuestionFragment extends BaseFragment {
         for (TestModel.Datum datum : viewPagerAdapter.getData()) {
 
         }
+
+        ScoreCardFragment instance = ScoreCardFragment.getInstance(new ArrayList<TestModel.Datum>(viewPagerAdapter.getData()));
+
+        ((TestActivity) getActivity()).fragmentTransaction(instance);
     }
 
+    public void bookMark(boolean checked) {
+        viewPagerAdapter.getData().get(viewPager.getCurrentItem()).setBookMark(checked);
+    }
+
+
+    public boolean isBookMark() {
+        List<TestModel.Datum> data = viewPagerAdapter.getData();
+        return data != null && data.get(viewPager.getCurrentItem()).isBookMark();
+    }
 
     private final class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -148,7 +229,9 @@ public class TestQuestionFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return QuestionFragment.getInstance(data.get(position), getArguments());
+            QuestionFragment instance = QuestionFragment.getInstance(data.get(position), getArguments());
+            instance.setListener(questionStatusListener);
+            return instance;
         }
 
         @Override
@@ -156,12 +239,12 @@ public class TestQuestionFragment extends BaseFragment {
             return data.size();
         }
 
-        @Nullable
+        /*@Nullable
         @Override
         public CharSequence getPageTitle(int position) {
             return String.valueOf(position + 1);
         }
-
+*/
         public void setData(List<TestModel.Datum> data) {
             this.data = data;
         }
@@ -169,6 +252,33 @@ public class TestQuestionFragment extends BaseFragment {
         public List<TestModel.Datum> getData() {
             return data;
         }
+    }
+
+
+    QuestionStatusListener questionStatusListener = new QuestionStatusListener() {
+        @Override
+        public void onSelected(boolean status) {
+
+        }
+
+        @Override
+        public void onMarkReview(boolean status) {
+            questionNoAdapter.getOptions().get(viewPager.getCurrentItem()).setReview(status);
+        }
+
+        @Override
+        public void onAnswer(boolean status) {
+            questionNoAdapter.getOptions().get(viewPager.getCurrentItem()).setDone(status);
+        }
+
+    };
+
+    interface QuestionStatusListener {
+        void onSelected(boolean status);
+
+        void onMarkReview(boolean status);
+
+        void onAnswer(boolean status);
     }
 
 }

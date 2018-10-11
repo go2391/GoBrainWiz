@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
@@ -25,6 +26,7 @@ import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.TimerService;
 import brainwiz.gobrainwiz.onlinetest.InstructionsFragment;
+import brainwiz.gobrainwiz.utils.DDAlerts;
 
 public class TestActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,6 +43,16 @@ public class TestActivity extends BaseActivity
 
     // Message type for the handler
     private final static int MSG_UPDATE_TIME = 0;
+    private long targetTime;
+    private View submitView;
+
+    public long getTargetTime() {
+        return targetTime;
+    }
+
+    public void setTargetTime(long targetTime) {
+        this.targetTime = targetTime;
+    }
 
 
     @Override
@@ -78,11 +90,15 @@ public class TestActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        findViewById(R.id.submit).setOnClickListener(clickListener);
+
+        submitView = findViewById(R.id.submit);
+        submitView.setOnClickListener(clickListener);
 
         timerTextView = findViewById(R.id.timer);
         Bundle extras = getIntent().getExtras();
         isCompanyTest = extras.getBoolean(BaseFragment.IS_COMPANY_TEST);
+        String string = extras.getString(BaseFragment.DURATION);
+        targetTime = Integer.parseInt(string) * 60;
 
         if (isCompanyTest) {
             fragmentTransaction(InstructionsFragment.getInstance(extras), R.id.content_frame, false);
@@ -91,6 +107,12 @@ public class TestActivity extends BaseActivity
         }
     }
 
+
+    public void startTest() {
+        submitView.setVisibility(View.VISIBLE);
+        runTimer();
+
+    }
 
     public void runTimer() {
         if (serviceBound && !timerService.isTimerRunning()) {
@@ -130,13 +152,21 @@ public class TestActivity extends BaseActivity
      */
     private void updateUITimer() {
         if (serviceBound) {
-            timerTextView.setText(timerService.elapsedTime() + " seconds");
+            long pTime = targetTime - timerService.elapsedTime();
+            timerTextView.setText(String.format("%02d:%02d", pTime / 60, pTime % 60));
         }
     }
 
     @Override
     public void onBackPressed() {
+        Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+        if (fragmentById != null) {
+            if (fragmentById instanceof ScoreCardFragment && backStackEntryCount > 0) {
+                finish();
+                return;
+            }
+        }
         if (backStackEntryCount > 0) {
             getSupportFragmentManager().popBackStack();
         } else
@@ -147,7 +177,20 @@ public class TestActivity extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.main, menu);
-
+        Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+        if (fragmentById != null) {
+            if (fragmentById instanceof InstructionsFragment) {
+                submitView.setVisibility(View.GONE);
+                timerTextView.setVisibility(View.GONE);
+//                            runTimer();
+            } else if (fragmentById instanceof TestQuestionFragment) {
+                submitView.setVisibility(View.VISIBLE);
+                timerTextView.setVisibility(View.VISIBLE);
+            } else if (fragmentById instanceof ScoreCardFragment) {
+                submitView.setVisibility(View.GONE);
+                timerTextView.setVisibility(View.GONE);
+            }
+        }
         return true;
     }
 
@@ -196,21 +239,25 @@ public class TestActivity extends BaseActivity
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            final Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
             switch (v.getId()) {
                 case R.id.submit:
-                    Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
-                    if (fragmentById != null) {
-                        if (fragmentById instanceof InstructionsFragment) {
-                            runTimer();
-                        } else if (fragmentById instanceof TestQuestionFragment) {
-                            ((TestQuestionFragment) fragmentById).submitTest();
+                    DDAlerts.showAlert(TestActivity.this, "Are you sure you want to submit this test.", getString(R.string.submit), getString(R.string.cancel), new DDAlerts.AlertListener() {
+                        @Override
+                        public void onClick(int buttonType) {
+                            if (buttonType == DDAlerts.BUTTON_POSITIVE) {
+                                if (fragmentById != null && fragmentById instanceof TestQuestionFragment) {
+                                    ((TestQuestionFragment) fragmentById).submitTest();
+                                    runTimer();
+                                }
+                            }
+
                         }
-                    }
+                    });
+
 
                     break;
-                case R.id.back:
-                    onBackPressed();
-                    break;
+
             }
         }
     };

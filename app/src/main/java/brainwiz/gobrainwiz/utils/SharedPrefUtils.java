@@ -2,12 +2,20 @@ package brainwiz.gobrainwiz.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentActivity;
 
 import brainwiz.gobrainwiz.api.ApiStringConstants;
 
 
 public class SharedPrefUtils {
     public static String PREF_NAME = "GoBrainWizPref";
+
+    public static final String USER_ID = "UserID";
+    public static final String USER_MOBILE = "UserMObile";
+    public static final String USER_NAME = "UserName";
+    public static final String USER_TOKEN = "UserToken";
+    public static final String USER_EMAIL = "UserEmail";
+
 
     public static SharedPreferences getSharedPref(Context context) {
         return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -52,6 +60,15 @@ public class SharedPrefUtils {
 
     public static void clear(Context context) {
         getSharedPref(context).edit().clear().commit();
+    }
+
+    public static String getToken(Context context) {
+
+        return getString(context, USER_TOKEN, "");
+    }
+
+    public static String getStudentID(Context context) {
+        return getString(context, USER_ID, "");
     }
 
 

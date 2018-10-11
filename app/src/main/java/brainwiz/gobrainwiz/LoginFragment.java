@@ -24,9 +24,15 @@ import brainwiz.gobrainwiz.api.model.LoginModel;
 import brainwiz.gobrainwiz.databinding.FragmentLoginBinding;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
+import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import retrofit2.Response;
 
 import static brainwiz.gobrainwiz.R.color.colorAccent;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_EMAIL;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_ID;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_MOBILE;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_NAME;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_TOKEN;
 
 public class LoginFragment extends BaseFragment {
 
@@ -87,7 +93,7 @@ public class LoginFragment extends BaseFragment {
         showProgress();
 //            "user_name" : "6785435787",
 //             "password" : "alex1234"
-        HashMap<String, String> hashMap = new HashMap<>();
+        HashMap<String, String> hashMap = getBaseBodyMap();
         hashMap.put("user_name", bind.mobile.getText().toString().trim());
         hashMap.put("password", bind.password.getText().toString().trim());
         RetrofitManager.getRestApiMethods().login(hashMap).enqueue(new ApiCallback<LoginModel>(activity) {
@@ -95,6 +101,7 @@ public class LoginFragment extends BaseFragment {
             public void onApiResponse(Response<LoginModel> response, boolean isSuccess, String message) {
                 dismissProgress();
                 if (isSuccess) {
+                    saveUserDetails(response.body().getData());
                     activity.finish();
                     startActivity(new Intent(activity, MainActivity.class));
                 }
@@ -105,6 +112,15 @@ public class LoginFragment extends BaseFragment {
                 dismissProgress();
             }
         });
+    }
+
+    private void saveUserDetails(LoginModel.Data body) {
+
+        SharedPrefUtils.putData(context, USER_EMAIL, body.getExamuserEmail());
+        SharedPrefUtils.putData(context, USER_ID, body.getExamuserId());
+        SharedPrefUtils.putData(context, USER_MOBILE, body.getExamuserMobile());
+        SharedPrefUtils.putData(context, USER_NAME, body.getExamuserName());
+        SharedPrefUtils.putData(context, USER_TOKEN, body.getExamUserToken());
     }
 
 

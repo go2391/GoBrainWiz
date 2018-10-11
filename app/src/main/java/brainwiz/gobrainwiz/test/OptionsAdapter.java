@@ -16,6 +16,7 @@ import java.util.List;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.databinding.InflateAnswerOptionBinding;
+import brainwiz.gobrainwiz.utils.UrlImageParser;
 
 public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHolder> {
 
@@ -52,9 +53,9 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
     public void onBindViewHolder(@NonNull OptionHolder holder, int position) {
         holder.bind.optionNo.setText(optionsIndicator[position]);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.bind.optionText.setText(Html.fromHtml(options.get(position), Html.FROM_HTML_MODE_LEGACY));
+            holder.bind.optionText.setText(Html.fromHtml(options.get(position), Html.FROM_HTML_MODE_LEGACY, new UrlImageParser(holder.bind.optionText, context), null));
         } else {
-            holder.bind.optionText.setText(Html.fromHtml(options.get(position)));
+            holder.bind.optionText.setText(Html.fromHtml(options.get(position), new UrlImageParser(holder.bind.optionText, context), null));
         }
         String selectedOption = selectedData.getSelectedOption();
         boolean selected = selectedOption != null && selectedOption.equals(String.valueOf(position));

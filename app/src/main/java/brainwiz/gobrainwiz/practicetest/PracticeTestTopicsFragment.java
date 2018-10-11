@@ -11,6 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.MainActivity;
 import brainwiz.gobrainwiz.R;
@@ -94,10 +98,13 @@ public class PracticeTestTopicsFragment extends BaseFragment {
 
             Intent intent = new Intent(getActivity(), TestActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putString(ID, testTestsAdapter.getData().get(position).getTestId());
+            TestsModel.TestList testList = testTestsAdapter.getData().get(position);
+            bundle.putString(ID, testList.getTestId());
             bundle.putString(CAT_ID, "");
             bundle.putBoolean(IS_COMPANY_TEST, false);
             bundle.putBoolean(IS_REVIEW, true);
+
+            bundle.putString(DURATION, String.valueOf(parseTimeToMinutes(testList.getTestTime())));
             intent.putExtras(bundle);
             startActivity(intent);
 
@@ -108,5 +115,24 @@ public class PracticeTestTopicsFragment extends BaseFragment {
 
         }
     };
+
+    public static int parseTimeToMinutes(String hourFormat) {
+
+        int minutes = 0;
+        String[] split = hourFormat.split(":");
+
+        try {
+
+            minutes += Double.parseDouble(split[0]) * 60;
+            minutes += Double.parseDouble(split[1]);
+            minutes += Double.parseDouble(split[2]) / 60;
+            return minutes;
+
+        } catch (Exception e) {
+            return -1;
+        }
+
+    }
+
 
 }

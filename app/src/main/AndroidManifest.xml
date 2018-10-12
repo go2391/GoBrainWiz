@@ -46,7 +46,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="brainwiz.gobrainwiz.MainActivity" />
         </activity>
-
         <activity
             android:name=".test.TestActivity"
             android:screenOrientation="portrait"
@@ -56,6 +55,10 @@
             android:name=".TimerService"
             android:exported="true" />
 
+        <activity
+            android:name=".SampleActivity"
+            android:label="@string/title_activity_sample"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

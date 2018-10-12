@@ -3,10 +3,8 @@ package brainwiz.gobrainwiz.test;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -17,11 +15,16 @@ import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.databinding.FragmentTestContentBinding;
+import brainwiz.gobrainwiz.utils.LogUtils;
 import brainwiz.gobrainwiz.utils.UrlImageParser;
 
-public class QuestionFragment extends BaseFragment {
+public class QuestionFragment extends BaseFragment implements TestQuestionFragment.FragmentStateListener {
     private TestModel.Datum data;
     private TestQuestionFragment.QuestionStatusListener listener;
+    private long startTime;
+    private long endTime;
+    private long totalTime;
+
 
     public static QuestionFragment getInstance(TestModel.Datum datum, Bundle bundle) {
         QuestionFragment questionFragment = new QuestionFragment();
@@ -30,6 +33,24 @@ public class QuestionFragment extends BaseFragment {
         questionFragment.setArguments(args);
         return questionFragment;
     }
+
+
+    @Override
+    public void onResumeFragment() {
+        startTime = System.currentTimeMillis();
+    }
+
+    @Override
+    public void onPauseFragment() {
+        endTime = System.currentTimeMillis();
+        totalTime = data.getSpentTime();
+        totalTime += endTime - startTime;
+        LogUtils.e("Total Time Spent sec:" + totalTime / 1000);
+
+        data.setSpentTime(totalTime);
+
+    }
+
 
     FragmentTestContentBinding contentBinding;
 
@@ -96,4 +117,6 @@ public class QuestionFragment extends BaseFragment {
     public TestQuestionFragment.QuestionStatusListener getListener() {
         return listener;
     }
+
+
 }

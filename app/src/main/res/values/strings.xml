@@ -108,6 +108,7 @@ sections
     <string name="welcome">Welcome</string>
     <string name="your_score">Your Score</string>
     <string name="your_rank">Your Rank</string>
+    <string name="title_activity_sample">SampleActivity</string>
 
 
 </resources>

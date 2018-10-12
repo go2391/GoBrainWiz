@@ -33,6 +33,7 @@ public class TestQuestionFragment extends BaseFragment {
     private QuestionNoAdapter questionNoAdapter;
     private RecyclerView indicatorRecycler;
     private List<TestModel.Datum> data;
+    private int fragmentCurrentPosition = -1;
 
 
     public static TestQuestionFragment getInstance(String id, boolean isReview) {
@@ -116,6 +117,7 @@ public class TestQuestionFragment extends BaseFragment {
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         viewPagerAdapter.setData(data);
         viewPager.setAdapter(viewPagerAdapter);
+        onPageChangeListener.onPageSelected(0);
     }
 
     private List<QuestionNumber> getQuestionsObjects(int size) {
@@ -145,30 +147,39 @@ public class TestQuestionFragment extends BaseFragment {
 
         inflate.findViewById(R.id.test_previous).setOnClickListener(onClickListener);
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        viewPager.addOnPageChangeListener(onPageChangeListener);
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                questionNoAdapter.setSelected(position);
-                indicatorRecycler.scrollToPosition(position);
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         inflate.findViewById(R.id.questions_overview).setOnClickListener(onClickListener);
 
 
     }
 
+
+    ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+
+            if (fragmentCurrentPosition != -1) {
+                ((FragmentStateListener) viewPagerAdapter.getItem(fragmentCurrentPosition)).onPauseFragment();
+            }
+            ((FragmentStateListener) viewPagerAdapter.getItem(position)).onResumeFragment();
+            fragmentCurrentPosition = position;
+            questionNoAdapter.setSelected(position);
+            indicatorRecycler.scrollToPosition(position);
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
 
     QuestionNoAdapter.QuestionListener questionListener = new QuestionNoAdapter.QuestionListener() {
         @Override
@@ -222,14 +233,16 @@ public class TestQuestionFragment extends BaseFragment {
     private final class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         private List<TestModel.Datum> data;
+        QuestionFragment[] questionFragments;
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
+
         }
 
         @Override
         public Fragment getItem(int position) {
-            QuestionFragment instance = QuestionFragment.getInstance(data.get(position), getArguments());
+            QuestionFragment instance = questionFragments[position];
             instance.setListener(questionStatusListener);
             return instance;
         }
@@ -247,6 +260,10 @@ public class TestQuestionFragment extends BaseFragment {
 */
         public void setData(List<TestModel.Datum> data) {
             this.data = data;
+            questionFragments = new QuestionFragment[data.size()];
+            for (int i = 0; i < data.size(); i++) {
+                questionFragments[i] = QuestionFragment.getInstance(data.get(i), getArguments());
+            }
         }
 
         public List<TestModel.Datum> getData() {
@@ -279,6 +296,12 @@ public class TestQuestionFragment extends BaseFragment {
         void onMarkReview(boolean status);
 
         void onAnswer(boolean status);
+    }
+
+    interface FragmentStateListener {
+        void onResumeFragment();
+
+        void onPauseFragment();
     }
 
 }

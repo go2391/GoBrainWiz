@@ -48,6 +48,7 @@ public class TestModel extends BaseModel {
         private List<String> options = new ArrayList<String>();
         private String selectedOption = "";
         private boolean bookMark;
+        private long spentTime;
 
         protected Datum(Parcel in) {
             questionId = in.readString();
@@ -57,6 +58,7 @@ public class TestModel extends BaseModel {
             question = in.readString();
             options = in.createStringArrayList();
             selectedOption = in.readString();
+            spentTime = in.readLong();
         }
 
         public final Creator<Datum> CREATOR = new Creator<Datum>() {
@@ -133,6 +135,7 @@ public class TestModel extends BaseModel {
             dest.writeString(question);
             dest.writeStringList(options);
             dest.writeString(selectedOption);
+            dest.writeLong(spentTime);
         }
 
         public void setSelectedOption(String selectedOption) {
@@ -149,6 +152,14 @@ public class TestModel extends BaseModel {
 
         public boolean isBookMark() {
             return bookMark;
+        }
+
+        public long getSpentTime() {
+            return spentTime;
+        }
+
+        public void setSpentTime(long spentTime) {
+            this.spentTime = spentTime;
         }
     }
 

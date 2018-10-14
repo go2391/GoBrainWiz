@@ -1,4 +1,4 @@
-package brainwiz.gobrainwiz.practicetest;
+package brainwiz.gobrainwiz.sidemenu;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -12,18 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import brainwiz.gobrainwiz.R;
-import brainwiz.gobrainwiz.api.model.TestsModel;
+import brainwiz.gobrainwiz.api.model.HistoryOnlineTestModel;
 import brainwiz.gobrainwiz.databinding.InflateTestItemBinding;
 
-public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestTestsAdapter.TestViewHolder> {
+public class OnlineTestHistoryAdapter extends RecyclerView.Adapter<OnlineTestHistoryAdapter.TestViewHolder> {
 
     Context context;
 
     private TestListener testListener;
-    private List<TestsModel.TestList> data = new ArrayList<>();
+    private List<HistoryOnlineTestModel.TestHistory> data = new ArrayList<>();
 
 
-    public PracticeTestTestsAdapter(Context context) {
+    public OnlineTestHistoryAdapter(Context context) {
 
         this.context = context;
     }
@@ -41,10 +41,10 @@ public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestT
     @Override
     public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
 
-        TestsModel.TestList testList = data.get(position);
+        HistoryOnlineTestModel.TestHistory testList = data.get(position);
         holder.bind.testItemTitle.setText(testList.getTestName());
-        holder.bind.testQuestions.setText(String.format(context.getString(R.string.questions), testList.getCountque()));
-        holder.bind.testMins.setText(String.format(context.getString(R.string.mins), testList.getTestTime()));
+        holder.bind.testQuestions.setText(String.format(context.getString(R.string.sets), testList.getTotalSets()));
+        holder.bind.testMins.setText(String.format(context.getString(R.string.mins), ""));
     }
 
     @Override
@@ -52,12 +52,12 @@ public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestT
         return data.size();
     }
 
-    public void setData(List<TestsModel.TestList> data) {
+    public void setData(List<HistoryOnlineTestModel.TestHistory> data) {
 
         this.data = data;
     }
 
-    public List<TestsModel.TestList> getData() {
+    public List<HistoryOnlineTestModel.TestHistory> getData() {
         return data;
     }
 
@@ -67,19 +67,19 @@ public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestT
         public TestViewHolder(View itemView) {
             super(itemView);
             bind = DataBindingUtil.bind(itemView);
+            bind.testTopicItemStart.setText(context.getString(R.string.review));
             bind.testTopicItemStart.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if (testListener != null) {
-                testListener.onTestStart(getAdapterPosition());
+                testListener.onReviewTest(getAdapterPosition());
             }
         }
     }
 
     public interface TestListener {
-        void onTestStart(int position);
 
         void onReviewTest(int position);
     }

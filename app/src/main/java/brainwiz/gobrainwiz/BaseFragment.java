@@ -2,9 +2,11 @@ package brainwiz.gobrainwiz;
 
 import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 import java.util.HashMap;
 
+import brainwiz.gobrainwiz.test.TestActivity;
 import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 
 @SuppressLint("ValidFragment")
@@ -18,11 +20,31 @@ public class BaseFragment extends Fragment {
 
     public void showProgress() {
 
-        ((BaseActivity) getActivity()).showProgress();
+        FragmentActivity activity = getActivity();
+
+        if (activity instanceof MainActivity) {
+            ((MainActivity) activity).showProgress();
+        } else if (activity instanceof LoginActivity) {
+            ((LoginActivity) activity).showProgress();
+        } else if (activity instanceof TestActivity) {
+            ((TestActivity) activity).showProgress();
+        }
+
+
     }
 
     public void dismissProgress() {
-        ((BaseActivity) getActivity()).dismissProgress();
+
+        FragmentActivity activity = getActivity();
+
+        if (activity instanceof MainActivity) {
+            ((MainActivity) activity).dismissProgress();
+        } else if (activity instanceof LoginActivity) {
+            ((LoginActivity) activity).dismissProgress();
+        } else if (activity instanceof TestActivity) {
+            ((TestActivity) activity).dismissProgress();
+        }
+//        ((MainActivity) getActivity()).dismissProgress();
     }
 
 

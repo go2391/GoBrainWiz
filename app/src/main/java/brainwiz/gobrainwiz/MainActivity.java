@@ -1,6 +1,7 @@
 package brainwiz.gobrainwiz;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -17,12 +18,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import brainwiz.gobrainwiz.sidemenu.TestHistoryFragment;
+
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int PERMISSIONS_REQUEST_CALL_PHONE = 100;
     private static final String PHONE_NUMBER = "8142123938";
     private DrawerLayout drawer;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,7 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        findViewById(R.id.logo).setOnClickListener(onClickListener);
         fragmentTransaction(new HomeFragment(), R.id.content_frame, false);
     }
 
@@ -158,7 +163,8 @@ public class MainActivity extends BaseActivity
         switch (id) {
             case R.id.nav_camera:
                 break;
-            case R.id.nav_gallery:
+            case R.id.nav_my_tests:
+                fragmentTransaction(new TestHistoryFragment(), R.id.content_frame, true);
                 break;
             case R.id.nav_slideshow:
                 break;
@@ -167,6 +173,10 @@ public class MainActivity extends BaseActivity
             case R.id.nav_contact_us:
                 fragmentTransaction(new ContactUsFragment(), R.id.content_frame, true);
                 break;
+            case R.id.nav_about_us:
+                fragmentTransaction(new AboutUsFragment(), R.id.content_frame, true);
+                break;
+
             case R.id.nav_share:
                 share();
                 break;
@@ -202,6 +212,24 @@ public class MainActivity extends BaseActivity
             startActivity(Intent.createChooser(i, "choose one"));
         } catch (Exception e) {
             //e.toString();
+        }
+    }
+
+    public void showProgress() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogTheme);
+        View inflate = this.getLayoutInflater().inflate(R.layout.progress_dialog_layout, null);
+        builder.setView(inflate);
+
+        alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        configureProgress(alertDialog);
+        alertDialog.show();
+
+    }
+
+    public void dismissProgress() {
+        if (alertDialog != null) {
+            alertDialog.dismiss();
         }
     }
 

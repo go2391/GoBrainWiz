@@ -18,18 +18,19 @@ import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.HistoryOnlineTestModel;
+import brainwiz.gobrainwiz.api.model.HistoryPractiseTestModel;
 import brainwiz.gobrainwiz.databinding.FragmentMyTestsBinding;
 import brainwiz.gobrainwiz.test.TestActivity;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import retrofit2.Response;
 
-public class MyOnlineTestsFragment extends BaseFragment {
+public class MyPracticeTestsFragment extends BaseFragment {
 
     private Context context;
     private FragmentActivity activity;
     private FragmentMyTestsBinding bind;
-    private OnlineTestHistoryAdapter testTestsAdapter;
+    private PractiseTestHistoryAdapter testTestsAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -60,9 +61,9 @@ public class MyOnlineTestsFragment extends BaseFragment {
 //        showProgress();
         HashMap<String, String> baseBodyMap = getBaseBodyMap();
 //        (getArguments().getString(TOPIC_ID))
-        RetrofitManager.getRestApiMethods().getPastTests(baseBodyMap).enqueue(new ApiCallback<HistoryOnlineTestModel>(activity) {
+        RetrofitManager.getRestApiMethods().getPastPractiseTests(baseBodyMap).enqueue(new ApiCallback<HistoryPractiseTestModel>(activity) {
             @Override
-            public void onApiResponse(Response<HistoryOnlineTestModel> response, boolean isSuccess, String message) {
+            public void onApiResponse(Response<HistoryPractiseTestModel> response, boolean isSuccess, String message) {
 //                dismissProgress();
                 if (isSuccess) {
                     testTestsAdapter.setData(response.body().getData());
@@ -80,22 +81,22 @@ public class MyOnlineTestsFragment extends BaseFragment {
 
     private void initViews() {
 
-        testTestsAdapter = new OnlineTestHistoryAdapter(context);
+        testTestsAdapter = new PractiseTestHistoryAdapter(context);
         bind.recycleMyTests.setAdapter(testTestsAdapter);
         testTestsAdapter.setTestListener(testListener);
 //        bind.recycleTopics.addItemDecoration(new DividerItemDecoration(context, RecyclerView.VERTICAL));
     }
 
-    private final OnlineTestHistoryAdapter.TestListener testListener = new OnlineTestHistoryAdapter.TestListener() {
+    private final PractiseTestHistoryAdapter.TestListener testListener = new PractiseTestHistoryAdapter.TestListener() {
 
         @Override
         public void onReviewTest(int position) {
             Intent intent = new Intent(getActivity(), TestActivity.class);
             Bundle bundle = new Bundle();
-            HistoryOnlineTestModel.TestHistory testList = testTestsAdapter.getData().get(position);
+            HistoryPractiseTestModel.PractiseTestHistory testList = testTestsAdapter.getData().get(position);
             bundle.putString(ID, testList.getTestId());
             bundle.putString(CAT_ID, "");
-            bundle.putBoolean(IS_COMPANY_TEST, true);
+            bundle.putBoolean(IS_COMPANY_TEST, false);
             bundle.putBoolean(IS_REVIEW, true);
 
             bundle.putString(DURATION, String.valueOf(0));

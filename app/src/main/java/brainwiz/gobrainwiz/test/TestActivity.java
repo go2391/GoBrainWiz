@@ -1,5 +1,6 @@
 package brainwiz.gobrainwiz.test;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -16,7 +17,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
@@ -45,6 +45,8 @@ public class TestActivity extends BaseActivity
     private final static int MSG_UPDATE_TIME = 0;
     private long targetTime;
     private View submitView;
+    private AlertDialog alertDialog;
+    private boolean isReview;
 
     public long getTargetTime() {
         return targetTime;
@@ -97,6 +99,7 @@ public class TestActivity extends BaseActivity
         timerTextView = findViewById(R.id.timer);
         Bundle extras = getIntent().getExtras();
         isCompanyTest = extras.getBoolean(BaseFragment.IS_COMPANY_TEST);
+        isReview = extras.getBoolean(BaseFragment.IS_REVIEW);
         String string = extras.getString(BaseFragment.DURATION);
         targetTime = Integer.parseInt(string) * 60;
 
@@ -116,18 +119,26 @@ public class TestActivity extends BaseActivity
 
     public void runTimer() {
         if (serviceBound && !timerService.isTimerRunning()) {
-            if (Log.isLoggable(TAG, Log.VERBOSE)) {
-                Log.v(TAG, "Starting timer");
-            }
-            timerService.startTimer();
-            updateUIStartRun();
+            startTimer();
         } else if (serviceBound && timerService.isTimerRunning()) {
-            if (Log.isLoggable(TAG, Log.VERBOSE)) {
-                Log.v(TAG, "Stopping timer");
-            }
-            timerService.stopTimer();
-            updateUIStopRun();
+            stopTimer();
         }
+    }
+
+    private void stopTimer() {
+        if (Log.isLoggable(TAG, Log.VERBOSE)) {
+            Log.v(TAG, "Stopping timer");
+        }
+        timerService.stopTimer();
+        updateUIStopRun();
+    }
+
+    private void startTimer() {
+        if (Log.isLoggable(TAG, Log.VERBOSE)) {
+            Log.v(TAG, "Starting timer");
+        }
+        timerService.startTimer();
+        updateUIStartRun();
     }
 
     /**
@@ -154,6 +165,13 @@ public class TestActivity extends BaseActivity
         if (serviceBound) {
             long pTime = targetTime - timerService.elapsedTime();
             timerTextView.setText(String.format("%02d:%02d", pTime / 60, pTime % 60));
+            final Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+            if (timerTextView.getText().toString().equalsIgnoreCase("00:00")) {
+                if (fragmentById != null && fragmentById instanceof TestQuestionFragment) {
+                    ((TestQuestionFragment) fragmentById).submitTest();
+                    stopTimer();
+                }
+            }
         }
     }
 
@@ -184,8 +202,9 @@ public class TestActivity extends BaseActivity
                 timerTextView.setVisibility(View.GONE);
 //                            runTimer();
             } else if (fragmentById instanceof TestQuestionFragment) {
-                submitView.setVisibility(View.VISIBLE);
-                timerTextView.setVisibility(View.VISIBLE);
+
+                submitView.setVisibility(((TestQuestionFragment) fragmentById).isReview() ? View.INVISIBLE : View.VISIBLE);
+                timerTextView.setVisibility(((TestQuestionFragment) fragmentById).isReview() ? View.INVISIBLE : View.VISIBLE);
             } else if (fragmentById instanceof ScoreCardFragment) {
                 submitView.setVisibility(View.GONE);
                 timerTextView.setVisibility(View.GONE);
@@ -219,7 +238,7 @@ public class TestActivity extends BaseActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_my_tests) {
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -248,7 +267,7 @@ public class TestActivity extends BaseActivity
                             if (buttonType == DDAlerts.BUTTON_POSITIVE) {
                                 if (fragmentById != null && fragmentById instanceof TestQuestionFragment) {
                                     ((TestQuestionFragment) fragmentById).submitTest();
-                                    runTimer();
+                                    stopTimer();
                                 }
                             }
 
@@ -317,5 +336,23 @@ public class TestActivity extends BaseActivity
         }
     }
 
+
+    public void showProgress() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogTheme);
+        View inflate = this.getLayoutInflater().inflate(R.layout.progress_dialog_layout, null);
+        builder.setView(inflate);
+
+        alertDialog = builder.create();
+        configureProgress(alertDialog);
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+
+    }
+
+    public void dismissProgress() {
+        if (alertDialog != null) {
+            alertDialog.dismiss();
+        }
+    }
 
 }

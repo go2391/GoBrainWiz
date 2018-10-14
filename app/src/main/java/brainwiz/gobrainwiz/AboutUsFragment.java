@@ -1,11 +1,11 @@
 package brainwiz.gobrainwiz;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,15 +13,22 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import java.util.List;
 
+import brainwiz.gobrainwiz.databinding.FragmentAboutUsBinding;
 import brainwiz.gobrainwiz.databinding.FragmentContactUsBinding;
 
-public class ContactUsFragment extends BaseFragment {
+public class AboutUsFragment extends BaseFragment {
 
     private Context context;
-    FragmentContactUsBinding bind;
+    FragmentAboutUsBinding bind;
 
     @Override
     public void onAttach(Context context) {
@@ -33,7 +40,7 @@ public class ContactUsFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_contact_us, container, false);
+        View inflate = inflater.inflate(R.layout.fragment_about_us, container, false);
         bind = DataBindingUtil.bind(inflate);
         initViews();
         return inflate;
@@ -41,12 +48,36 @@ public class ContactUsFragment extends BaseFragment {
 
     private void initViews() {
 
-        bind.contactUsAddress.setOnClickListener(onClickListener);
-        bind.contactUsEmail.setOnClickListener(onClickListener);
-        bind.contactUsCall.setOnClickListener(onClickListener);
+        bind.aboutUsWebview.getSettings().setJavaScriptEnabled(true);
+        bind.aboutUsWebview.getSettings().setDomStorageEnabled(true);
 
-
+//        bind.aboutUsWebview.setWebViewClient(new MyClient());
+        bind.aboutUsWebview.loadUrl("https://itsbiz.000webhostapp.com/aboutus.html");
     }
+
+
+    class MyClient extends WebViewClient {
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+
+        /*@SuppressWarnings("deprecation")
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            Toast.makeText(getActivity(), description, Toast.LENGTH_SHORT).show();
+        }
+
+        @TargetApi(android.os.Build.VERSION_CODES.M)
+        @Override
+        public void onReceivedError(WebView view, WebResourceRequest req, WebResourceError rerr) {
+            // Redirect to deprecated method, so you can use it in all SDK versions
+            onReceivedError(view, rerr.getErrorCode(), rerr.getDescription().toString(), req.getUrl().toString());
+        }*/
+    }
+
 
     private final View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -72,7 +103,7 @@ public class ContactUsFragment extends BaseFragment {
                         if (info.activityInfo.packageName.equals("com.google.android.gm")) {
                             className = info.activityInfo.name;
 
-                            if(className != null && !className.isEmpty()){
+                            if (className != null && !className.isEmpty()) {
                                 break;
                             }
                         }

@@ -13,17 +13,19 @@ import java.util.List;
 
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.model.HistoryOnlineTestModel;
+import brainwiz.gobrainwiz.api.model.HistoryPractiseTestModel;
 import brainwiz.gobrainwiz.databinding.InflateTestItemBinding;
+import brainwiz.gobrainwiz.utils.AppUtils;
 
-public class OnlineTestHistoryAdapter extends RecyclerView.Adapter<OnlineTestHistoryAdapter.TestViewHolder> {
+public class PractiseTestHistoryAdapter extends RecyclerView.Adapter<PractiseTestHistoryAdapter.TestViewHolder> {
 
     Context context;
 
     private TestListener testListener;
-    private List<HistoryOnlineTestModel.TestHistory> data = new ArrayList<>();
+    private List<HistoryPractiseTestModel.PractiseTestHistory> data = new ArrayList<>();
 
 
-    public OnlineTestHistoryAdapter(Context context) {
+    public PractiseTestHistoryAdapter(Context context) {
 
         this.context = context;
     }
@@ -41,10 +43,10 @@ public class OnlineTestHistoryAdapter extends RecyclerView.Adapter<OnlineTestHis
     @Override
     public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
 
-        HistoryOnlineTestModel.TestHistory testList = data.get(position);
+        HistoryPractiseTestModel.PractiseTestHistory testList = data.get(position);
         holder.bind.testItemTitle.setText(testList.getTestName());
-        holder.bind.testQuestions.setText(String.format(context.getString(R.string.sets), testList.getTotalSets()));
-        holder.bind.testMins.setText(String.format(context.getString(R.string.mins), ""));
+        holder.bind.testQuestions.setText(String.format(context.getString(R.string.total_questions), Integer.parseInt(testList.getTotalQuestions())));
+        holder.bind.testMins.setText(String.format(context.getString(R.string.questions_attempted), Integer.parseInt(testList.getAttempted())));
     }
 
     @Override
@@ -52,12 +54,12 @@ public class OnlineTestHistoryAdapter extends RecyclerView.Adapter<OnlineTestHis
         return data.size();
     }
 
-    public void setData(List<HistoryOnlineTestModel.TestHistory> data) {
+    public void setData(List<HistoryPractiseTestModel.PractiseTestHistory> data) {
 
         this.data = data;
     }
 
-    public List<HistoryOnlineTestModel.TestHistory> getData() {
+    public List<HistoryPractiseTestModel.PractiseTestHistory> getData() {
         return data;
     }
 

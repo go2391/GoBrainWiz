@@ -98,7 +98,7 @@ public class OnlineTestFragment extends BaseFragment {
             bundle.putString(ID, test.getBrainTestId());
             bundle.putString(CAT_ID, "");
             bundle.putBoolean(IS_COMPANY_TEST, true);
-            bundle.putBoolean(IS_REVIEW, true);
+            bundle.putBoolean(IS_REVIEW, false);
             intent.putExtras(bundle);
             startActivity(intent);
 

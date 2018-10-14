@@ -1,9 +1,11 @@
 package brainwiz.gobrainwiz
 
 import android.app.Activity
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -12,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import brainwiz.gobrainwiz.utils.KeyBoardUtils
+import android.util.DisplayMetrics
 
 
 /**
@@ -87,10 +90,11 @@ open class BaseActivity : AppCompatActivity() {
         return editText.text.toString().trim { it <= ' ' }
     }
 
+    /*  */
     /**
      * show progress dialog for api calls
-     */
-    fun showProgress() {
+     *//*
+    protected fun showProgress() {
         dialog = ProgressDialog(this as Context)
         dialog!!.setMessage("Please wait...")
         dialog!!.setCancelable(false)
@@ -99,15 +103,16 @@ open class BaseActivity : AppCompatActivity() {
 
     }
 
+    */
     /**
      * dismiss progress dialog after api calls
-     */
-    fun dismissProgress() {
+     *//*
+    protected fun dismissProgress() {
         if (dialog != null) {
             dialog!!.cancel()
             dialog!!.dismiss()
         }
-    }
+    }*/
 
 
     /**
@@ -148,5 +153,23 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+
+    fun configureProgress(dialog: Dialog) {
+
+        val metrics = resources.displayMetrics
+        val screenWidth = (metrics.widthPixels * 0.90).toInt()
+        val screenHeight = (metrics.heightPixels * 0.90).toInt()
+        val size = Point()
+        this.windowManager.defaultDisplay.getSize(size)
+
+        //        layout.setMinimumWidth((int) (displayRectangle.width() * 0.9f));
+        //        layout.setMinimumHeight((int) (displayRectangle.height() * 0.9f));
+
+
+        dialog.getWindow().setLayout(screenWidth, screenHeight);
+//        dialog.window!!
+//                .setLayout((size.x * .3).toInt(), (size.y * .3).toInt())
+
+    }
 
 }

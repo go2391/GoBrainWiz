@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class InstructionsFragment extends BaseFragment {
     private String testID;
     private InstructionTestTypeAdapter adapter;
     private String selectedCatId = "";
+    private boolean isReview;
 
     public static InstructionsFragment getInstance(Bundle bundle) {
         InstructionsFragment instructionsFragment = new InstructionsFragment();
@@ -61,18 +63,24 @@ public class InstructionsFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_instructions, container, false);
+        setHasOptionsMenu(true);
         initViews(inflate);
         return inflate;
     }
 
     private void initViews(View inflate) {
 
+        isReview = getArguments().getBoolean(BaseFragment.IS_REVIEW);
+
+
         RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.instruction_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter = new InstructionTestTypeAdapter(context, testSets);
         adapter.setListener(listener);
         recyclerView.setAdapter(adapter);
-        inflate.findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
+        TextView start_Review_btn = inflate.findViewById(R.id.start);
+        start_Review_btn.setText(isReview ? getString(R.string.review) : getString(R.string.start));
+        start_Review_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -80,8 +88,10 @@ public class InstructionsFragment extends BaseFragment {
                     DDAlerts.showAlert(getActivity(), "Select any one test", getString(R.string.ok));
                     return;
                 }
-                ((TestActivity) activity).startTest();
-                ((TestActivity) activity).fragmentTransaction(TestQuestionFragment.getInstance(testID, selectedCatId, true, false));
+                if (!isReview)
+                    ((TestActivity) activity).startTest();
+
+                ((TestActivity) activity).fragmentTransaction(TestQuestionFragment.getInstance(testID, selectedCatId, true, isReview));
 
             }
         });

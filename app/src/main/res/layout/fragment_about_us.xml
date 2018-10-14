@@ -7,91 +7,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:padding="5dp"
-            android:text="@string/phone"
-            android:textColor="@color/blueSecondary" />
-
-        <TextView
-            android:id="@+id/contact_us_call"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/dimen_10"
-            android:drawableStart="@drawable/ic_call"
-            android:fontFamily="@font/medium"
-            android:gravity="center_vertical"
-            android:padding="5dp"
-            android:text="@string/_81421_23938"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="@dimen/font_16" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:padding="5dp"
-            android:text="@string/email"
-            android:textColor="@color/blueSecondary" />
-
-        <TextView
-            android:id="@+id/contact_us_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/dimen_10"
-            android:drawableStart="@drawable/ic_email"
-            android:fontFamily="@font/medium"
-            android:gravity="center_vertical"
-            android:padding="5dp"
-            android:text="@string/gobrainwiz_gmail_com"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="@dimen/font_16" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:padding="5dp"
-            android:text="@string/address"
-            android:textColor="@color/blueSecondary" />
-
-        <RelativeLayout
+        <WebView
+            android:id="@+id/about_us_webview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/contact_us_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawablePadding="@dimen/dimen_10"
-                android:fontFamily="@font/medium"
-                android:gravity="center_vertical"
-                android:padding="5dp"
-                android:text="@string/brainwiz_address"
-                android:textColor="@color/colorSecondaryText"
-                android:textSize="@dimen/font_16" />
-
-            <TextView
-                android:id="@+id/contact_us_map"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:drawableTop="@drawable/ic_map"
-                android:fontFamily="@font/bold"
-                android:gravity="center"
-                android:padding="@dimen/dimen_10"
-                android:text="@string/view"
-                android:textColor="@color/colorSecondaryText"
-                android:textSize="@dimen/font_12" />
-        </RelativeLayout>
-
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </layout>

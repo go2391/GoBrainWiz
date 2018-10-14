@@ -268,4 +268,10 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+
+    <style name="MyAlertDialogTheme" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
+        <item name="windowFixedWidthMajor">30%</item>
+        <item name="windowFixedWidthMinor">30%</item>
+    </style>
+
 </resources>

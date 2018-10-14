@@ -18,24 +18,18 @@ import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.HistoryOnlineTestModel;
-import brainwiz.gobrainwiz.api.model.TestsModel;
 import brainwiz.gobrainwiz.databinding.FragmentMyTestsBinding;
-import brainwiz.gobrainwiz.databinding.FragmentTestTopicBinding;
-import brainwiz.gobrainwiz.practicetest.PracticeTestCategoryFragment;
-import brainwiz.gobrainwiz.practicetest.PracticeTestTestsAdapter;
 import brainwiz.gobrainwiz.test.TestActivity;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import retrofit2.Response;
 
-import static brainwiz.gobrainwiz.practicetest.PracticeTestCategoryFragment.TOPIC_ID;
-
-public class MyTestsFragment extends BaseFragment {
+public class MyOnlineTestsFragment extends BaseFragment {
 
     private Context context;
     private FragmentActivity activity;
     private FragmentMyTestsBinding bind;
-    private PracticeTestTestsAdapter testTestsAdapter;
+    private OnlineTestHistoryAdapter testTestsAdapter;
 
     @Override
     public void onAttach(Context context) {
@@ -71,7 +65,7 @@ public class MyTestsFragment extends BaseFragment {
             public void onApiResponse(Response<HistoryOnlineTestModel> response, boolean isSuccess, String message) {
 //                dismissProgress();
                 if (isSuccess) {
-                    testTestsAdapter.setData(response.body().get().getTestList());
+                    testTestsAdapter.setData(response.body().getData());
                     testTestsAdapter.notifyDataSetChanged();
                 }
             }
@@ -86,53 +80,30 @@ public class MyTestsFragment extends BaseFragment {
 
     private void initViews() {
 
-        testTestsAdapter = new PracticeTestTestsAdapter(context);
+        testTestsAdapter = new OnlineTestHistoryAdapter(context);
         bind.recycleMyTests.setAdapter(testTestsAdapter);
         testTestsAdapter.setTestListener(testListener);
 //        bind.recycleTopics.addItemDecoration(new DividerItemDecoration(context, RecyclerView.VERTICAL));
     }
 
-    private final PracticeTestTestsAdapter.TestListener testListener = new PracticeTestTestsAdapter.TestListener() {
-        @Override
-        public void onTestStart(int position) {
-
-
-        }
+    private final OnlineTestHistoryAdapter.TestListener testListener = new OnlineTestHistoryAdapter.TestListener() {
 
         @Override
         public void onReviewTest(int position) {
             Intent intent = new Intent(getActivity(), TestActivity.class);
             Bundle bundle = new Bundle();
-            TestsModel.TestList testList = testTestsAdapter.getData().get(position);
+            HistoryOnlineTestModel.TestHistory testList = testTestsAdapter.getData().get(position);
             bundle.putString(ID, testList.getTestId());
             bundle.putString(CAT_ID, "");
-            bundle.putBoolean(IS_COMPANY_TEST, false);
+            bundle.putBoolean(IS_COMPANY_TEST, true);
             bundle.putBoolean(IS_REVIEW, true);
 
-            bundle.putString(DURATION, String.valueOf(parseTimeToMinutes(testList.getTestTime())));
+            bundle.putString(DURATION, String.valueOf(0));
             intent.putExtras(bundle);
             startActivity(intent);
 
         }
     };
-
-    public static int parseTimeToMinutes(String hourFormat) {
-
-        int minutes = 0;
-        String[] split = hourFormat.split(":");
-
-        try {
-
-            minutes += Double.parseDouble(split[0]) * 60;
-            minutes += Double.parseDouble(split[1]);
-            minutes += Double.parseDouble(split[2]) / 60;
-            return minutes;
-
-        } catch (Exception e) {
-            return -1;
-        }
-
-    }
 
 
 }

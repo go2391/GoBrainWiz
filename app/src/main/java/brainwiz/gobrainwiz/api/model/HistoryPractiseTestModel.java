@@ -1,8 +1,28 @@
 package brainwiz.gobrainwiz.api.model;
 
-public class HistoryPractiseTestModle extends BaseModel {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public static class Datum {
+import java.util.ArrayList;
+import java.util.List;
+
+public class HistoryPractiseTestModel extends BaseModel {
+
+
+    @SerializedName("data")
+    @Expose
+    private List<PractiseTestHistory> data = new ArrayList<PractiseTestHistory>();
+
+    public List<PractiseTestHistory> getData() {
+        return data;
+    }
+
+    public void setData(List<PractiseTestHistory> data) {
+        this.data = data;
+    }
+
+
+    public static class PractiseTestHistory {
 
         @SerializedName("test_id")
         @Expose

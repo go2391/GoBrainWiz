@@ -24,6 +24,7 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
     private long startTime;
     private long endTime;
     private long totalTime;
+    private boolean isReview;
 
 
     public static QuestionFragment getInstance(TestModel.Datum datum, Bundle bundle) {
@@ -43,11 +44,11 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
     @Override
     public void onPauseFragment() {
         endTime = System.currentTimeMillis();
-        totalTime = data.getSpentTime();
+//        totalTime = data.getSpentTime();
         totalTime += endTime - startTime;
         LogUtils.e("Total Time Spent sec:" + totalTime / 1000);
 
-        data.setSpentTime(totalTime);
+//        data.setSpentTime(totalTime);
 
     }
 
@@ -66,7 +67,6 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
 
     private void init() {
 
-        contentBinding.bookmark.setOnClickListener(onClickListener);
 
         data = ((TestModel.Datum) getArguments().getParcelable("object"));
         contentBinding.answerOptionsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -77,6 +77,10 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
         adapter.setSelectedData(data);
         contentBinding.answerOptionsRecycler.setAdapter(adapter);
 //        contentBinding.testQuestion.setText(data.getQuestion());
+        if (!isReviewMode) {
+            contentBinding.bookmark.setOnClickListener(onClickListener);
+        }
+
 
         contentBinding.testExplanationLayout.setVisibility(isReviewMode ? View.VISIBLE : View.GONE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

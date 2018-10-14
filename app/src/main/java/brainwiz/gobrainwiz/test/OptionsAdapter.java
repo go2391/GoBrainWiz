@@ -10,12 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.databinding.InflateAnswerOptionBinding;
+import brainwiz.gobrainwiz.utils.LogUtils;
 import brainwiz.gobrainwiz.utils.UrlImageParser;
 
 public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHolder> {
@@ -52,15 +54,25 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
     @Override
     public void onBindViewHolder(@NonNull OptionHolder holder, int position) {
         holder.bind.optionNo.setText(optionsIndicator[position]);
+        String source = options.get(position);
+//        source = source.replaceAll("<\\/span><\\/p>", "");
+
+        LogUtils.e(source);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.bind.optionText.setText(Html.fromHtml(options.get(position), Html.FROM_HTML_MODE_LEGACY, new UrlImageParser(holder.bind.optionText, context), null));
+            holder.bind.optionText.setText(Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY, new UrlImageParser(holder.bind.optionText, context), null));
         } else {
-            holder.bind.optionText.setText(Html.fromHtml(options.get(position), new UrlImageParser(holder.bind.optionText, context), null));
+            holder.bind.optionText.setText(Html.fromHtml(source, new UrlImageParser(holder.bind.optionText, context), null));
         }
         String selectedOption = selectedData.getSelectedOption();
         boolean selected = selectedOption != null && selectedOption.equals(String.valueOf(position));
         holder.bind.optionNo.setSelected(selected);
         holder.bind.optionLayout.setSelected(selected);
+
+        if (isReviewMode()) {
+            String selectedAnswer = selectedData.getSelectedAnswer();
+            holder.bind.optionNo.setSelected(selectedAnswer != null && selectedOption != null && selectedAnswer.equals(selectedOption));
+        }
+
     }
 
     @Override
@@ -98,7 +110,9 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
         public OptionHolder(View itemView) {
             super(itemView);
             bind = DataBindingUtil.bind(itemView);
-            itemView.setOnClickListener(this);
+            if (!isReviewMode()) {
+                itemView.setOnClickListener(this);
+            }
         }
 
         @Override

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
 import java.util.List;
 
 import brainwiz.gobrainwiz.api.RetrofitManager;
@@ -100,7 +101,8 @@ public class HomeFragment extends BaseFragment {
         }
 
         showProgress();
-        RetrofitManager.getRestApiMethods().getDashBoard().enqueue(new Callback<DashBoardModel>() {
+        HashMap<String, String> baseBodyMap = getBaseBodyMap();
+        RetrofitManager.getRestApiMethods().getDashBoard(baseBodyMap).enqueue(new Callback<DashBoardModel>() {
             @Override
             public void onResponse(Call<DashBoardModel> call, Response<DashBoardModel> response) {
                 Log.e("", response.toString());

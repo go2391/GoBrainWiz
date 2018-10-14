@@ -11,20 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import brainwiz.gobrainwiz.BaseFragment;
-import brainwiz.gobrainwiz.MainActivity;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
-import brainwiz.gobrainwiz.api.model.PracticeTestModel;
 import brainwiz.gobrainwiz.api.model.TestsModel;
 import brainwiz.gobrainwiz.databinding.FragmentTestTopicBinding;
 import brainwiz.gobrainwiz.test.TestActivity;
-import brainwiz.gobrainwiz.test.TestQuestionFragment;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import retrofit2.Response;
@@ -102,7 +95,7 @@ public class PracticeTestTopicsFragment extends BaseFragment {
             bundle.putString(ID, testList.getTestId());
             bundle.putString(CAT_ID, "");
             bundle.putBoolean(IS_COMPANY_TEST, false);
-            bundle.putBoolean(IS_REVIEW, true);
+            bundle.putBoolean(IS_REVIEW, false);
 
             bundle.putString(DURATION, String.valueOf(parseTimeToMinutes(testList.getTestTime())));
             intent.putExtras(bundle);

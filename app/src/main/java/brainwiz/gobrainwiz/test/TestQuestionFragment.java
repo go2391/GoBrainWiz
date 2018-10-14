@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import brainwiz.gobrainwiz.BaseFragment;
@@ -34,6 +35,7 @@ public class TestQuestionFragment extends BaseFragment {
     private RecyclerView indicatorRecycler;
     private List<TestModel.Datum> data;
     private int fragmentCurrentPosition = -1;
+    private boolean isReview;
 
 
     public static TestQuestionFragment getInstance(String id, boolean isReview) {
@@ -62,6 +64,7 @@ public class TestQuestionFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_test_tab, container, false);
+        setHasOptionsMenu(true);
         ViewDataBinding bind = DataBindingUtil.bind(inflate);
         init(inflate);
 
@@ -95,13 +98,16 @@ public class TestQuestionFragment extends BaseFragment {
         };
 
         isCompanyTest = getArguments().getBoolean("isCompanyTest");
+        isReview = getArguments().getBoolean(BaseFragment.IS_REVIEW);
         String id = getArguments().getString("id", "");
-//        String catId = getArguments().getString("catId", "");
+        String catId = getArguments().getString(CAT_ID, "");
 
         if (isCompanyTest) {
 
-            String catId = new StringBuilder().append(id).append("/").append(getArguments().getString("catId")).toString();
-            RetrofitManager.getRestApiMethods().getCompanyTests(catId).enqueue(callback);
+            HashMap<String, String> baseBodyMap = getBaseBodyMap();
+            baseBodyMap.put("sets_id", catId);
+            baseBodyMap.put("exam_id", id);
+            RetrofitManager.getRestApiMethods().getCompanyTests(baseBodyMap).enqueue(callback);
         } else {
             RetrofitManager.getRestApiMethods().getPracticeTests(id).enqueue(callback);
         }
@@ -110,8 +116,10 @@ public class TestQuestionFragment extends BaseFragment {
     }
 
     private void setViews(List<TestModel.Datum> data) {
+        if (!isReview)
+            ((TestActivity) getActivity()).startTest();
 
-        ((TestActivity) getActivity()).startTest();
+        questionNoAdapter.setReviewMode(isReview);
         questionNoAdapter.setOptions(getQuestionsObjects(data.size()));
         questionNoAdapter.notifyDataSetChanged();
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
@@ -230,6 +238,14 @@ public class TestQuestionFragment extends BaseFragment {
         return data != null && data.get(viewPager.getCurrentItem()).isBookMark();
     }
 
+    public boolean isReview() {
+        return isReview;
+    }
+
+    public void setReview(boolean review) {
+        isReview = review;
+    }
+
     private final class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         private List<TestModel.Datum> data;
@@ -242,7 +258,9 @@ public class TestQuestionFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            QuestionFragment instance = questionFragments[position];
+
+//            QuestionFragment instance = questionFragments[position];
+            QuestionFragment instance = QuestionFragment.getInstance(data.get(position), getArguments());
             instance.setListener(questionStatusListener);
             return instance;
         }

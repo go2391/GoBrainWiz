@@ -94,6 +94,7 @@ public class QuestionNoAdapter extends RecyclerView.Adapter<QuestionNoAdapter.Nu
             super(itemView);
             bind = DataBindingUtil.bind(itemView);
             itemView.setOnClickListener(this);
+
         }
 
         @Override

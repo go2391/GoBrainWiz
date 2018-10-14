@@ -78,7 +78,7 @@ public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestT
         }
     }
 
-    interface TestListener {
+    public interface TestListener {
         void onTestStart(int position);
 
         void onReviewTest(int position);

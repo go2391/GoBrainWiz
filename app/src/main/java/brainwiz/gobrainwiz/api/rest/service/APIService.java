@@ -6,6 +6,8 @@ import com.apshutters.salesperson.model.BaseResponse;
 import java.util.HashMap;
 
 import brainwiz.gobrainwiz.api.model.DashBoardModel;
+import brainwiz.gobrainwiz.api.model.HistoryOnlineTestModel;
+import brainwiz.gobrainwiz.api.model.HistoryPractiseTestModel;
 import brainwiz.gobrainwiz.api.model.LoginModel;
 import brainwiz.gobrainwiz.api.model.OnlineTestModle;
 import brainwiz.gobrainwiz.api.model.OnlineTestSetModel;
@@ -22,8 +24,8 @@ import retrofit2.http.Path;
 /**
  */
 public interface APIService {
-    @GET("/dashboard")
-    Call<DashBoardModel> getDashBoard();
+    @POST("/dashboard")
+    Call<DashBoardModel> getDashBoard(@Body HashMap<String, String> hashMap);
 
     @POST("/login")
     Call<LoginModel> login(@Body HashMap<String, String> hashMap);
@@ -48,15 +50,19 @@ public interface APIService {
     Call<OnlineTestSetModel> getCompanySets(@Body HashMap<String, String> hashMap);
 
 
-    @GET("/company-test")
+    @POST("/company-test")
 ///21/16
-    Call<TestModel> getCompanyTests(@Path(value = "idCatID", encoded = true) String id);
+    Call<TestModel> getCompanyTests(@Body HashMap<String, String> hashMap);
 
     @GET("/practise-test/{id}")
     Call<TestModel> getPracticeTests(@Path("id") String id);
 
-    @POST("/past_tests")
-    Call<BaseResponse> getPastTests();
+    @POST("/past_tests_company")
+    Call<HistoryOnlineTestModel> getPastTests(@Body HashMap<String, String> baseBodyMap);
+
+
+    @POST("/past_tests_practise")
+    Call<HistoryPractiseTestModel> getPastPractiseTests(@Body HashMap<String, String> baseBodyMap);
 
 
 }

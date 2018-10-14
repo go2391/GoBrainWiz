@@ -54,9 +54,18 @@ public class OverViewFragment extends android.support.v4.app.DialogFragment {
         QuestionNoAdapter questionNoAdapter = new QuestionNoAdapter(getActivity());
         questionNoAdapter.setOptions(data);
         contentBinding.overViewRecycler.setAdapter(questionNoAdapter);
-//        questionNoAdapter.setListener(questionListener);
+        questionNoAdapter.setListener(questionListenerNew);
 
     }
+
+    QuestionNoAdapter.QuestionListener questionListenerNew = new QuestionNoAdapter.QuestionListener() {
+        @Override
+        public void onOptionSelected(int position) {
+            questionListener.onOptionSelected(position);
+            dismiss();
+        }
+    };
+
 
     public void setData(List<QuestionNumber> data) {
 

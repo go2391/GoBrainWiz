@@ -93,7 +93,7 @@ public class OnlineTestFragment extends BaseFragment {
 
             Intent intent = new Intent(getActivity(), TestActivity.class);
             Bundle bundle = new Bundle();
-
+            bundle.putString(COMPANY_NAME, test.getTestName());
             bundle.putString(DURATION, test.getDuration());
             bundle.putString(ID, test.getBrainTestId());
             bundle.putString(CAT_ID, "");

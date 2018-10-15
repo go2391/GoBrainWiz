@@ -62,6 +62,7 @@ public class HomeFragment extends BaseFragment {
         inflate.findViewById(R.id.tv_practice_tests_layout).setOnClickListener(clickListener);
         inflate.findViewById(R.id.tv_weekly_schedule_layout).setOnClickListener(clickListener);
         inflate.findViewById(R.id.tv_video_gallery_layout).setOnClickListener(clickListener);
+        inflate.findViewById(R.id.share_arrow).setOnClickListener(clickListener);
 
 
 //        bind.homeAutoSlideViewpager.setAdapter(new SlidingImageAdapter(context, bannerList));
@@ -150,6 +151,11 @@ public class HomeFragment extends BaseFragment {
                     break;
                 case R.id.video_play_icon:
                     startActivity(new Intent(getActivity(), YoutubeVideoActivity.class));
+                    break;
+                case R.id.review_arrow:
+                    break;
+                case R.id.share_arrow:
+                    ((MainActivity) getActivity()).share();
                     break;
             }
         }

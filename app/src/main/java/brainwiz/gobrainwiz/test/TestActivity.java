@@ -23,6 +23,7 @@ import java.lang.ref.WeakReference;
 
 import brainwiz.gobrainwiz.BaseActivity;
 import brainwiz.gobrainwiz.BaseFragment;
+import brainwiz.gobrainwiz.MainActivity;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.TimerService;
 import brainwiz.gobrainwiz.onlinetest.InstructionsFragment;
@@ -198,16 +199,18 @@ public class TestActivity extends BaseActivity
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
         if (fragmentById != null) {
             if (fragmentById instanceof InstructionsFragment) {
-                submitView.setVisibility(View.GONE);
-                timerTextView.setVisibility(View.GONE);
+                submitView.setVisibility(View.INVISIBLE);
+                timerTextView.setVisibility(View.VISIBLE);
+                timerTextView.setText(getIntent().getExtras().getString(BaseFragment.COMPANY_NAME, ""));
 //                            runTimer();
             } else if (fragmentById instanceof TestQuestionFragment) {
 
                 submitView.setVisibility(((TestQuestionFragment) fragmentById).isReview() ? View.INVISIBLE : View.VISIBLE);
                 timerTextView.setVisibility(((TestQuestionFragment) fragmentById).isReview() ? View.INVISIBLE : View.VISIBLE);
             } else if (fragmentById instanceof ScoreCardFragment) {
-                submitView.setVisibility(View.GONE);
-                timerTextView.setVisibility(View.GONE);
+                submitView.setVisibility(View.INVISIBLE);
+                timerTextView.setText(R.string.your_result);
+                timerTextView.setVisibility(View.VISIBLE);
             }
         }
         return true;
@@ -242,7 +245,6 @@ public class TestActivity extends BaseActivity
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 

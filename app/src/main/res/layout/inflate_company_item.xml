@@ -28,9 +28,10 @@
                 android:layout_toEndOf="@id/company_image"
                 android:fontFamily="@font/bold"
                 android:gravity="start"
+                android:textAllCaps="true"
                 android:text="@string/arithmetic"
                 android:textColor="@color/blueSecondary"
-                android:textSize="@dimen/font_24" />
+                android:textSize="@dimen/font_20" />
 
 
             <TextView

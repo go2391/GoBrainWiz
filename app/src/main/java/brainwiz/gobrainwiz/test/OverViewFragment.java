@@ -49,7 +49,7 @@ public class OverViewFragment extends android.support.v4.app.DialogFragment {
 
     private void init() {
 
-        contentBinding.overViewRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        contentBinding.overViewRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));
 
         QuestionNoAdapter questionNoAdapter = new QuestionNoAdapter(getActivity());
         questionNoAdapter.setOptions(data);

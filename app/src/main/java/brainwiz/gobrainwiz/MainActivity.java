@@ -168,8 +168,6 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.nav_slideshow:
                 break;
-            case R.id.nav_manage:
-                break;
             case R.id.nav_contact_us:
                 fragmentTransaction(new ContactUsFragment(), R.id.content_frame, true);
                 break;
@@ -195,7 +193,7 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
-    private void share() {
+    public void share() {
 
 //        ShareCompat.IntentBuilder.from(this)
 //                .setType("text/plain")

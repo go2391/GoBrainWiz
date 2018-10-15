@@ -17,6 +17,8 @@ public class BaseFragment extends Fragment {
     public static final String CAT_ID = "catId";
     public static final String IS_REVIEW = "isReview";
     public static final String DURATION = "Duration";
+    public static final String COMPANY_NAME = "CompanyName";
+
 
     public void showProgress() {
 

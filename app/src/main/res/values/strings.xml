@@ -32,7 +32,7 @@
     <string name="digits_address">, ,-,,,,0,1,2,3,4,5,6,7,8,9,/,qwertzuiopasdfghjklyxcvbnm,QWERTZUIOPASDFGHJKLYXCVBNM</string>
     <string name="digits_char">\, ,qwertzuiopasdfghjklyxcvbnm,QWERTZUIOPASDFGHJKLYXCVBNM</string>
     <string name="digits_name">qwertzuiopasdfghjklyxcvbnm QWERTZUIOPASDFGHJKLYXCVBNM</string>
-    <string name="reviews_this_app">Reviews this app</string>
+    <string name="reviews_this_app">Rate this app</string>
     <string name="please_review_this_app_and_encourage_us_to_give_better_services_to_you">Please review this app and encourage us to give better services to you</string>
     <string name="help_your_friends_to_know_this_app_and_make_them_so_benefices_as_you_in_case_of_crt">Help your friends to know this app and make them so benefices as you in case of CRT.</string>
     <string name="share_with_friends">Share with friends</string>
@@ -113,4 +113,8 @@ sections
     <string name="sets">%s Sets</string>
 
     <string name="practicetests">Practice Tests</string>
+    <string name="notications">Notifications</string>
+    <string name="select_section">Select any one of the section</string>
+    <string name="watch_it_later">Watch it later \t</string>
+    <string name="your_result">Your Result</string>
 </resources>

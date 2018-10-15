@@ -85,7 +85,7 @@ public class InstructionsFragment extends BaseFragment {
             public void onClick(View v) {
 
                 if (selectedCatId.isEmpty()) {
-                    DDAlerts.showAlert(getActivity(), "Select any one test", getString(R.string.ok));
+                    DDAlerts.showAlert(getActivity(), getString(R.string.select_section), getString(R.string.ok));
                     return;
                 }
                 if (!isReview)

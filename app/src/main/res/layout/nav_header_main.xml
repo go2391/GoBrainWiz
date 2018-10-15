@@ -14,14 +14,14 @@
 
     <brainwiz.gobrainwiz.RoundishImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="@dimen/dimen_20"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:cornerRadius="@dimen/dimen_40"
+        app:cornerRadius="60dp"
         app:roundedCorners="ALL"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
@@ -38,7 +38,7 @@
         android:textSize="@dimen/font_18" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/welcome_label"

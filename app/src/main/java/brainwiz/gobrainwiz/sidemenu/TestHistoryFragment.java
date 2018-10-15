@@ -39,6 +39,40 @@ public class TestHistoryFragment extends BaseFragment {
 
     private void init(View inflate) {
 
+        /*fragmentNotificationBinding.vpNotifications.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        fragmentNotificationBinding.rbPromotions.setChecked(true);
+                        break;
+                    default:
+                        fragmentNotificationBinding.rbGeneral.setChecked(true);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        fragmentNotificationBinding.rbPromotions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentNotificationBinding.vpNotifications.setCurrentItem(0);
+            }
+        });
+        fragmentNotificationBinding.rbGeneral.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentNotificationBinding.vpNotifications.setCurrentItem(1);
+            }
+        });*/
         viewPager = (ViewPager) inflate.findViewById(R.id.view_pager_history);
 
         PagerTabStrip pagerTabStrip = inflate.findViewById(R.id.pager_tab_strip);

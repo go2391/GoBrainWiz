@@ -15,6 +15,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import brainwiz.gobrainwiz.utils.KeyBoardUtils
 import android.util.DisplayMetrics
+import android.view.Gravity
+import android.view.WindowManager
 
 
 /**
@@ -154,21 +156,21 @@ open class BaseActivity : AppCompatActivity() {
     }
 
 
+
     fun configureProgress(dialog: Dialog) {
 
-        val metrics = resources.displayMetrics
-        val screenWidth = (metrics.widthPixels * 0.90).toInt()
-        val screenHeight = (metrics.heightPixels * 0.90).toInt()
-        val size = Point()
-        this.windowManager.defaultDisplay.getSize(size)
 
-        //        layout.setMinimumWidth((int) (displayRectangle.width() * 0.9f));
-        //        layout.setMinimumHeight((int) (displayRectangle.height() * 0.9f));
+        val window = dialog.window
 
+        if (window != null) {
 
-        dialog.getWindow().setLayout(screenWidth, screenHeight);
-//        dialog.window!!
-//                .setLayout((size.x * .3).toInt(), (size.y * .3).toInt())
+            window.setBackgroundDrawableResource(android.R.color.transparent)
+            val size = Point()
+            val display = window.windowManager.defaultDisplay
+            display.getSize(size)
+            window.setLayout((size.x * 0.80).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
+            window.setGravity(Gravity.CENTER)
+        }
 
     }
 

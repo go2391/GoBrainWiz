@@ -112,5 +112,5 @@ sections
     <string name="review">Review</string>
     <string name="sets">%s Sets</string>
 
-
+    <string name="practicetests">Practice Tests</string>
 </resources>

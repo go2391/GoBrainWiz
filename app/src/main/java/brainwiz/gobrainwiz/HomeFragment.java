@@ -3,6 +3,7 @@ package brainwiz.gobrainwiz;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -84,6 +85,8 @@ public class HomeFragment extends BaseFragment {
                         m.release();
                         m = new MediaPlayer();
                     }
+                    AudioManager mAm = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+                    mAm.setStreamMute(AudioManager.STREAM_MUSIC, false);
                     m.setVolume(0f, 0f);
                     m.setLooping(true);
                     m.start();

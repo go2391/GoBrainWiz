@@ -48,11 +48,13 @@ public class AboutUsFragment extends BaseFragment {
 
     private void initViews() {
 
-        bind.aboutUsWebview.getSettings().setJavaScriptEnabled(true);
-        bind.aboutUsWebview.getSettings().setDomStorageEnabled(true);
+        WebSettings settings = bind.aboutUsWebview.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setLoadsImagesAutomatically(true);
 
 //        bind.aboutUsWebview.setWebViewClient(new MyClient());
-        bind.aboutUsWebview.loadUrl("https://itsbiz.000webhostapp.com/aboutus.html");
+        bind.aboutUsWebview.loadUrl("http://itsbiz.000webhostapp.com/aboutus.html");
     }
 
 

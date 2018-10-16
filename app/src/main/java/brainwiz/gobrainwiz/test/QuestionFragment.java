@@ -16,7 +16,7 @@ import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.databinding.FragmentTestContentBinding;
 import brainwiz.gobrainwiz.utils.LogUtils;
-import brainwiz.gobrainwiz.utils.UrlImageParser;
+import brainwiz.gobrainwiz.utils.URLImageParserNew;
 
 public class QuestionFragment extends BaseFragment implements TestQuestionFragment.FragmentStateListener {
     private TestModel.Datum data;
@@ -84,11 +84,11 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
 
         contentBinding.testExplanationLayout.setVisibility(isReviewMode ? View.VISIBLE : View.GONE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), Html.FROM_HTML_MODE_LEGACY, new UrlImageParser(contentBinding.testExplanation, getActivity()), null));
-            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), Html.FROM_HTML_MODE_LEGACY, new UrlImageParser(contentBinding.testExplanation, getActivity()), null));
+            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(contentBinding.testExplanation, getActivity()), null));
+            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(contentBinding.testQuestion, getActivity()), null));
         } else {
-            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), new UrlImageParser(contentBinding.testExplanation, getActivity()), null));
-            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), new UrlImageParser(contentBinding.testExplanation, getActivity()), null));
+            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), new URLImageParserNew(contentBinding.testQuestion, getActivity()), null));
+            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), new URLImageParserNew(contentBinding.testExplanation, getActivity()), null));
         }
     }
 

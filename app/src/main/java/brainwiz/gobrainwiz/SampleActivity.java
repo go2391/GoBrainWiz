@@ -11,7 +11,7 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
-import brainwiz.gobrainwiz.utils.UrlImageParser;
+import brainwiz.gobrainwiz.utils.URLImageParserNew;
 
 public class SampleActivity extends AppCompatActivity {
 
@@ -33,9 +33,9 @@ public class SampleActivity extends AppCompatActivity {
 
         TextView textView = (TextView) findViewById(R.id.sampletextview);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            textView.setText(Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY, new UrlImageParser(textView, this), null));
+            textView.setText(Html.fromHtml(htmlString, Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(textView, this), null));
         } else {
-            textView.setText(Html.fromHtml(htmlString, new UrlImageParser(textView, this), null));
+            textView.setText(Html.fromHtml(htmlString, new URLImageParserNew(textView, this), null));
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

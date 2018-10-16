@@ -1,5 +1,7 @@
 package brainwiz.gobrainwiz.test;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -223,9 +225,18 @@ public class TestQuestionFragment extends BaseFragment {
 
         }
 
-        ScoreCardFragment instance = ScoreCardFragment.getInstance(new ArrayList<TestModel.Datum>(viewPagerAdapter.getData()));
+        if (isCompanyTest) {
+            Intent data = new Intent();
+            data.putExtra(ID, getArguments().getString(ID, ""));
+            getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
+            ((TestActivity) getActivity()).getSupportFragmentManager().popBackStack();
 
-        ((TestActivity) getActivity()).fragmentTransaction(instance);
+        } else {
+
+            ScoreCardFragment instance = ScoreCardFragment.getInstance(new ArrayList<TestModel.Datum>(viewPagerAdapter.getData()));
+
+            ((TestActivity) getActivity()).fragmentTransaction(instance);
+        }
     }
 
     public void bookMark(boolean checked) {

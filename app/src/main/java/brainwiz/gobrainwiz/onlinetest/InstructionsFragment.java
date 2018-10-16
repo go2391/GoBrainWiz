@@ -1,6 +1,8 @@
 package brainwiz.gobrainwiz.onlinetest;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,6 +40,7 @@ public class InstructionsFragment extends BaseFragment {
     private InstructionTestTypeAdapter adapter;
     private String selectedCatId = "";
     private boolean isReview;
+    int TEST_REQUESTCODE = 100;
 
     public static InstructionsFragment getInstance(Bundle bundle) {
         InstructionsFragment instructionsFragment = new InstructionsFragment();
@@ -91,14 +94,36 @@ public class InstructionsFragment extends BaseFragment {
                 if (!isReview)
                     ((TestActivity) activity).startTest();
 
-                ((TestActivity) activity).fragmentTransaction(TestQuestionFragment.getInstance(testID, selectedCatId, true, isReview));
+                TestQuestionFragment instance = TestQuestionFragment.getInstance(testID, selectedCatId, true, isReview);
+
+                instance.setTargetFragment(InstructionsFragment.this, TEST_REQUESTCODE);
+                ((TestActivity) activity).fragmentTransaction(instance);
 
             }
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && requestCode == TEST_REQUESTCODE) {
+            if (data != null) {
+                List<OnlineTestSetModel.TestSet> options = adapter.getOptions();
+                for (OnlineTestSetModel.TestSet option : options) {
+                    if (option.getCatId().equalsIgnoreCase(data.getStringExtra(ID))) {
+                        option.setCompleted(true);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+
+            }
+        }
+    }
 
     private void getCompanySets() {
+        if (!testSets.isEmpty()) {
+            return;
+        }
         showProgress();
         testID = getArguments().getString(ID, "");
         HashMap<String, String> baseBodyMap = getBaseBodyMap();

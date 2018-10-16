@@ -86,6 +86,9 @@ public class InstructionTestTypeAdapter extends RecyclerView.Adapter<Instruction
         public void onClick(View v) {
             if (getAdapterPosition() != RecyclerView.NO_POSITION) {
 
+                if (options.get(getAdapterPosition()).isCompleted()) {
+                    return;
+                }
                 if (selectedOption != -1) {
                     options.get(selectedOption).setSelected(false);
                 }

@@ -18,7 +18,7 @@
             android:weightSum="2">
 
             <RadioButton
-                android:id="@+id/rb_promotions"
+                android:id="@+id/rb_practice"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -35,7 +35,7 @@
                 android:textSize="@dimen/font_16" />
 
             <RadioButton
-                android:id="@+id/rb_general"
+                android:id="@+id/rb_online"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -52,38 +52,12 @@
         </RadioGroup>
 
 
-        <brainwiz.gobrainwiz.utils.SlidingTabLayout
-            android:id="@+id/sliding_tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/blueSecondary"
-            android:minHeight="@dimen/dimen_50"
-            android:visibility="gone">
-
-            <!--<android.support.v4.view.PagerTabStrip-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
-        </brainwiz.gobrainwiz.utils.SlidingTabLayout>
-
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager_history"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <android.support.v4.view.PagerTabStrip
-                android:id="@+id/pager_tab_strip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginEnd="@dimen/dimen_16"
-                android:layout_marginStart="@dimen/dimen_16"
-                android:padding="@dimen/dimen_10"
-                android:paddingBottom="4dp"
-                android:paddingTop="4dp"
-                android:textColor="@color/question_text_selector"
-                app:tabGravity="fill"
-                app:tabMode="fixed" />
 
         </android.support.v4.view.ViewPager>
 

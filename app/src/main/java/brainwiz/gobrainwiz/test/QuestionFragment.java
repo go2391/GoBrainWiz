@@ -38,15 +38,16 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
 
     @Override
     public void onResumeFragment() {
-        startTime = System.currentTimeMillis();
+        startTime = ((TestActivity) getActivity()).getCurrentRunningTime();
     }
 
     @Override
     public void onPauseFragment() {
-        endTime = System.currentTimeMillis();
+        endTime = ((TestActivity) getActivity()).getCurrentRunningTime();
 //        totalTime = data.getSpentTime();
         totalTime += endTime - startTime;
-        LogUtils.e("Total Time Spent sec:" + totalTime / 1000);
+//        timerTextView.setText(String.format("%02d:%02d", currentRunningTime / 60, currentRunningTime % 60));
+        LogUtils.e("Total Time Spent sec:" + String.format("%02d:%02d", totalTime / 60, totalTime % 60));
 
 //        data.setSpentTime(totalTime);
 

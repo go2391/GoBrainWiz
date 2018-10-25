@@ -17,8 +17,10 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import brainwiz.gobrainwiz.sidemenu.TestHistoryFragment;
+import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -60,6 +62,8 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        ((RoundishImageView) findViewById(R.id.imageView)).setUrl(SharedPrefUtils.getString(this, SharedPrefUtils.PROFILE_IMAGE, ""));
+        ((TextView) findViewById(R.id.textView_user_name)).setText(SharedPrefUtils.getUserName(this));
         findViewById(R.id.logo).setOnClickListener(onClickListener);
         fragmentTransaction(new HomeFragment(), R.id.content_frame, false);
     }

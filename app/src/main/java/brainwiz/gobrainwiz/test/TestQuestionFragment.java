@@ -221,6 +221,9 @@ public class TestQuestionFragment extends BaseFragment {
 
     public void submitTest() {
 //        TODO Submit Test
+        if (viewPagerAdapter.getData() == null) {
+            return;
+        }
         for (TestModel.Datum datum : viewPagerAdapter.getData()) {
 
         }

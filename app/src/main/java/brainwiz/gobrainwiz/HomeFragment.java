@@ -25,10 +25,13 @@ import brainwiz.gobrainwiz.onlinetest.OnlineTestFragment;
 import brainwiz.gobrainwiz.practicetest.PracticeTestCategoryFragment;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
+import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import brainwiz.gobrainwiz.videos.VideosFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.PROFILE_IMAGE;
 
 public class HomeFragment extends BaseFragment {
 
@@ -116,6 +119,8 @@ public class HomeFragment extends BaseFragment {
 
                 bind.homeTestimonialsViewpager.setAdapter(new TestimonalAdapter(context, data.getTestinomials()));
 
+
+                SharedPrefUtils.putData(getActivity(), PROFILE_IMAGE, data.getProfile_link());
                 dismissProgress();
 
             }

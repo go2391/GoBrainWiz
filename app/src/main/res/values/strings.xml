@@ -117,4 +117,6 @@ sections
     <string name="select_section">Select any one of the section</string>
     <string name="watch_it_later">Watch it later \t</string>
     <string name="your_result">Your Result</string>
+    <string name="change_password">change password</string>
+    <string name="update_profile">Update Profile</string>
 </resources>

@@ -34,6 +34,18 @@ public class DashBoardModel extends BaseModel {
         @Expose
         private WeekSchedule weekSchedule = new WeekSchedule();
 
+        @SerializedName("profile_link")
+        @Expose
+        private String profile_link = "";
+
+        public String getProfile_link() {
+            return profile_link;
+        }
+
+        public void setProfile_link(String profile_link) {
+            this.profile_link = profile_link;
+        }
+
         public List<Banner> getBanners() {
             return banners;
         }

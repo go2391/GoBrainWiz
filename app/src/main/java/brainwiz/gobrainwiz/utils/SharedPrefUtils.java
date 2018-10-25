@@ -2,7 +2,6 @@ package brainwiz.gobrainwiz.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentActivity;
 
 import brainwiz.gobrainwiz.api.ApiStringConstants;
 
@@ -15,6 +14,7 @@ public class SharedPrefUtils {
     public static final String USER_NAME = "UserName";
     public static final String USER_TOKEN = "UserToken";
     public static final String USER_EMAIL = "UserEmail";
+    public static final String PROFILE_IMAGE = "ProfileImage";
 
 
     public static SharedPreferences getSharedPref(Context context) {
@@ -25,6 +25,10 @@ public class SharedPrefUtils {
         getSharedPref(context).edit().putString(key, value).apply();
     }
 
+
+    public static String getUserName(Context context) {
+        return getString(context, USER_NAME, "");
+    }
 
     public static String getUserEmail(Context context) {
         return getString(context, ApiStringConstants.EMAIL, "");

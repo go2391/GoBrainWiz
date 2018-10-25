@@ -1,5 +1,6 @@
 package brainwiz.gobrainwiz.test;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
+import brainwiz.gobrainwiz.YoutubeVideoActivity;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.databinding.FragmentTestContentBinding;
 import brainwiz.gobrainwiz.utils.LogUtils;
@@ -68,6 +70,7 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
 
     private void init() {
 
+        contentBinding.testVideoExplanationLayout.setOnClickListener(onClickListener);
 
         data = ((TestModel.Datum) getArguments().getParcelable("object"));
         contentBinding.answerOptionsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -84,6 +87,7 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
 
 
         contentBinding.testExplanationLayout.setVisibility(isReviewMode ? View.VISIBLE : View.GONE);
+        contentBinding.testVideoExplanationLayout.setVisibility(isReviewMode ? View.VISIBLE : View.GONE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(contentBinding.testExplanation, getActivity()), null));
             contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(contentBinding.testQuestion, getActivity()), null));
@@ -101,6 +105,11 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
                     contentBinding.bookmark.setChecked(!contentBinding.bookmark.isChecked());
                     data.setBookMark(contentBinding.bookmark.isChecked());
                     listener.onMarkReview(contentBinding.bookmark.isChecked());
+                    break;
+                case R.id.test_video_explanation_layout:
+                    Intent intent1 = new Intent(getActivity(), YoutubeVideoActivity.class);
+                    intent1.putExtra(YoutubeVideoActivity.VIDEO_ID, data.getVideoLink());
+                    startActivity(intent1);
                     break;
             }
         }

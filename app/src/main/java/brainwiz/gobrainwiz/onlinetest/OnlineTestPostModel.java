@@ -4,44 +4,29 @@ package brainwiz.gobrainwiz.onlinetest;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class OnlineTestPostModel {
 
-    @SerializedName("student_id")
-    @Expose
-    private int studentId;
-    @SerializedName("device_id")
-    @Expose
-    private String deviceId;
-    @SerializedName("token")
-    @Expose
+    private int student_id;
+    private String device_id;
     private String token;
-    @SerializedName("test_id")
-    @Expose
-    private int testId;
-    @SerializedName("set_id")
-    @Expose
-    private int setId;
-    @SerializedName("questions")
-    @Expose
+    private int test_id;
+    private int set_id;
     private List<Question> questions = new ArrayList<Question>();
 
     public int getStudentId() {
-        return studentId;
+        return student_id;
     }
 
     public void setStudentId(int studentId) {
-        this.studentId = studentId;
+        this.student_id = studentId;
     }
 
-    public String getDeviceId() {
-        return deviceId;
+    public String getDevice_id() {
+        return device_id;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
     }
 
     public String getToken() {
@@ -52,20 +37,20 @@ public class OnlineTestPostModel {
         this.token = token;
     }
 
-    public int getTestId() {
-        return testId;
+    public int getTest_id() {
+        return test_id;
     }
 
-    public void setTestId(int testId) {
-        this.testId = testId;
+    public void setTest_id(int test_id) {
+        this.test_id = test_id;
     }
 
-    public int getSetId() {
-        return setId;
+    public int getSet_id() {
+        return set_id;
     }
 
-    public void setSetId(int setId) {
-        this.setId = setId;
+    public void setSet_id(int set_id) {
+        this.set_id = set_id;
     }
 
     public List<Question> getQuestions() {
@@ -79,60 +64,50 @@ public class OnlineTestPostModel {
 
     public static class Question {
 
-        @SerializedName("q_id")
-        @Expose
-        private String qId;
-        @SerializedName("selected_option")
-        @Expose
-        private int selectedOption;
-        @SerializedName("time_taken_in")
-        @Expose
-        private String timeTakenIn;
-        @SerializedName("time_taken_out")
-        @Expose
-        private String timeTakenOut;
-        @SerializedName("time_taken")
-        @Expose
-        private int timeTaken;
+        private String q_id;
+        private int selected_option;
+        private String time_taken_in;
+        private String time_taken_out;
+        private int time_taken;
 
         public String getQId() {
-            return qId;
+            return q_id;
         }
 
         public void setQId(String qId) {
-            this.qId = qId;
+            this.q_id = qId;
         }
 
-        public int getSelectedOption() {
-            return selectedOption;
+        public int getSelected_option() {
+            return selected_option;
         }
 
-        public void setSelectedOption(int selectedOption) {
-            this.selectedOption = selectedOption;
+        public void setSelected_option(int selected_option) {
+            this.selected_option = selected_option;
         }
 
-        public String getTimeTakenIn() {
-            return timeTakenIn;
+        public String getTime_taken_in() {
+            return time_taken_in;
         }
 
-        public void setTimeTakenIn(String timeTakenIn) {
-            this.timeTakenIn = timeTakenIn;
+        public void setTime_taken_in(String time_taken_in) {
+            this.time_taken_in = time_taken_in;
         }
 
-        public String getTimeTakenOut() {
-            return timeTakenOut;
+        public String getTime_taken_out() {
+            return time_taken_out;
         }
 
-        public void setTimeTakenOut(String timeTakenOut) {
-            this.timeTakenOut = timeTakenOut;
+        public void setTime_taken_out(String time_taken_out) {
+            this.time_taken_out = time_taken_out;
         }
 
-        public int getTimeTaken() {
-            return timeTaken;
+        public int getTime_taken() {
+            return time_taken;
         }
 
-        public void setTimeTaken(int timeTaken) {
-            this.timeTaken = timeTaken;
+        public void setTime_taken(int time_taken) {
+            this.time_taken = time_taken;
         }
 
     }

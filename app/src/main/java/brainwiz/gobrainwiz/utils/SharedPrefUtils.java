@@ -8,7 +8,8 @@ import brainwiz.gobrainwiz.api.ApiStringConstants;
 
 public class SharedPrefUtils {
     public static String PREF_NAME = "GoBrainWizPref";
-
+    public static final String IS_FIRST_LAUNCH = "IsFirstLaunch";
+    public static final String IS_LOGIN = "IsLogin";
     public static final String USER_ID = "UserID";
     public static final String USER_MOBILE = "UserMObile";
     public static final String USER_NAME = "UserName";
@@ -25,6 +26,14 @@ public class SharedPrefUtils {
         getSharedPref(context).edit().putString(key, value).apply();
     }
 
+
+    public static boolean getIsFirstLaunch(Context context) {
+        return getBoolean(context, IS_FIRST_LAUNCH, true);
+    }
+
+    public static boolean getIsLogin(Context context) {
+        return getBoolean(context, IS_LOGIN, false);
+    }
 
     public static String getUserName(Context context) {
         return getString(context, USER_NAME, "");

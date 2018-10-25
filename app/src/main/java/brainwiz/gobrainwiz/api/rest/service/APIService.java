@@ -1,8 +1,6 @@
 package brainwiz.gobrainwiz.api.rest.service;
 
 
-import com.apshutters.salesperson.model.BaseResponse;
-
 import java.util.HashMap;
 
 import brainwiz.gobrainwiz.api.model.DashBoardModel;
@@ -15,6 +13,7 @@ import brainwiz.gobrainwiz.api.model.PracticeTestModel;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.api.model.TestsModel;
 import brainwiz.gobrainwiz.api.model.VideoListModel;
+import brainwiz.gobrainwiz.onlinetest.OnlineTestPostModel;
 import brainwiz.gobrainwiz.practicetest.PractiseTestPostModel;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -70,6 +69,7 @@ public interface APIService {
     Call<String> postPracticeTest(@Body PractiseTestPostModel model);
 
     @POST("/online-save")
-    Call<String> postOnlineTest(@Body PractiseTestPostModel model);
+    Call<String> postOnlineTest(@Body OnlineTestPostModel model);
 
+    Call<String> postJoinRequest(@Body HashMap<String, String> baseBodyMap);
 }

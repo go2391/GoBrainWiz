@@ -1,8 +1,6 @@
 package brainwiz.gobrainwiz.test;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -29,6 +27,7 @@ import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.TestModel;
+import brainwiz.gobrainwiz.onlinetest.OnlineTestPostModel;
 import brainwiz.gobrainwiz.practicetest.PractiseTestPostModel;
 import brainwiz.gobrainwiz.utils.LogUtils;
 import brainwiz.gobrainwiz.utils.SharedPrefUtils;
@@ -251,16 +250,37 @@ public class TestQuestionFragment extends BaseFragment {
         }
 
         if (isCompanyTest) {
-            RetrofitManager.getRestApiMethods().postOnlineTest(getPraticeTestData(viewPagerAdapter.getData()));
+            RetrofitManager.getRestApiMethods().postOnlineTest(getOnlineTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<String>(getActivity()) {
+                @Override
+                public void onApiResponse(Response<String> response, boolean isSuccess, String message) {
+                    LogUtils.e(response.body());
+                }
+
+                @Override
+                public void onApiFailure(boolean isSuccess, String message) {
+                    LogUtils.e(message);
+                }
+            });
+
         } else {
-            RetrofitManager.getRestApiMethods().postPracticeTest()
+            RetrofitManager.getRestApiMethods().postPracticeTest(getPraticeTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<String>(getActivity()) {
+                @Override
+                public void onApiResponse(Response<String> response, boolean isSuccess, String message) {
+                    LogUtils.e(response.body());
+                }
+
+                @Override
+                public void onApiFailure(boolean isSuccess, String message) {
+                    LogUtils.e(message);
+                }
+            });
         }
 
-        for (TestModel.Datum datum : viewPagerAdapter.getData()) {
+//        for (TestModel.Datum datum : viewPagerAdapter.getData()) {
+//
+//        }
 
-        }
-
-        if (isCompanyTest) {
+/*        if (isCompanyTest) {
             Intent data = new Intent();
             data.putExtra(ID, getArguments().getString(ID, ""));
             getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
@@ -271,7 +291,34 @@ public class TestQuestionFragment extends BaseFragment {
             ScoreCardFragment instance = ScoreCardFragment.getInstance(new ArrayList<TestModel.Datum>(viewPagerAdapter.getData()));
 
             ((TestActivity) getActivity()).fragmentTransaction(instance);
+        }*/
+    }
+
+    @SuppressLint("HardwareIds")
+    private OnlineTestPostModel getOnlineTestData(List<TestModel.Datum> data) {
+        OnlineTestPostModel onlineTestPostModel = new OnlineTestPostModel();
+        onlineTestPostModel.setToken(SharedPrefUtils.getToken(getActivity()));
+        onlineTestPostModel.setStudentId(Integer.parseInt(SharedPrefUtils.getStudentID(getActivity())));
+        onlineTestPostModel.setDevice_id(Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ANDROID_ID));
+        onlineTestPostModel.setTest_id(Integer.parseInt(getArguments().getString(ID, "")));
+        onlineTestPostModel.setSet_id(Integer.parseInt(getArguments().getString(CAT_ID, "")));
+
+        ArrayList<OnlineTestPostModel.Question> questions = new ArrayList<>();
+
+        for (TestModel.Datum datum : data) {
+            OnlineTestPostModel.Question question = new OnlineTestPostModel.Question();
+            question.setQId(datum.getQuestionId());
+            String selectedOption = datum.getSelectedOption();
+            if (selectedOption != null && !selectedOption.isEmpty()) {
+                question.setSelected_option(Integer.parseInt(selectedOption));
+            }
+            question.setTime_taken((int) datum.getSpentTime());
+            questions.add(question);
         }
+        onlineTestPostModel.setQuestions(questions);
+        return onlineTestPostModel;
+
     }
 
     @SuppressLint("HardwareIds")
@@ -283,7 +330,20 @@ public class TestQuestionFragment extends BaseFragment {
                 Settings.Secure.ANDROID_ID));
         practiseTestPostModel.setExamTestId(Integer.parseInt(getArguments().getString(ID, "")));
 
+        ArrayList<PractiseTestPostModel.Question> questions = new ArrayList<>();
 
+        for (TestModel.Datum datum : data) {
+            PractiseTestPostModel.Question question = new PractiseTestPostModel.Question();
+            question.setQId(datum.getQuestionId());
+            String selectedOption = datum.getSelectedOption();
+            if (selectedOption != null && !selectedOption.isEmpty()) {
+                question.setSelectedOption(Integer.parseInt(selectedOption));
+            }
+
+            question.setTimeTaken((int) datum.getSpentTime());
+            questions.add(question);
+        }
+        practiseTestPostModel.setQuestions(questions);
         return practiseTestPostModel;
 
     }

@@ -1,7 +1,6 @@
 package brainwiz.gobrainwiz;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,7 +31,8 @@ public class YoutubeVideoActivity extends YouTubeBaseActivity implements YouTube
 
         setContentView(R.layout.activity_youtube_video);
 
-        mVideoId = "DqROxv0pDDA";
+
+        mVideoId = getIntent().getStringExtra(VIDEO_ID);
 
         // Initializing video player with developer key
         youTubePlayerView = (YouTubePlayerView) findViewById(R.id.youtubeView);

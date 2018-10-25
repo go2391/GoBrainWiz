@@ -155,7 +155,9 @@ public class HomeFragment extends BaseFragment {
                     startActivity(intent);
                     break;
                 case R.id.video_play_icon:
-                    startActivity(new Intent(getActivity(), YoutubeVideoActivity.class));
+                    Intent intent1 = new Intent(getActivity(), YoutubeVideoActivity.class);
+                    intent1.putExtra(YoutubeVideoActivity.VIDEO_ID, "DqROxv0pDDA");
+                    startActivity(intent1);
                     break;
                 case R.id.review_arrow:
                     break;

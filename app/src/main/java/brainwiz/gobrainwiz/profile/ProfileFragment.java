@@ -28,5 +28,6 @@ public class ProfileFragment extends BaseFragment {
 
     private void initViews() {
         bind.profileImageView.setUrl(SharedPrefUtils.getString(getActivity(), SharedPrefUtils.PROFILE_IMAGE, ""));
+        bind.profileUserName.setText(SharedPrefUtils.getUserPhone(getActivity()));
     }
 }

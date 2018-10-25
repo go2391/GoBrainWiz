@@ -3,7 +3,6 @@ package brainwiz.gobrainwiz;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +27,7 @@ import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import retrofit2.Response;
 
 import static brainwiz.gobrainwiz.R.color.colorAccent;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.IS_LOGIN;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_EMAIL;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_ID;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_MOBILE;
@@ -115,7 +115,7 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void saveUserDetails(LoginModel.Data body) {
-
+        SharedPrefUtils.putData(context, IS_LOGIN, true);
         SharedPrefUtils.putData(context, USER_EMAIL, body.getExamuserEmail());
         SharedPrefUtils.putData(context, USER_ID, body.getExamuserId());
         SharedPrefUtils.putData(context, USER_MOBILE, body.getExamuserMobile());

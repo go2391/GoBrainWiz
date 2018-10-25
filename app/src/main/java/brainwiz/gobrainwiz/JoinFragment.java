@@ -1,34 +1,29 @@
 package brainwiz.gobrainwiz;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Toast;
+import android.widget.EditText;
 
-import java.util.List;
+import java.util.HashMap;
 
-import brainwiz.gobrainwiz.databinding.FragmentAboutUsBinding;
-import brainwiz.gobrainwiz.databinding.FragmentContactUsBinding;
+import brainwiz.gobrainwiz.api.ApiCallback;
+import brainwiz.gobrainwiz.api.RetrofitManager;
+import brainwiz.gobrainwiz.databinding.FragmentJoinBinding;
+import brainwiz.gobrainwiz.utils.DDAlerts;
+import brainwiz.gobrainwiz.utils.NetWorkUtil;
+import brainwiz.gobrainwiz.utils.SharedPrefUtils;
+import retrofit2.Response;
 
-public class AboutUsFragment extends BaseFragment {
+public class JoinFragment extends BaseFragment {
 
     private Context context;
-    FragmentAboutUsBinding bind;
+    FragmentJoinBinding bind;
 
     @Override
     public void onAttach(Context context) {
@@ -40,44 +35,18 @@ public class AboutUsFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_about_us, container, false);
+        View inflate = inflater.inflate(R.layout.fragment_join, container, false);
         bind = DataBindingUtil.bind(inflate);
         initViews();
         return inflate;
     }
 
     private void initViews() {
+        bind.name.setText(SharedPrefUtils.getUserName(context));
+        bind.email.setText(SharedPrefUtils.getUserEmail(context));
+        bind.mobile.setText(SharedPrefUtils.getUserPhone(context));
 
-        WebSettings settings = bind.aboutUsWebview.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
-        settings.setLoadsImagesAutomatically(true);
-
-//        bind.aboutUsWebview.setWebViewClient(new MyClient());
-        bind.aboutUsWebview.loadUrl("http://itsbiz.000webhostapp.com/aboutus.html");
-    }
-
-
-    class MyClient extends WebViewClient {
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-
-        /*@SuppressWarnings("deprecation")
-        @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            Toast.makeText(getActivity(), description, Toast.LENGTH_SHORT).show();
-        }
-
-        @TargetApi(android.os.Build.VERSION_CODES.M)
-        @Override
-        public void onReceivedError(WebView view, WebResourceRequest req, WebResourceError rerr) {
-            // Redirect to deprecated method, so you can use it in all SDK versions
-            onReceivedError(view, rerr.getErrorCode(), rerr.getDescription().toString(), req.getUrl().toString());
-        }*/
+        bind.submit.setOnClickListener(onClickListener);
     }
 
 
@@ -85,44 +54,67 @@ public class AboutUsFragment extends BaseFragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.contact_us_address:
-                    openGmap();
-                    break;
-                case R.id.contact_us_call:
-                    ((MainActivity) getActivity()).call();
-                    break;
+                case R.id.submit:
+                    if (isValidDetails()) {
 
-                case R.id.contact_us_email:
-
-
-                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.gobrainwiz_gmail_com), null));
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "");
-                    intent.putExtra(Intent.EXTRA_TEXT, "");
-                    final PackageManager pm = context.getPackageManager();
-                    final List<ResolveInfo> matches = pm.queryIntentActivities(intent, 0);
-                    String className = null;
-                    for (final ResolveInfo info : matches) {
-                        if (info.activityInfo.packageName.equals("com.google.android.gm")) {
-                            className = info.activityInfo.name;
-
-                            if (className != null && !className.isEmpty()) {
-                                break;
-                            }
+                        if (!NetWorkUtil.isConnected(context)) {
+                            DDAlerts.showNetworkAlert(getActivity());
+                            return;
                         }
+                        showProgress();
+                        HashMap<String, String> baseBodyMap = getBaseBodyMap();
+                        baseBodyMap.put("name", bind.name.getText().toString());
+                        baseBodyMap.put("email", bind.email.getText().toString());
+                        baseBodyMap.put("mobile", bind.mobile.getText().toString());
+                        baseBodyMap.put("message", bind.message.getText().toString());
+                        RetrofitManager.getRestApiMethods().postJoinRequest(baseBodyMap).enqueue(new ApiCallback<String>(getActivity()) {
+                            @Override
+                            public void onApiResponse(Response<String> response, boolean isSuccess, String message) {
+                                dismissProgress();
+                                if (isSuccess) {
+                                    bind.name.setText("");
+                                    bind.email.setText("");
+                                    bind.mobile.setText("");
+                                    bind.message.setText("");
+                                    DDAlerts.showAlert(getActivity(), "Your request has been sent, We will contact you soon. Thank you for your interest.", getString(R.string.ok));
+                                }
+                            }
+
+                            @Override
+                            public void onApiFailure(boolean isSuccess, String message) {
+
+                            }
+                        });
                     }
-                    intent.setClassName("com.google.android.gm", className);
-                    getActivity().startActivity(intent);
                     break;
+
             }
         }
     };
 
-    private void openGmap() {
-        Uri gmmIntentUri = Uri.parse("geo:17.438687,78.448138");
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
-            startActivity(mapIntent);
+    private boolean isValidDetails() {
+        if (isEmpty(bind.name)) {
+            DDAlerts.showToast(getActivity(), "enter name.");
+            return false;
         }
+
+        if (isEmpty(bind.email)) {
+            DDAlerts.showToast(getActivity(), "enter email.");
+            return false;
+        }
+
+        if (isEmpty(bind.mobile)) {
+            DDAlerts.showToast(getActivity(), "enter mobile number.");
+            return false;
+        }
+
+
+        return true;
     }
+
+    private boolean isEmpty(EditText editText) {
+        return editText.getText().toString().isEmpty();
+    }
+
+
 }

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.google.android.youtube.player.YouTubePlayerView;
+import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 
 public class LandingActivity extends BaseActivity {
     private ViewPager viewPager;
@@ -35,6 +35,15 @@ public class LandingActivity extends BaseActivity {
 
         findViewById(R.id.skip).setOnClickListener(onClickListener);
         findViewById(R.id.next).setOnClickListener(onClickListener);
+
+        if (!SharedPrefUtils.getIsFirstLaunch(this)) {
+            if (SharedPrefUtils.getIsLogin(this)) {
+                startActivity(new Intent(LandingActivity.this, MainActivity.class));
+            } else {
+                startActivity(new Intent(LandingActivity.this, LoginActivity.class));
+            }
+            finish();
+        }
     }
 
 
@@ -44,13 +53,15 @@ public class LandingActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.skip:
                     startActivity(new Intent(LandingActivity.this, LoginActivity.class));
+                    SharedPrefUtils.putData(getApplicationContext(), SharedPrefUtils.IS_FIRST_LAUNCH, false);
                     finish();
                     break;
                 case R.id.next:
                     int count = viewPager.getAdapter().getCount();
 
                     if (viewPager.getCurrentItem() == count - 1) {
-                        startActivity(new Intent(LandingActivity.this, MainActivity.class));
+                        startActivity(new Intent(LandingActivity.this, LoginActivity.class));
+                        SharedPrefUtils.putData(getApplicationContext(), SharedPrefUtils.IS_FIRST_LAUNCH, false);
                         finish();
                     } else {
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);

@@ -3,10 +3,8 @@ package brainwiz.gobrainwiz.api;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 
 public class NetworkImageView extends android.support.v7.widget.AppCompatImageView {
 
@@ -30,6 +28,9 @@ public class NetworkImageView extends android.support.v7.widget.AppCompatImageVi
 
 
     public void setUrl(String url) {
+        if (url == null) {
+            return;
+        }
         Glide.with(getContext()).load(url).into(this);
     }
 

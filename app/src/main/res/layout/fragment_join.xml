@@ -1,6 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
 
-</LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_20">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:text="@string/like_to_know_about_brainwiz"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_18" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/name"
+                style="@style/EditTextStyle"
+                android:hint="@string/name" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/email"
+                style="@style/EditTextStyle"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/mobile"
+                style="@style/EditTextStyle"
+                android:hint="@string/mobile"
+                android:inputType="number"
+                android:maxLength="10" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/message"
+                style="@style/EditTextStyle"
+                android:gravity="start|top"
+                android:hint="leave any query"
+                android:minHeight="@dimen/dimen_100"
+                android:singleLine="false" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_10"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:background="@drawable/button_bg_green"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/ic_arrow_forward"
+            android:text="@string/submit"
+            android:textColor="@color/white"
+            android:translationZ="@dimen/dimen_10" />
+
+    </LinearLayout>
+</layout>

@@ -49,8 +49,14 @@ public class TestActivity extends BaseActivity
     private AlertDialog alertDialog;
     private boolean isReview;
 
+    private long currentRunningTime;
+
     public long getTargetTime() {
         return targetTime;
+    }
+
+    public long getCurrentRunningTime() {
+        return currentRunningTime;
     }
 
     public void setTargetTime(long targetTime) {
@@ -164,8 +170,8 @@ public class TestActivity extends BaseActivity
      */
     private void updateUITimer() {
         if (serviceBound) {
-            long pTime = targetTime - timerService.elapsedTime();
-            timerTextView.setText(String.format("%02d:%02d", pTime / 60, pTime % 60));
+            currentRunningTime = targetTime - timerService.elapsedTime();
+            timerTextView.setText(String.format("%02d:%02d", currentRunningTime / 60, currentRunningTime % 60));
             final Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
             if (timerTextView.getText().toString().equalsIgnoreCase("00:00")) {
                 if (fragmentById != null && fragmentById instanceof TestQuestionFragment) {

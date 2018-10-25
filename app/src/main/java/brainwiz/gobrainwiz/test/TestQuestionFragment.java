@@ -1,10 +1,13 @@
 package brainwiz.gobrainwiz.test;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +29,9 @@ import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.TestModel;
+import brainwiz.gobrainwiz.practicetest.PractiseTestPostModel;
+import brainwiz.gobrainwiz.utils.LogUtils;
+import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import retrofit2.Response;
 
 public class TestQuestionFragment extends BaseFragment {
@@ -127,7 +133,13 @@ public class TestQuestionFragment extends BaseFragment {
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         viewPagerAdapter.setData(data);
         viewPager.setAdapter(viewPagerAdapter);
-        onPageChangeListener.onPageSelected(0);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                onPageChangeListener.onPageSelected(0);
+            }
+        }, 1000);
+
     }
 
     private List<QuestionNumber> getQuestionsObjects(int size) {
@@ -173,15 +185,28 @@ public class TestQuestionFragment extends BaseFragment {
         }
 
         @Override
-        public void onPageSelected(int position) {
+        public void onPageSelected(final int position) {
 
-            if (fragmentCurrentPosition != -1) {
-                ((FragmentStateListener) viewPagerAdapter.getItem(fragmentCurrentPosition)).onPauseFragment();
-            }
-            ((FragmentStateListener) viewPagerAdapter.getItem(position)).onResumeFragment();
-            fragmentCurrentPosition = position;
-            questionNoAdapter.setSelected(position);
-            indicatorRecycler.scrollToPosition(position);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (fragmentCurrentPosition != -1) {
+//                        ((FragmentStateListener) viewPagerAdapter.getItem(fragmentCurrentPosition)).onPauseFragment();
+                        viewPagerAdapter.getData().get(fragmentCurrentPosition).setEndTime(((TestActivity) getActivity()).getCurrentRunningTime());
+
+                        long spentTime = viewPagerAdapter.getData().get(fragmentCurrentPosition).getSpentTime();
+
+                        LogUtils.e("Total Time Spent sec:" + String.format("%02d:%02d", spentTime / 60, spentTime % 60));
+
+                    }
+                    viewPagerAdapter.getData().get(position).setStartTime(((TestActivity) getActivity()).getCurrentRunningTime());
+                    fragmentCurrentPosition = position;
+                    questionNoAdapter.setSelected(position);
+                    indicatorRecycler.scrollToPosition(position);
+
+
+                }
+            });
 
         }
 
@@ -224,6 +249,13 @@ public class TestQuestionFragment extends BaseFragment {
         if (viewPagerAdapter.getData() == null) {
             return;
         }
+
+        if (isCompanyTest) {
+            RetrofitManager.getRestApiMethods().postOnlineTest(getPraticeTestData(viewPagerAdapter.getData()));
+        } else {
+            RetrofitManager.getRestApiMethods().postPracticeTest()
+        }
+
         for (TestModel.Datum datum : viewPagerAdapter.getData()) {
 
         }
@@ -240,6 +272,20 @@ public class TestQuestionFragment extends BaseFragment {
 
             ((TestActivity) getActivity()).fragmentTransaction(instance);
         }
+    }
+
+    @SuppressLint("HardwareIds")
+    private PractiseTestPostModel getPraticeTestData(List<TestModel.Datum> data) {
+        PractiseTestPostModel practiseTestPostModel = new PractiseTestPostModel();
+        practiseTestPostModel.setToken(SharedPrefUtils.getToken(getActivity()));
+        practiseTestPostModel.setStudentId(Integer.parseInt(SharedPrefUtils.getStudentID(getActivity())));
+        practiseTestPostModel.setDeviceId(Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ANDROID_ID));
+        practiseTestPostModel.setExamTestId(Integer.parseInt(getArguments().getString(ID, "")));
+
+
+        return practiseTestPostModel;
+
     }
 
     public void bookMark(boolean checked) {

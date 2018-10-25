@@ -49,6 +49,8 @@ public class TestModel extends BaseModel {
         private String selectedOption = "";
         private boolean bookMark;
         private long spentTime;
+        private long startTime;
+        private long endTime;
 
         protected Datum(Parcel in) {
             questionId = in.readString();
@@ -160,6 +162,27 @@ public class TestModel extends BaseModel {
 
         public void setSpentTime(long spentTime) {
             this.spentTime = spentTime;
+        }
+
+        public void setStartTime(long startTime) {
+            this.startTime = startTime;
+        }
+
+        public long getStartTime() {
+            return startTime;
+        }
+
+        public void setEndTime(long endTime) {
+            this.endTime = endTime;
+            calculateTotalTime();
+        }
+
+        private void calculateTotalTime() {
+            spentTime = spentTime + startTime - endTime;
+        }
+
+        public long getEndTime() {
+            return endTime;
         }
     }
 

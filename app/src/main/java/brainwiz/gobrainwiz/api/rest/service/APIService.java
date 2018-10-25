@@ -15,6 +15,7 @@ import brainwiz.gobrainwiz.api.model.PracticeTestModel;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.api.model.TestsModel;
 import brainwiz.gobrainwiz.api.model.VideoListModel;
+import brainwiz.gobrainwiz.practicetest.PractiseTestPostModel;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -64,5 +65,11 @@ public interface APIService {
     @POST("/past_tests_practise")
     Call<HistoryPractiseTestModel> getPastPractiseTests(@Body HashMap<String, String> baseBodyMap);
 
+
+    @POST("/practice-save")
+    Call<String> postPracticeTest(@Body PractiseTestPostModel model);
+
+    @POST("/online-save")
+    Call<String> postOnlineTest(@Body PractiseTestPostModel model);
 
 }

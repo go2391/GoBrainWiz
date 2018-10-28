@@ -3,6 +3,7 @@ package brainwiz.gobrainwiz.api.rest.service;
 
 import java.util.HashMap;
 
+import brainwiz.gobrainwiz.api.model.BaseModel;
 import brainwiz.gobrainwiz.api.model.DashBoardModel;
 import brainwiz.gobrainwiz.api.model.HistoryOnlineTestModel;
 import brainwiz.gobrainwiz.api.model.HistoryPractiseTestModel;
@@ -10,6 +11,7 @@ import brainwiz.gobrainwiz.api.model.LoginModel;
 import brainwiz.gobrainwiz.api.model.OnlineTestModle;
 import brainwiz.gobrainwiz.api.model.OnlineTestSetModel;
 import brainwiz.gobrainwiz.api.model.PracticeTestModel;
+import brainwiz.gobrainwiz.api.model.PractiseTestResultModel;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.api.model.TestsModel;
 import brainwiz.gobrainwiz.api.model.VideoListModel;
@@ -40,8 +42,8 @@ public interface APIService {
     @GET("/practice_tests/2")
     Call<PracticeTestModel> getPractiveTestCategories();
 
-    @GET("/practice/{id}")
-    Call<TestsModel> getTests(@Path("id") String id);
+    @POST("/practice")
+    Call<TestsModel> getTests(@Body HashMap<String, String> hashMap);
 
     @POST("/company")
     Call<OnlineTestModle> getCompanies(@Body HashMap<String, String> hashMap);
@@ -51,7 +53,6 @@ public interface APIService {
 
 
     @POST("/company-test")
-///21/16
     Call<TestModel> getCompanyTests(@Body HashMap<String, String> hashMap);
 
     @GET("/practise-test/{id}")
@@ -66,10 +67,16 @@ public interface APIService {
 
 
     @POST("/practice-save")
-    Call<String> postPracticeTest(@Body PractiseTestPostModel model);
+    Call<PractiseTestResultModel> postPracticeTest(@Body PractiseTestPostModel model);
 
-    @POST("/online-save")
-    Call<String> postOnlineTest(@Body OnlineTestPostModel model);
+    @POST("/company-test")
+    Call<BaseModel> postOnlineTest(@Body OnlineTestPostModel model);
 
-    Call<String> postJoinRequest(@Body HashMap<String, String> baseBodyMap);
+    @POST("/send_enquiry")
+    Call<BaseModel> postJoinRequest(@Body HashMap<String, String> baseBodyMap);
+
+    //    upload_image
+    @POST("/upload_image")
+    Call<BaseModel> uploadImage(@Body HashMap<String, String> baseBodyMap);
+
 }

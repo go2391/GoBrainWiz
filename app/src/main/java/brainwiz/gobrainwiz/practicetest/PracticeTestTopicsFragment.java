@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+
 import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
@@ -58,7 +60,9 @@ public class PracticeTestTopicsFragment extends BaseFragment {
         }
 
         showProgress();
-        RetrofitManager.getRestApiMethods().getTests(getArguments().getString(TOPIC_ID)).enqueue(new ApiCallback<TestsModel>(activity) {
+        HashMap<String, String> baseBodyMap = getBaseBodyMap();
+        baseBodyMap.put("topic_id", getArguments().getString(TOPIC_ID));
+        RetrofitManager.getRestApiMethods().getTests(baseBodyMap).enqueue(new ApiCallback<TestsModel>(activity) {
             @Override
             public void onApiResponse(Response<TestsModel> response, boolean isSuccess, String message) {
                 dismissProgress();
@@ -105,6 +109,17 @@ public class PracticeTestTopicsFragment extends BaseFragment {
 
         @Override
         public void onReviewTest(int position) {
+            Intent intent = new Intent(getActivity(), TestActivity.class);
+            Bundle bundle = new Bundle();
+            TestsModel.TestList testList = testTestsAdapter.getData().get(position);
+            bundle.putString(ID, testList.getTestId());
+            bundle.putString(CAT_ID, "");
+            bundle.putBoolean(IS_COMPANY_TEST, false);
+            bundle.putBoolean(IS_REVIEW, true);
+
+            bundle.putString(DURATION, String.valueOf(parseTimeToMinutes(testList.getTestTime())));
+            intent.putExtras(bundle);
+            startActivity(intent);
 
         }
     };

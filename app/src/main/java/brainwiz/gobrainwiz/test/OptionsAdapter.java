@@ -68,7 +68,13 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
 
         if (isReviewMode()) {
             String selectedAnswer = selectedData.getSelectedAnswer();
-            holder.bind.optionNo.setSelected(selectedAnswer != null && selectedOption != null && selectedAnswer.equals(selectedOption));
+            boolean selectedCorrect = selectedAnswer != null && selectedOption != null && selectedAnswer.equals(selectedOption);
+            holder.bind.optionNo.setSelected(selectedCorrect);
+            holder.bind.optionIcon.setVisibility(View.VISIBLE);
+            if (selectedOption != null) {
+                holder.bind.optionIcon.setImageResource(selectedOption.equalsIgnoreCase(String.valueOf(position)) ? R.drawable.ic_wrong : 0);
+            }
+            holder.bind.optionIcon.setImageResource(selectedAnswer.equalsIgnoreCase(String.valueOf(position)) ? R.drawable.ic_tick : 0);
         }
 
     }

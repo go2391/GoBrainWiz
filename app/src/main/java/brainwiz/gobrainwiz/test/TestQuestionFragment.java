@@ -1,6 +1,8 @@
 package brainwiz.gobrainwiz.test;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
@@ -26,6 +28,8 @@ import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
+import brainwiz.gobrainwiz.api.model.BaseModel;
+import brainwiz.gobrainwiz.api.model.PractiseTestResultModel;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.onlinetest.OnlineTestPostModel;
 import brainwiz.gobrainwiz.practicetest.PractiseTestPostModel;
@@ -250,10 +254,19 @@ public class TestQuestionFragment extends BaseFragment {
         }
 
         if (isCompanyTest) {
-            RetrofitManager.getRestApiMethods().postOnlineTest(getOnlineTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<String>(getActivity()) {
+            RetrofitManager.getRestApiMethods().postOnlineTest(getOnlineTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<BaseModel>(getActivity()) {
                 @Override
-                public void onApiResponse(Response<String> response, boolean isSuccess, String message) {
-                    LogUtils.e(response.body());
+                public void onApiResponse(Response<BaseModel> response, boolean isSuccess, String message) {
+                    LogUtils.e(response.body().getMessage());
+                    if (isSuccess) {
+                        Intent data = new Intent();
+                        data.putExtra(ID, getArguments().getString(ID, ""));
+                        Fragment targetFragment = getTargetFragment();
+                        if (targetFragment != null) {
+                            onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
+                        }
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }
                 }
 
                 @Override
@@ -263,10 +276,14 @@ public class TestQuestionFragment extends BaseFragment {
             });
 
         } else {
-            RetrofitManager.getRestApiMethods().postPracticeTest(getPraticeTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<String>(getActivity()) {
+            RetrofitManager.getRestApiMethods().postPracticeTest(getPraticeTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<PractiseTestResultModel>(getActivity()) {
                 @Override
-                public void onApiResponse(Response<String> response, boolean isSuccess, String message) {
-                    LogUtils.e(response.body());
+                public void onApiResponse(Response<PractiseTestResultModel> response, boolean isSuccess, String message) {
+                    if (isSuccess) {
+                        ScoreCardFragment instance = ScoreCardFragment.getInstance(response.body().getData());
+
+                        ((TestActivity) getActivity()).fragmentTransaction(instance);
+                    }
                 }
 
                 @Override
@@ -325,10 +342,10 @@ public class TestQuestionFragment extends BaseFragment {
     private PractiseTestPostModel getPraticeTestData(List<TestModel.Datum> data) {
         PractiseTestPostModel practiseTestPostModel = new PractiseTestPostModel();
         practiseTestPostModel.setToken(SharedPrefUtils.getToken(getActivity()));
-        practiseTestPostModel.setStudentId(Integer.parseInt(SharedPrefUtils.getStudentID(getActivity())));
-        practiseTestPostModel.setDeviceId(Settings.Secure.getString(getActivity().getContentResolver(),
+        practiseTestPostModel.setStudent_id(Integer.parseInt(SharedPrefUtils.getStudentID(getActivity())));
+        practiseTestPostModel.setDevice_id(Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID));
-        practiseTestPostModel.setExamTestId(Integer.parseInt(getArguments().getString(ID, "")));
+        practiseTestPostModel.setExamTest_id(Integer.parseInt(getArguments().getString(ID, "")));
 
         ArrayList<PractiseTestPostModel.Question> questions = new ArrayList<>();
 
@@ -337,10 +354,10 @@ public class TestQuestionFragment extends BaseFragment {
             question.setQId(datum.getQuestionId());
             String selectedOption = datum.getSelectedOption();
             if (selectedOption != null && !selectedOption.isEmpty()) {
-                question.setSelectedOption(Integer.parseInt(selectedOption));
+                question.setSelected_option(Integer.parseInt(selectedOption));
             }
 
-            question.setTimeTaken((int) datum.getSpentTime());
+            question.setTime_taken((int) datum.getSpentTime());
             questions.add(question);
         }
         practiseTestPostModel.setQuestions(questions);

@@ -117,10 +117,17 @@ public class TestActivity extends BaseActivity
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 
     public void startTest() {
         submitView.setVisibility(View.VISIBLE);
-        runTimer();
+        if (serviceBound && !timerService.isTimerRunning()) {
+            startTimer();
+        }
 
     }
 

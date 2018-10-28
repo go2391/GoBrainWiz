@@ -12,6 +12,6 @@
         android:gravity="center"
         android:padding="@dimen/dimen_10"
         android:text="@string/logical_reasoning"
-        android:textColor="@color/blueSecondary"
+        android:textColor="@color/online_test_set_text_selector"
         android:textSize="@dimen/font_24" />
 </layout>

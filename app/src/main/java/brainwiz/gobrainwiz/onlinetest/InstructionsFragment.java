@@ -77,6 +77,7 @@ public class InstructionsFragment extends BaseFragment {
         RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.instruction_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter = new InstructionTestTypeAdapter(context, testSets);
+        adapter.setReview(isReview);
         adapter.setListener(listener);
         recyclerView.setAdapter(adapter);
         TextView start_Review_btn = inflate.findViewById(R.id.start);

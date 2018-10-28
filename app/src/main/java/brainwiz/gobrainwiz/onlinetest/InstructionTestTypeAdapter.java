@@ -2,6 +2,7 @@ package brainwiz.gobrainwiz.onlinetest;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ public class InstructionTestTypeAdapter extends RecyclerView.Adapter<Instruction
     private Context context;
     private int selectedOption = -1;
     private TypeListener listener;
+    private boolean isReview;
 
 
     public int getSelectedOption() {
@@ -48,7 +50,16 @@ public class InstructionTestTypeAdapter extends RecyclerView.Adapter<Instruction
         OnlineTestSetModel.TestSet testSet = options.get(position);
         holder.bind.testType.setText(testSet.getCatName());
         holder.bind.testType.setChecked(testSet.isSelected());
-        holder.bind.testType.setEnabled(!testSet.isCompleted());
+
+        if (!isReview) {
+            holder.bind.testType.setEnabled(!testSet.isCompleted());
+            holder.bind.getRoot().setEnabled(!testSet.isCompleted());
+            if (testSet.isCompleted()) {
+                holder.bind.testType.setPaintFlags(holder.bind.testType.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            } else holder.bind.testType.setPaintFlags(0);
+
+        }
+
     }
 
     @Override
@@ -71,6 +82,14 @@ public class InstructionTestTypeAdapter extends RecyclerView.Adapter<Instruction
 
     public void setOptions(List<OnlineTestSetModel.TestSet> options) {
         this.options = options;
+    }
+
+    public void setReview(boolean review) {
+        this.isReview = review;
+    }
+
+    public boolean isReview() {
+        return isReview;
     }
 
     class TestTypeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

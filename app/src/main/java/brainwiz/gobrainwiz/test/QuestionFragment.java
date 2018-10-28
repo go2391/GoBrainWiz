@@ -80,14 +80,15 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
         adapter.setReviewMode(isReviewMode);
         adapter.setSelectedData(data);
         contentBinding.answerOptionsRecycler.setAdapter(adapter);
+        contentBinding.bookmark.setVisibility(isReviewMode ? View.INVISIBLE : View.VISIBLE);
 //        contentBinding.testQuestion.setText(data.getQuestion());
         if (!isReviewMode) {
             contentBinding.bookmark.setOnClickListener(onClickListener);
         }
 
 
-        contentBinding.testExplanationLayout.setVisibility(isReviewMode ? View.VISIBLE : View.GONE);
-        contentBinding.testVideoExplanationLayout.setVisibility(isReviewMode ? View.VISIBLE : View.GONE);
+        contentBinding.testExplanationLayout.setVisibility(isReviewMode && !data.getExplanation().isEmpty() ? View.VISIBLE : View.GONE);
+        contentBinding.testVideoExplanationLayout.setVisibility(isReviewMode && !data.getVideoLink().isEmpty() ? View.VISIBLE : View.GONE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(contentBinding.testExplanation, getActivity()), null));
             contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(contentBinding.testQuestion, getActivity()), null));
@@ -108,7 +109,10 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
                     break;
                 case R.id.test_video_explanation_layout:
                     Intent intent1 = new Intent(getActivity(), YoutubeVideoActivity.class);
-                    intent1.putExtra(YoutubeVideoActivity.VIDEO_ID, data.getVideoLink());
+                    String youtubeLink = data.getVideoLink();
+                    youtubeLink = youtubeLink.substring(youtubeLink.lastIndexOf("/") + 1, youtubeLink.length());
+
+                    intent1.putExtra(YoutubeVideoActivity.VIDEO_ID, youtubeLink);
                     startActivity(intent1);
                     break;
             }

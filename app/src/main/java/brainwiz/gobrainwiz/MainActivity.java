@@ -164,6 +164,9 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         switch (id) {
+            case R.id.nav_home:
+                getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                break;
             case R.id.nav_camera:
                 fragmentTransaction(new ProfileFragment(), R.id.content_frame, true);
                 break;

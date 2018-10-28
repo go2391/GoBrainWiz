@@ -86,6 +86,10 @@ public class TestsModel {
         @Expose
         private String countque;
 
+        @SerializedName("test_attempted")
+        @Expose
+        private int testAttempted;
+
         public String getTestName() {
             return testName;
         }
@@ -118,5 +122,12 @@ public class TestsModel {
             this.countque = countque;
         }
 
+        public int getTestAttempted() {
+            return testAttempted;
+        }
+
+        public void setTestAttempted(int testAttempted) {
+            this.testAttempted = testAttempted;
+        }
     }
 }

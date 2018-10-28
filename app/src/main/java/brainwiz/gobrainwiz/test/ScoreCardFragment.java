@@ -15,6 +15,7 @@ import java.util.List;
 
 import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
+import brainwiz.gobrainwiz.api.model.PractiseTestResultModel;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.databinding.FragmentScoreCardBinding;
 
@@ -23,10 +24,10 @@ public class ScoreCardFragment extends BaseFragment {
     FragmentScoreCardBinding bind;
 
 
-    public static ScoreCardFragment getInstance(ArrayList<TestModel.Datum> datum) {
+    public static ScoreCardFragment getInstance(PractiseTestResultModel.Data datum) {
         ScoreCardFragment scoreCardFragment = new ScoreCardFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList("object", datum);
+        args.putParcelable("object", datum);
         scoreCardFragment.setArguments(args);
         return scoreCardFragment;
     }
@@ -44,22 +45,12 @@ public class ScoreCardFragment extends BaseFragment {
 
     private void initViews() {
 
-        ArrayList<TestModel.Datum> object = getArguments().getParcelableArrayList("object");
-        int correctAnswers = 0;
-        int attempted = 0;
+        PractiseTestResultModel.Data object = getArguments().getParcelable("object");
 
-        for (int i = 0; i < object.size(); i++) {
-            TestModel.Datum datum = object.get(i);
-            if (datum.getSelectedOption() != null && !datum.getSelectedOption().isEmpty()) {
-                ++attempted;
-                if (datum.getSelectedAnswer().equalsIgnoreCase(datum.getSelectedOption())) {
-                    ++correctAnswers;
-                }
-            }
-        }
-        bind.scoreCardCorrect.setText(String.format(getString(R.string.correct), correctAnswers));
-        bind.scoreCardQuestionsAttempted.setText(String.format(getString(R.string.questions_attempted), attempted));
-        bind.scoreCardTotalQuestions.setText(String.format(getString(R.string.total_questions), object.size()));
-        bind.scoreCardProgress.setProgress((correctAnswers / object.size()) * 100);
+        bind.scoreCardCorrect.setText(String.format(getString(R.string.correct), object.getCorrect()));
+        bind.scoreCardWrong.setText(String.format(getString(R.string.wrong), object.getIncorrect()));
+        bind.scoreCardQuestionsAttempted.setText(String.format(getString(R.string.questions_attempted), object.getAttemptedQuestions()));
+        bind.scoreCardTotalQuestions.setText(String.format(getString(R.string.total_questions), object.getTotalQuestions()));
+        bind.scoreCardProgress.setProgress((object.getCorrect() / object.getTotalQuestions()) * 100);
     }
 }

@@ -9,36 +9,26 @@ import com.google.gson.annotations.SerializedName;
 
 public class PractiseTestPostModel {
 
-    @SerializedName("student_id")
-    @Expose
-    private int studentId;
-    @SerializedName("device_id")
-    @Expose
-    private String deviceId;
-    @SerializedName("token")
-    @Expose
+    private int student_id;
+    private String device_id;
     private String token;
-    @SerializedName("examTest_id")
-    @Expose
-    private int examTestId;
-    @SerializedName("questions")
-    @Expose
+    private int examTest_id;
     private List<Question> questions = new ArrayList<Question>();
 
-    public int getStudentId() {
-        return studentId;
+    public int getStudent_id() {
+        return student_id;
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    public void setStudent_id(int student_id) {
+        this.student_id = student_id;
     }
 
-    public String getDeviceId() {
-        return deviceId;
+    public String getDevice_id() {
+        return device_id;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
     }
 
     public String getToken() {
@@ -49,12 +39,12 @@ public class PractiseTestPostModel {
         this.token = token;
     }
 
-    public int getExamTestId() {
-        return examTestId;
+    public int getExamTest_id() {
+        return examTest_id;
     }
 
-    public void setExamTestId(int examTestId) {
-        this.examTestId = examTestId;
+    public void setExamTest_id(int examTest_id) {
+        this.examTest_id = examTest_id;
     }
 
     public List<Question> getQuestions() {
@@ -68,38 +58,32 @@ public class PractiseTestPostModel {
 
     public static class Question {
 
-        @SerializedName("q_id")
-        @Expose
-        private String qId;
-        @SerializedName("selected_option")
-        @Expose
-        private int selectedOption;
-        @SerializedName("time_taken")
-        @Expose
-        private int timeTaken;
+        private String q_id;
+        private int selected_option;
+        private int time_taken;
 
         public String getQId() {
-            return qId;
+            return q_id;
         }
 
         public void setQId(String qId) {
-            this.qId = qId;
+            this.q_id = qId;
         }
 
-        public int getSelectedOption() {
-            return selectedOption;
+        public int getSelected_option() {
+            return selected_option;
         }
 
-        public void setSelectedOption(int selectedOption) {
-            this.selectedOption = selectedOption;
+        public void setSelected_option(int selected_option) {
+            this.selected_option = selected_option;
         }
 
-        public int getTimeTaken() {
-            return timeTaken;
+        public int getTime_taken() {
+            return time_taken;
         }
 
-        public void setTimeTaken(int timeTaken) {
-            this.timeTaken = timeTaken;
+        public void setTime_taken(int time_taken) {
+            this.time_taken = time_taken;
         }
 
     }

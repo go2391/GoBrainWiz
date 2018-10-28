@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BrainWiz</string>
+    <string name="app_name">BRAINWIZ</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -122,4 +122,11 @@ sections
     <string name="like_to_know_about_brainwiz">Like to know about brainwiz</string>
     <string name="video_explanation">Video Explanation</string>
     <string name="watch_this_video_explination_for_better_understanding">Watch this video explination for better understanding.</string>
+    <string name="name_">Name : %s</string>
+    <string name="email_">Email : %s</string>
+    <string name="mobile_number_">Mobile Number : %s</string>
+    <string name="location_">Location : %s</string>
+    <string name="wrong">Wrong Answers %d</string>
+    <string name="pick_image_intent_text">Pick your profile image</string>
+    <string name="choose_photo_title">Choose Photos</string>
 </resources>

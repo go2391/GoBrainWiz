@@ -14,6 +14,7 @@ import java.util.HashMap;
 
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
+import brainwiz.gobrainwiz.api.model.BaseModel;
 import brainwiz.gobrainwiz.databinding.FragmentJoinBinding;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
@@ -67,9 +68,9 @@ public class JoinFragment extends BaseFragment {
                         baseBodyMap.put("email", bind.email.getText().toString());
                         baseBodyMap.put("mobile", bind.mobile.getText().toString());
                         baseBodyMap.put("message", bind.message.getText().toString());
-                        RetrofitManager.getRestApiMethods().postJoinRequest(baseBodyMap).enqueue(new ApiCallback<String>(getActivity()) {
+                        RetrofitManager.getRestApiMethods().postJoinRequest(baseBodyMap).enqueue(new ApiCallback<BaseModel>(getActivity()) {
                             @Override
-                            public void onApiResponse(Response<String> response, boolean isSuccess, String message) {
+                            public void onApiResponse(Response<BaseModel> response, boolean isSuccess, String message) {
                                 dismissProgress();
                                 if (isSuccess) {
                                     bind.name.setText("");
@@ -82,7 +83,7 @@ public class JoinFragment extends BaseFragment {
 
                             @Override
                             public void onApiFailure(boolean isSuccess, String message) {
-
+                                    dismissProgress();
                             }
                         });
                     }

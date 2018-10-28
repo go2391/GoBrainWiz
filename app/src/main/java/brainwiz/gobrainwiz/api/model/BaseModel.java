@@ -3,7 +3,7 @@ package brainwiz.gobrainwiz.api.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class BaseModel {
+public class BaseModel {
     @SerializedName("status")
     @Expose
     private boolean status;

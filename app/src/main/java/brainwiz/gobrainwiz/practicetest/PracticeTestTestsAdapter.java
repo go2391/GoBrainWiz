@@ -45,6 +45,7 @@ public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestT
         holder.bind.testItemTitle.setText(testList.getTestName());
         holder.bind.testQuestions.setText(String.format(context.getString(R.string.questions), testList.getCountque()));
         holder.bind.testMins.setText(String.format(context.getString(R.string.mins), testList.getTestTime()));
+        holder.bind.testTopicItemStart.setText(data.get(position).getTestAttempted() == 0 ? context.getString(R.string.start) : context.getString(R.string.review));
     }
 
     @Override
@@ -73,7 +74,10 @@ public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestT
         @Override
         public void onClick(View v) {
             if (testListener != null) {
-                testListener.onTestStart(getAdapterPosition());
+                if (data.get(getAdapterPosition()).getTestAttempted() == 0) {
+                    testListener.onTestStart(getAdapterPosition());
+                } else
+                    testListener.onReviewTest(getAdapterPosition());
             }
         }
     }

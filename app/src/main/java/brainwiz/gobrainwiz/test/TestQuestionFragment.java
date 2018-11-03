@@ -120,9 +120,10 @@ public class TestQuestionFragment extends BaseFragment {
             baseBodyMap.put("exam_id", id);
             RetrofitManager.getRestApiMethods().getCompanyTests(baseBodyMap).enqueue(callback);
         } else {
-            RetrofitManager.getRestApiMethods().getPracticeTests(id).enqueue(callback);
+            HashMap<String, String> baseBodyMap = getBaseBodyMap();
+            baseBodyMap.put("testId", id);
+            RetrofitManager.getRestApiMethods().getPracticeTests(baseBodyMap).enqueue(callback);
         }
-
 
     }
 
@@ -263,7 +264,7 @@ public class TestQuestionFragment extends BaseFragment {
                         data.putExtra(ID, getArguments().getString(ID, ""));
                         Fragment targetFragment = getTargetFragment();
                         if (targetFragment != null) {
-                            onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
+                            targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
                         }
                         getActivity().getSupportFragmentManager().popBackStack();
                     }

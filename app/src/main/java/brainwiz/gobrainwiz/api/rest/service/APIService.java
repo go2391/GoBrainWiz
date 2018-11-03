@@ -55,8 +55,8 @@ public interface APIService {
     @POST("/company-test")
     Call<TestModel> getCompanyTests(@Body HashMap<String, String> hashMap);
 
-    @GET("/practise-test/{id}")
-    Call<TestModel> getPracticeTests(@Path("id") String id);
+    @POST("/practise-test")
+    Call<TestModel> getPracticeTests(@Body HashMap<String, String> hashMap);
 
     @POST("/past_tests_company")
     Call<HistoryOnlineTestModel> getPastTests(@Body HashMap<String, String> baseBodyMap);

@@ -44,4 +44,31 @@
         android:layout_toEndOf="@id/imageView"
         android:text="User" />
 
+
+    <TextView
+        android:id="@+id/textView_user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_user_name"
+        android:layout_toEndOf="@id/imageView"
+        android:text="User" />
+
+    <TextView
+        android:id="@+id/textView_user_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_user_email"
+        android:layout_toEndOf="@id/imageView"
+        android:text="User" />
+
+    <TextView
+        android:id="@+id/textView_user_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_user_phone"
+        android:layout_toEndOf="@id/imageView"
+        android:text="User" />
+
+
+
 </RelativeLayout>

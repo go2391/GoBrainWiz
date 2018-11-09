@@ -79,4 +79,13 @@ public interface APIService {
     @POST("/upload_image")
     Call<BaseModel> uploadImage(@Body HashMap<String, String> baseBodyMap);
 
+
+    @POST("/reset_password")
+    Call<BaseModel> resetPassword(@Body HashMap<String, String> baseBodyMap);
+
+
+    @POST("/verifyOTP")
+    Call<BaseModel> verifyOTP(@Body HashMap<String, String> baseBodyMap);
+
+
 }

@@ -3,6 +3,7 @@ package brainwiz.gobrainwiz;
 import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.widget.EditText;
 
 import java.util.HashMap;
 
@@ -56,5 +57,10 @@ public class BaseFragment extends Fragment {
         hashMap.put("student_id", SharedPrefUtils.getStudentID(getActivity()));
 
         return hashMap;
+    }
+
+
+    public boolean isEmpty(EditText editText) {
+        return editText.getText().toString().isEmpty();
     }
 }

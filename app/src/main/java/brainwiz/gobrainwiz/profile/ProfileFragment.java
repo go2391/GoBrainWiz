@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import brainwiz.gobrainwiz.BaseFragment;
+import brainwiz.gobrainwiz.MainActivity;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.databinding.FragmentProfileBinding;
 import brainwiz.gobrainwiz.utils.SharedPrefUtils;
@@ -91,6 +92,7 @@ public class ProfileFragment extends BaseFragment {
 
     private void dispatchTakePictureIntent() {
 
+//        Context context = MainActivity.this;
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.CAMERA},

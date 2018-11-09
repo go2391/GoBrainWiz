@@ -14,14 +14,14 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
 
-        if (getActionBar() != null) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-            getActionBar().setHomeButtonEnabled(true);
-        }
+//        if (getActionBar() != null) {
+//            getActionBar().setDisplayHomeAsUpEnabled(true);
+//            getActionBar().setHomeButtonEnabled(true);
+//        }
 
 
         fragmentTransaction(new LoginFragment(), R.id.login_frame);

@@ -48,7 +48,7 @@
     <string name="next">Next</string>
     <string name="name">Name</string>
     <string name="mobile">Mobile</string>
-    <string name="don_t_you_have_an_account_please_register">Don\'t have an account? Sign up</string>
+    <string name="don_t_you_have_an_account_please_register">Don\'t have an account? Register Here</string>
     <string name="welcome_back">Welcome back,</string>
     <string name="it_s_great_pleasure_to_see_you_again">It\'s great pleasure to see you again</string>
     <string name="login">Login</string>
@@ -119,7 +119,7 @@ sections
     <string name="your_result">Your Result</string>
     <string name="change_password">change password</string>
     <string name="update_profile">Update Profile</string>
-    <string name="like_to_know_about_brainwiz">Like to know about brainwiz</string>
+    <string name="like_to_know_about_brainwiz">Like to know about BRAINWIZ</string>
     <string name="video_explanation">Video Explanation</string>
     <string name="watch_this_video_explination_for_better_understanding">Watch this video explination for better understanding.</string>
     <string name="name_">Name : %s</string>
@@ -129,4 +129,10 @@ sections
     <string name="wrong">Wrong Answers %d</string>
     <string name="pick_image_intent_text">Pick your profile image</string>
     <string name="choose_photo_title">Choose Photos</string>
+    <string name="register">register</string>
+    <string name="confirm_otp">Confirm OTP</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="confirm">Confirm</string>
+    <string name="email_mobile_no">Email/Mobile no</string>
+    <string name="reset_my_password">Reset My Password</string>
 </resources>

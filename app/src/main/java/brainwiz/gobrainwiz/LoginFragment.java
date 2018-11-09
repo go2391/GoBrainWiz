@@ -26,6 +26,7 @@ import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import retrofit2.Response;
 
+import static brainwiz.gobrainwiz.R.color.blueSecondary;
 import static brainwiz.gobrainwiz.R.color.colorAccent;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.IS_LOGIN;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_EMAIL;
@@ -59,7 +60,7 @@ public class LoginFragment extends BaseFragment {
     private void initViews() {
 
         SpannableString spannableString = new SpannableString(getString(R.string.don_t_you_have_an_account_please_register));
-        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, colorAccent)), spannableString.length() - 8, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.blueSecondary)), spannableString.length() - 14, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         bind.registrationHere.setText(spannableString);
         bind.registrationHere.setOnClickListener(onClickListener);
         bind.loginArrow.setOnClickListener(onClickListener);

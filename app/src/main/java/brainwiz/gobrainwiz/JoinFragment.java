@@ -113,9 +113,7 @@ public class JoinFragment extends BaseFragment {
         return true;
     }
 
-    private boolean isEmpty(EditText editText) {
-        return editText.getText().toString().isEmpty();
-    }
+
 
 
 }

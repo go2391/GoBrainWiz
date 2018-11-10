@@ -135,6 +135,14 @@ public class TestActivity extends BaseActivity
 
     }
 
+    public void stopTest() {
+        submitView.setVisibility(View.VISIBLE);
+        if (serviceBound && timerService.isTimerRunning()) {
+            stopTimer();
+        }
+
+    }
+
     public void runTimer() {
         if (serviceBound && !timerService.isTimerRunning()) {
             startTimer();
@@ -198,7 +206,7 @@ public class TestActivity extends BaseActivity
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
         if (fragmentById != null) {
-            if (fragmentById instanceof ScoreCardFragment && backStackEntryCount > 0) {
+            if ((fragmentById instanceof ScoreCardFragment || fragmentById instanceof ScoreCardOnlineFragment) && backStackEntryCount > 0) {
                 finish();
                 return;
             }
@@ -286,7 +294,7 @@ public class TestActivity extends BaseActivity
                             if (buttonType == DDAlerts.BUTTON_POSITIVE) {
                                 if (fragmentById != null && fragmentById instanceof TestQuestionFragment) {
                                     ((TestQuestionFragment) fragmentById).submitTest();
-                                    stopTimer();
+
                                 }
                             }
 

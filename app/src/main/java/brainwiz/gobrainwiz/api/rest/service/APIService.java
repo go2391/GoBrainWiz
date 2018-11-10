@@ -12,6 +12,7 @@ import brainwiz.gobrainwiz.api.model.OnlineTestModle;
 import brainwiz.gobrainwiz.api.model.OnlineTestSetModel;
 import brainwiz.gobrainwiz.api.model.PracticeTestModel;
 import brainwiz.gobrainwiz.api.model.PractiseTestResultModel;
+import brainwiz.gobrainwiz.api.model.ScoreCardModel;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.api.model.TestsModel;
 import brainwiz.gobrainwiz.api.model.VideoListModel;
@@ -70,7 +71,7 @@ public interface APIService {
     Call<PractiseTestResultModel> postPracticeTest(@Body PractiseTestPostModel model);
 
     @POST("/company-test")
-    Call<BaseModel> postOnlineTest(@Body OnlineTestPostModel model);
+    Call<ScoreCardModel> postOnlineTest(@Body OnlineTestPostModel model);
 
     @POST("/send_enquiry")
     Call<BaseModel> postJoinRequest(@Body HashMap<String, String> baseBodyMap);

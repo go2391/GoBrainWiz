@@ -19,14 +19,16 @@ public class PracticeTestTopicAdapter extends RecyclerView.Adapter<PracticeTestT
 
     Context context;
     private List<PracticeTestModel.SubList> subLists = new ArrayList<>();
+    private int type;
 
     private TopicSelectionListener topicSelectionListener;
 
 
-    public PracticeTestTopicAdapter(Context context, List<PracticeTestModel.SubList> subLists) {
+    public PracticeTestTopicAdapter(Context context, List<PracticeTestModel.SubList> subLists, int type) {
 
         this.context = context;
         this.subLists = subLists;
+        this.type = type;
     }
 
     public void setTopicSelectionListener(TopicSelectionListener topicSelectionListener) {
@@ -64,12 +66,12 @@ public class PracticeTestTopicAdapter extends RecyclerView.Adapter<PracticeTestT
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             if (topicSelectionListener != null && adapterPosition != RecyclerView.NO_POSITION) {
-                topicSelectionListener.onTopicSelect(subLists.get(adapterPosition));
+                topicSelectionListener.onTopicSelect(subLists.get(adapterPosition),type);
             }
         }
     }
 
     interface TopicSelectionListener {
-        void onTopicSelect(PracticeTestModel.SubList subList);
+        void onTopicSelect(PracticeTestModel.SubList subList, int type);
     }
 }

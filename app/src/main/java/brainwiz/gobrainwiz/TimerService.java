@@ -135,15 +135,15 @@ public class TimerService extends Service {
     private Notification createNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getChannalID())
                 .setContentTitle("Test Timer is  Active")
-                .setContentText("Tap to return to the Test")
+                .setContentText("Please return to the Test")
                 .setSmallIcon(R.mipmap.ic_launcher);
 
-        Intent resultIntent = new Intent(this, TestActivity.class);
+        /*Intent resultIntent = new Intent(this, TestActivity.class);
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(this, 0, resultIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultPendingIntent);
-
+*/
         return builder.build();
     }
 

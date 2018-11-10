@@ -31,9 +31,13 @@ public class PracticeTestCategoryFragment extends BaseFragment {
     private PracticeTestTopicAdapter adapterLogical;
     private PracticeTestTopicAdapter adapterVerbal;
     private FragmentActivity activity;
+    public static final int TYPE_VERBAL = 2;
+    public static final int TYPE_ARITHMETIC = 0;
+    public static final int TYPE_LOGICAL = 1;
 
     public static final String TOPIC_ID = "TopicID";
     public static final String TOPIC_NAME = "TopicName";
+    public static final String TYPE = "type";
 
     @Override
     public void onAttach(Context context) {
@@ -89,21 +93,24 @@ public class PracticeTestCategoryFragment extends BaseFragment {
     }
 
     private void setDataToArithmetic(PracticeTestModel.TopicModel arithmetic) {
-        adapterArithmetic = new PracticeTestTopicAdapter(context, arithmetic.getSubLists());
+
+        adapterArithmetic = new PracticeTestTopicAdapter(context, arithmetic.getSubLists(), TYPE_ARITHMETIC);
         bind.testCategoryTests.setText(String.format(getString(R.string.tests), String.valueOf(arithmetic.getTestsCount())));
         bind.testCategoryTopics.setText(String.format(getString(R.string.topics), String.valueOf(arithmetic.getTopicCount())));
         adapterArithmetic.setTopicSelectionListener(topicSelectionListener);
     }
 
     private void setDataToLogical(PracticeTestModel.TopicModel logical) {
-        adapterLogical = new PracticeTestTopicAdapter(context, logical.getSubLists());
+
+        adapterLogical = new PracticeTestTopicAdapter(context, logical.getSubLists(), TYPE_LOGICAL);
         bind.testCategoryTests1.setText(String.format(getString(R.string.tests), String.valueOf(logical.getTestsCount())));
         bind.testCategoryTopics1.setText(String.format(getString(R.string.topics), String.valueOf(logical.getTopicCount())));
         adapterLogical.setTopicSelectionListener(topicSelectionListener);
     }
 
     private void setDataToVerbal(PracticeTestModel.TopicModel logical) {
-        adapterVerbal = new PracticeTestTopicAdapter(context, logical.getSubLists());
+
+        adapterVerbal = new PracticeTestTopicAdapter(context, logical.getSubLists(), TYPE_VERBAL);
         bind.testCategoryTests2.setText(String.format(getString(R.string.tests), String.valueOf(logical.getTestsCount())));
         bind.testCategoryTopics2.setText(String.format(getString(R.string.topics), String.valueOf(logical.getTopicCount())));
         adapterVerbal.setTopicSelectionListener(topicSelectionListener);
@@ -164,10 +171,11 @@ public class PracticeTestCategoryFragment extends BaseFragment {
 
     private final PracticeTestTopicAdapter.TopicSelectionListener topicSelectionListener = new PracticeTestTopicAdapter.TopicSelectionListener() {
         @Override
-        public void onTopicSelect(PracticeTestModel.SubList subList) {
+        public void onTopicSelect(PracticeTestModel.SubList subList, int type) {
             Bundle bundle = new Bundle();
             bundle.putString(TOPIC_ID, subList.getTopicId());
             bundle.putString(TOPIC_NAME, subList.getTopicName());
+            bundle.putInt(TYPE, type);
 
             PracticeTestTopicsFragment topicsFragment = new PracticeTestTopicsFragment();
             topicsFragment.setArguments(bundle);

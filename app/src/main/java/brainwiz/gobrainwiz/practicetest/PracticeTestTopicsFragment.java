@@ -82,6 +82,19 @@ public class PracticeTestTopicsFragment extends BaseFragment {
 
     private void initViews() {
 
+        int bgResource = 0;
+        switch (getArguments().getInt(PracticeTestCategoryFragment.TYPE)) {
+            case PracticeTestCategoryFragment.TYPE_ARITHMETIC:
+                bgResource = R.drawable.gradient_orange;
+                break;
+            case PracticeTestCategoryFragment.TYPE_LOGICAL:
+                bgResource = R.drawable.gradient_blue;
+                break;
+            case PracticeTestCategoryFragment.TYPE_VERBAL:
+                bgResource = R.drawable.gradient_red;
+                break;
+        }
+        bind.topicTitle.setBackgroundResource(bgResource);
         bind.topicTitle.setText(getArguments().getString(PracticeTestCategoryFragment.TOPIC_NAME));
         testTestsAdapter = new PracticeTestTestsAdapter(context);
         bind.recycleTopics.setAdapter(testTestsAdapter);

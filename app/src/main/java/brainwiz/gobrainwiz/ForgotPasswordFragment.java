@@ -20,7 +20,7 @@ import brainwiz.gobrainwiz.databinding.FragmentForgotPasswordBinding;
 import brainwiz.gobrainwiz.databinding.FragmentOtpPasswordBinding;
 import retrofit2.Response;
 
-public class ResetPasswordFragment extends BaseFragment {
+public class ForgotPasswordFragment extends BaseFragment {
 
     private Context context;
     private FragmentActivity activity;
@@ -44,7 +44,7 @@ public class ResetPasswordFragment extends BaseFragment {
 
     private void initViews() {
 
-        bind.confirm.setOnClickListener(onClickListener);
+//        bind.confirm.setOnClickListener(onClickListener);
     }
 
     private final View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -62,7 +62,7 @@ public class ResetPasswordFragment extends BaseFragment {
 
     private void resetPassword() {
         HashMap<String, String> hashMap = getBaseBodyMap();
-        hashMap.put("user_name", bind.confirm.getText().toString());
+//        hashMap.put("user_name", bind.confirm.getText().toString());
 
         RetrofitManager.getRestApiMethods().resetPassword(hashMap).enqueue(new ApiCallback<BaseModel>(getActivity()) {
             @Override

@@ -28,7 +28,7 @@
             android:layout_toStartOf="@id/test_topic_item_arrow"
             android:fontFamily="@font/regular"
             android:text="5 Tests"
-            android:textColor="@color/greenSecondary"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_14" />
 
         <android.support.v7.widget.AppCompatImageView

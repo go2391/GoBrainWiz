@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -23,6 +25,9 @@ import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.OnlineTestSetModel;
+import brainwiz.gobrainwiz.api.model.ScoreCardModel;
+import brainwiz.gobrainwiz.test.ScoreCardFragment;
+import brainwiz.gobrainwiz.test.ScoreCardOnlineFragment;
 import brainwiz.gobrainwiz.test.TestActivity;
 import brainwiz.gobrainwiz.test.TestQuestionFragment;
 import brainwiz.gobrainwiz.utils.DDAlerts;
@@ -109,11 +114,27 @@ public class InstructionsFragment extends BaseFragment {
             if (data != null) {
                 List<OnlineTestSetModel.TestSet> options = adapter.getOptions();
                 for (OnlineTestSetModel.TestSet option : options) {
-                    if (option.getCatId().equalsIgnoreCase(data.getStringExtra(ID))) {
+                    if (option.getCatId().equalsIgnoreCase(data.getStringExtra(CAT_ID))) {
                         option.setCompleted(true);
                     }
                 }
                 adapter.notifyDataSetChanged();
+
+
+                final ArrayList<ScoreCardModel.Datum> resultList = data.getParcelableArrayListExtra("data");
+                if (resultList != null && !resultList.isEmpty() && resultList.size() > 1) {
+                    ((TestActivity) activity).stopTest();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ScoreCardOnlineFragment instance = ScoreCardOnlineFragment.getInstance(resultList);
+                            ((TestActivity) getActivity()).fragmentTransaction(instance);
+
+                        }
+                    }, 2000);
+
+                }
 
             }
         }

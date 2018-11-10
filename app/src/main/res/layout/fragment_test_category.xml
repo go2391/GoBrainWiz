@@ -19,6 +19,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/gradient_orange"
                     android:padding="@dimen/dimen_16">
 
                     <TextView
@@ -29,7 +30,7 @@
                         android:fontFamily="@font/bold"
                         android:gravity="start"
                         android:text="@string/arithmetic"
-                        android:textColor="@color/blueSecondary"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/font_24" />
 
 
@@ -42,7 +43,7 @@
                         android:fontFamily="@font/regular"
                         android:gravity="start"
                         android:text="@string/topics"
-                        android:textColor="@color/colorSecondaryText"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/font_12" />
 
                     <View
@@ -64,7 +65,7 @@
                         android:fontFamily="@font/regular"
                         android:gravity="start"
                         android:text="@string/tests"
-                        android:textColor="@color/colorSecondaryText"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/font_12" />
 
 
@@ -95,8 +96,10 @@
                 style="@style/CardViewStyle">
 
                 <RelativeLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/gradient_blue"
                     android:padding="@dimen/dimen_16">
 
                     <TextView
@@ -107,7 +110,7 @@
                         android:fontFamily="@font/bold"
                         android:gravity="start"
                         android:text="@string/logical_reasoning"
-                        android:textColor="@color/blueSecondary"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/font_24" />
 
 
@@ -120,7 +123,7 @@
                         android:fontFamily="@font/regular"
                         android:gravity="start"
                         android:text="@string/topics"
-                        android:textColor="@color/colorSecondaryText"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/font_12" />
 
                     <View
@@ -142,7 +145,7 @@
                         android:fontFamily="@font/regular"
                         android:gravity="start"
                         android:text="@string/tests"
-                        android:textColor="@color/colorSecondaryText"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/font_12" />
 
 
@@ -175,6 +178,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/gradient_red"
                     android:padding="@dimen/dimen_16">
 
                     <TextView
@@ -185,7 +189,7 @@
                         android:fontFamily="@font/bold"
                         android:gravity="start"
                         android:text="@string/verbal_ability"
-                        android:textColor="@color/blueSecondary"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/font_24" />
 
 
@@ -198,7 +202,7 @@
                         android:fontFamily="@font/regular"
                         android:gravity="start"
                         android:text="@string/topics"
-                        android:textColor="@color/colorSecondaryText"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/font_12" />
 
                     <View
@@ -220,7 +224,7 @@
                         android:fontFamily="@font/regular"
                         android:gravity="start"
                         android:text="@string/tests"
-                        android:textColor="@color/colorSecondaryText"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/font_12" />
 
 

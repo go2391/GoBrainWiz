@@ -2,11 +2,13 @@ package brainwiz.gobrainwiz.test;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,10 +32,13 @@ import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.BaseModel;
 import brainwiz.gobrainwiz.api.model.PractiseTestResultModel;
+import brainwiz.gobrainwiz.api.model.ScoreCardModel;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.onlinetest.OnlineTestPostModel;
 import brainwiz.gobrainwiz.practicetest.PractiseTestPostModel;
+import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.LogUtils;
+import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import retrofit2.Response;
 
@@ -47,6 +52,7 @@ public class TestQuestionFragment extends BaseFragment {
     private List<TestModel.Datum> data;
     private int fragmentCurrentPosition = -1;
     private boolean isReview;
+    private Context context;
 
 
     public static TestQuestionFragment getInstance(String id, boolean isReview) {
@@ -71,6 +77,12 @@ public class TestQuestionFragment extends BaseFragment {
         return testQuestionFragment;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        this.context = context;
+        super.onAttach(context);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -90,6 +102,11 @@ public class TestQuestionFragment extends BaseFragment {
 
     private void getQuestions() {
 
+        if (!NetWorkUtil.isConnected(context)) {
+            DDAlerts.showNetworkAlert(getActivity());
+            return;
+        }
+
         showProgress();
         ApiCallback<TestModel> callback = new ApiCallback<TestModel>(getActivity()) {
             @Override
@@ -97,7 +114,23 @@ public class TestQuestionFragment extends BaseFragment {
                 if (isSuccess) {
                     TestModel body = response.body();
                     data = body.getData();
-                    setViews(data);
+                    if (!data.isEmpty()) {
+                        setViews(data);
+                    } else {
+                        DDAlerts.showAlert(getActivity(), "You have already attempted these question.", getString(R.string.ok), new DDAlerts.AlertListener() {
+                            @Override
+                            public void onClick(int buttonType) {
+
+                                Intent data = new Intent();
+                                data.putExtra(CAT_ID, getArguments().getString(CAT_ID, ""));
+                                Fragment targetFragment = getTargetFragment();
+                                if (targetFragment != null) {
+                                    targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
+                                }
+                                getActivity().getSupportFragmentManager().popBackStack();
+                            }
+                        });
+                    }
                 }
                 dismissProgress();
             }
@@ -255,13 +288,14 @@ public class TestQuestionFragment extends BaseFragment {
         }
 
         if (isCompanyTest) {
-            RetrofitManager.getRestApiMethods().postOnlineTest(getOnlineTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<BaseModel>(getActivity()) {
+            RetrofitManager.getRestApiMethods().postOnlineTest(getOnlineTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<ScoreCardModel>(getActivity()) {
                 @Override
-                public void onApiResponse(Response<BaseModel> response, boolean isSuccess, String message) {
+                public void onApiResponse(Response<ScoreCardModel> response, boolean isSuccess, String message) {
                     LogUtils.e(response.body().getMessage());
                     if (isSuccess) {
                         Intent data = new Intent();
-                        data.putExtra(ID, getArguments().getString(ID, ""));
+                        data.putExtra(CAT_ID, getArguments().getString(CAT_ID, ""));
+                        data.putParcelableArrayListExtra("data", new ArrayList<>(response.body().getData()));
                         Fragment targetFragment = getTargetFragment();
                         if (targetFragment != null) {
                             targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
@@ -277,6 +311,7 @@ public class TestQuestionFragment extends BaseFragment {
             });
 
         } else {
+            ((TestActivity) getActivity()).stopTest();
             RetrofitManager.getRestApiMethods().postPracticeTest(getPraticeTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<PractiseTestResultModel>(getActivity()) {
                 @Override
                 public void onApiResponse(Response<PractiseTestResultModel> response, boolean isSuccess, String message) {

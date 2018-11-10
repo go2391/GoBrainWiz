@@ -11,6 +11,8 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
+
 import brainwiz.gobrainwiz.utils.URLImageParserNew;
 
 public class SampleActivity extends AppCompatActivity {
@@ -37,6 +39,10 @@ public class SampleActivity extends AppCompatActivity {
         } else {
             textView.setText(Html.fromHtml(htmlString, new URLImageParserNew(textView, this), null));
         }
+
+        DonutProgress viewById = (DonutProgress) findViewById(R.id.score_card_progress);
+
+        viewById.setProgress((10f / 50f) * 100f);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

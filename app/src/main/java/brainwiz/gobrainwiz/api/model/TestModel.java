@@ -31,6 +31,8 @@ public class TestModel extends BaseModel {
         @SerializedName("question_id")
         @Expose
         private String questionId;
+        @SerializedName("selected_answer")
+        @Expose
         private String selectedAnswer;
         @SerializedName("explanation")
         @Expose
@@ -44,7 +46,7 @@ public class TestModel extends BaseModel {
         @SerializedName("options")
         @Expose
         private List<String> options = new ArrayList<String>();
-        @SerializedName("selected_answer")
+        @SerializedName("selected_option")
         @Expose
         private String selectedOption = "";
         private boolean bookMark;

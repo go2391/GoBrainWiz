@@ -16,9 +16,19 @@ import java.util.HashMap;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.BaseModel;
+import brainwiz.gobrainwiz.api.model.LoginModel;
 import brainwiz.gobrainwiz.databinding.FragmentOtpPasswordBinding;
 import brainwiz.gobrainwiz.utils.DDAlerts;
+import brainwiz.gobrainwiz.utils.NetWorkUtil;
+import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import retrofit2.Response;
+
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.IS_LOGIN;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_EMAIL;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_ID;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_MOBILE;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_NAME;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_TOKEN;
 
 public class OtpPasswordFragment extends BaseFragment {
 
@@ -54,7 +64,8 @@ public class OtpPasswordFragment extends BaseFragment {
                 case R.id.confirm:
 
                     if (verifyFileds()) {
-                        confirmUser();
+//                        confirmUser();
+                        userLogin();
 //                        activity.finish();
 //                        startActivity(new Intent(activity, MainActivity.class));
 
@@ -63,6 +74,46 @@ public class OtpPasswordFragment extends BaseFragment {
             }
         }
     };
+
+    private void userLogin() {
+
+        if (!NetWorkUtil.isConnected(context)) {
+            DDAlerts.showNetworkAlert(activity);
+            return;
+        }
+
+        showProgress();
+//            "user_name" : "6785435787",
+//             "password" : "alex1234"
+        HashMap<String, String> hashMap = getBaseBodyMap();
+        hashMap.put("user_name", "6785435787");
+        hashMap.put("password", "alex1234");
+        RetrofitManager.getRestApiMethods().login(hashMap).enqueue(new ApiCallback<LoginModel>(activity) {
+            @Override
+            public void onApiResponse(Response<LoginModel> response, boolean isSuccess, String message) {
+                dismissProgress();
+                if (isSuccess) {
+                    saveUserDetails(response.body().getData());
+                    activity.finish();
+                    startActivity(new Intent(activity, MainActivity.class));
+                }
+            }
+
+            @Override
+            public void onApiFailure(boolean isSuccess, String message) {
+                dismissProgress();
+            }
+        });
+    }
+
+    private void saveUserDetails(LoginModel.Data body) {
+        SharedPrefUtils.putData(context, IS_LOGIN, true);
+        SharedPrefUtils.putData(context, USER_EMAIL, body.getExamuserEmail());
+        SharedPrefUtils.putData(context, USER_ID, body.getExamuserId());
+        SharedPrefUtils.putData(context, USER_MOBILE, body.getExamuserMobile());
+        SharedPrefUtils.putData(context, USER_NAME, body.getExamuserName());
+        SharedPrefUtils.putData(context, USER_TOKEN, body.getExamUserToken());
+    }
 
     private boolean verifyFileds() {
         if (isEmpty(bind.otp)) {
@@ -82,11 +133,11 @@ public class OtpPasswordFragment extends BaseFragment {
         }
 
         if (isEmpty(bind.confirmPassword)) {
-            DDAlerts.showToast(getActivity(), "enter mobile number.");
+            DDAlerts.showToast(getActivity(), "enter confirm password.");
             return false;
         }
 
-        if (bind.password.getText().toString().equals(bind.confirmPassword.getText().toString())) {
+        if (!bind.password.getText().toString().equals(bind.confirmPassword.getText().toString())) {
             DDAlerts.showToast(getActivity(), "password and confirm password are not matched ");
             return false;
         }

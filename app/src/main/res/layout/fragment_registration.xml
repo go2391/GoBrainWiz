@@ -20,16 +20,17 @@
             android:gravity="center"
             android:text="@string/registration"
             android:textColor="@color/blueSecondary"
-            android:textSize="@dimen/font_16"
+            android:textSize="@dimen/font_24"
             android:visibility="visible" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/registration_label"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="@dimen/dimen_10">
+            android:padding="@dimen/dimen_20">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -38,6 +39,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/name"
                     style="@style/EditTextStyle"
+                    android:drawableStart="@drawable/ic_person"
+                    android:drawableTint="@color/blueSecondary"
                     android:hint="@string/name" />
 
             </android.support.design.widget.TextInputLayout>
@@ -50,6 +53,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/email"
                     style="@style/EditTextStyle"
+                    android:drawableStart="@drawable/ic_mail"
+                    android:drawableTint="@color/blueSecondary"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress" />
 
@@ -63,6 +68,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/mobile"
                     style="@style/EditTextStyle"
+                    android:drawableStart="@drawable/ic_phone"
+                    android:drawableTint="@color/blueSecondary"
                     android:hint="@string/mobile"
                     android:inputType="number"
                     android:maxLength="10" />
@@ -76,6 +83,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/location"
                     style="@style/EditTextStyle"
+                    android:drawableStart="@drawable/ic_location"
+                    android:drawableTint="@color/blueSecondary"
                     android:hint="@string/location" />
 
             </android.support.design.widget.TextInputLayout>
@@ -102,7 +111,7 @@
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:layout_marginStart="@dimen/dimen_10"
                 android:layout_marginTop="@dimen/dimen_20"
-                android:background="@drawable/button_bg_green"
+                android:background="@drawable/button_bg_blue"
                 android:minWidth="160dp"
                 android:padding="@dimen/dimen_5"
                 android:src="@drawable/ic_arrow_forward"
@@ -149,7 +158,7 @@
             android:layout_marginTop="@dimen/dimen_20"
             android:fontFamily="@font/medium"
             android:text="@string/already_have_an_account_login"
-            android:textSize="@dimen/font_10" />
+            android:textSize="@dimen/font_16" />
 
 
     </RelativeLayout>

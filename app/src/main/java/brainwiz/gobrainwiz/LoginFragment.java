@@ -64,6 +64,7 @@ public class LoginFragment extends BaseFragment {
         bind.registrationHere.setText(spannableString);
         bind.registrationHere.setOnClickListener(onClickListener);
         bind.loginArrow.setOnClickListener(onClickListener);
+        bind.forgotPassword.setOnClickListener(onClickListener);
     }
 
     private final View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -79,6 +80,9 @@ public class LoginFragment extends BaseFragment {
 //                    activity.finish();
 //                    startActivity(new Intent(activity, MainActivity.class));
                     break;
+                case R.id.forgot_password:
+                    ((LoginActivity) activity).fragmentTransaction(new ForgotPasswordFragment(), R.id.login_frame, true);
+                    break;
 
             }
         }
@@ -90,30 +94,51 @@ public class LoginFragment extends BaseFragment {
             DDAlerts.showNetworkAlert(activity);
             return;
         }
-
-        showProgress();
+        if (isValidDetails()) {
+            showProgress();
 //            "user_name" : "6785435787",
 //             "password" : "alex1234"
-        HashMap<String, String> hashMap = getBaseBodyMap();
-        hashMap.put("user_name", bind.mobile.getText().toString().trim());
-        hashMap.put("password", bind.password.getText().toString().trim());
-        RetrofitManager.getRestApiMethods().login(hashMap).enqueue(new ApiCallback<LoginModel>(activity) {
-            @Override
-            public void onApiResponse(Response<LoginModel> response, boolean isSuccess, String message) {
-                dismissProgress();
-                if (isSuccess) {
-                    saveUserDetails(response.body().getData());
-                    activity.finish();
-                    startActivity(new Intent(activity, MainActivity.class));
+            HashMap<String, String> hashMap = getBaseBodyMap();
+            hashMap.put("user_name", bind.mobile.getText().toString().trim());
+            hashMap.put("password", bind.password.getText().toString().trim());
+            RetrofitManager.getRestApiMethods().login(hashMap).enqueue(new ApiCallback<LoginModel>(activity) {
+                @Override
+                public void onApiResponse(Response<LoginModel> response, boolean isSuccess, String message) {
+                    dismissProgress();
+                    if (isSuccess) {
+                        saveUserDetails(response.body().getData());
+                        activity.finish();
+                        startActivity(new Intent(activity, MainActivity.class));
+                    }
                 }
-            }
 
-            @Override
-            public void onApiFailure(boolean isSuccess, String message) {
-                dismissProgress();
-            }
-        });
+                @Override
+                public void onApiFailure(boolean isSuccess, String message) {
+                    dismissProgress();
+                }
+            });
+        }
+
+
     }
+
+    private boolean isValidDetails() {
+
+        if (isEmpty(bind.mobile)) {
+            DDAlerts.showToast(getActivity(), "enter mobile number or email.");
+            return false;
+        }
+
+
+        if (isEmpty(bind.password)) {
+            DDAlerts.showToast(getActivity(), "enter password.");
+            return false;
+        }
+
+
+        return true;
+    }
+
 
     private void saveUserDetails(LoginModel.Data body) {
         SharedPrefUtils.putData(context, IS_LOGIN, true);

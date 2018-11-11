@@ -9,26 +9,25 @@
         android:padding="@dimen/dimen_10">
 
         <ImageView
+            android:id="@+id/logo_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/login_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/dimen_30"
-            android:layout_marginTop="@dimen/dimen_30"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_text" />
 
-        <!--  <TextView
-              android:id="@+id/login_label"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_alignParentStart="true"
-              android:layout_alignParentTop="true"
-              android:layout_marginStart="@dimen/dimen_20"
-              android:layout_marginTop="@dimen/dimen_20"
-              android:fontFamily="@font/bold"
-              android:text="@string/login"
-              android:textColor="@color/colorAccent"
-              android:textSize="@dimen/font_16" />-->
+
+        <TextView
+            android:id="@+id/login_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/logo_image"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:fontFamily="@font/bold"
+            android:text="@string/welcome_to_brainwiz"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/font_16" />
 
 
         <LinearLayout
@@ -48,9 +47,9 @@
                     android:id="@+id/mobile"
                     style="@style/EditTextStyle"
                     android:drawablePadding="@dimen/dimen_10"
-                    android:drawableTint="@color/blueSecondary"
                     android:drawableStart="@drawable/ic_mail"
-                    android:hint="@string/mobile"
+                    android:drawableTint="@color/blueSecondary"
+                    android:hint="mobile or email"
                     android:inputType="number"
                     android:maxLength="10"
                     android:text="6785435787" />
@@ -63,10 +62,10 @@
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/password"
                         style="@style/EditTextStyle"
+                        android:drawablePadding="@dimen/dimen_10"
                         android:drawableStart="@drawable/ic_lock"
                         android:drawableTint="@color/blueSecondary"
                         android:hint="@string/password"
-                        android:drawablePadding="@dimen/dimen_10"
                         android:inputType="textPassword"
                         android:text="alex1234" />
 
@@ -75,18 +74,32 @@
             </android.support.design.widget.TextInputLayout>
 
 
+            <TextView
+                android:id="@+id/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:fontFamily="@font/medium"
+                android:text="Forgot password?"
+                android:textSize="@dimen/font_14" />
+
+
             <Button
                 android:id="@+id/login_arrow"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/dimen_10"
                 android:layout_marginEnd="@dimen/dimen_30"
                 android:layout_marginStart="@dimen/dimen_30"
                 android:layout_marginTop="@dimen/dimen_30"
                 android:background="@drawable/button_bg_blue"
+                android:minWidth="160dp"
                 android:padding="@dimen/dimen_5"
-                android:textAllCaps="false"
                 android:text="Sign in"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:translationZ="@dimen/dimen_10" />
 

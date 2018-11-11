@@ -61,6 +61,6 @@ public class BaseFragment extends Fragment {
 
 
     public boolean isEmpty(EditText editText) {
-        return editText.getText().toString().isEmpty();
+        return editText.getText().toString().trim().isEmpty();
     }
 }

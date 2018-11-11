@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.payumoney.core.PayUmoneySdkInitializer;
 
+import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import brainwiz.gobrainwiz.utils.URLImageParserNew;
 
 public class SampleActivity extends AppCompatActivity {
@@ -50,6 +52,33 @@ public class SampleActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                String txnId = SharedPrefUtils.getStudentID(SampleActivity.this) + SharedPrefUtils.getUserName(SampleActivity.this) + System.currentTimeMillis();
+
+                PayUmoneySdkInitializer.PaymentParam.Builder builder = new
+                        PayUmoneySdkInitializer.PaymentParam.Builder();
+//                builder.setAmount(10)                          // Payment amount
+//                        .setTxnId(txnId)                                             // Transaction ID
+//                        .setPhone(SharedPrefUtils.getUserPhone(SampleActivity.this))                                           // User Phone number
+//                        .setProductName("exam fee")                   // Product Name or description
+//                        .setFirstName(SharedPrefUtils.getUserName(SampleActivity.this))                              // User First name
+//                        .setEmail(SharedPrefUtils.getUserEmail(SampleActivity.this))                                            // User Email ID
+//                        .setsUrl(appEnvironment.surl())                    // Success URL (surl)
+//                        .setfUrl(appEnvironment.furl())                     //Failure URL (furl)
+//                        .setUdf1(udf1)
+//                        .setUdf2(udf2)
+//                        .setUdf3(udf3)
+//                        .setUdf4(udf4)
+//                        .setUdf5(udf5)
+//                        .setUdf6(udf6)
+//                        .setUdf7(udf7)
+//                        .setUdf8(udf8)
+//                        .setUdf9(udf9)
+//                        .setUdf10(udf10)
+//                        .setIsDebug(true)                              // Integration environment - true (Debug)/ false(Production)
+//                        .setKey(“enter merchant key”)                        // Merchant key
+//                        .setMerchantId(“enter merchant ID”);             // Merchant ID
+
             }
         });
     }

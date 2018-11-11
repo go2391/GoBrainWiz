@@ -19,6 +19,7 @@ import java.util.HashMap;
 
 import brainwiz.gobrainwiz.databinding.FragmentLoginBinding;
 import brainwiz.gobrainwiz.databinding.FragmentRegistrationBinding;
+import brainwiz.gobrainwiz.utils.DDAlerts;
 
 import static brainwiz.gobrainwiz.R.color.colorAccent;
 
@@ -61,9 +62,13 @@ public class RegistrationFragment extends BaseFragment {
                     activity.getSupportFragmentManager().popBackStack();
                     break;
                 case R.id.registration_arrow:
-                    registerUser();
-                    activity.finish();
-                    startActivity(new Intent(activity, MainActivity.class));
+                    if (isValidDetails()) {
+                        registerUser();
+//                        activity.finish();
+//                        startActivity(new Intent(activity, MainActivity.class));
+                        ((LoginActivity) getActivity()).fragmentTransaction(new OtpPasswordFragment(), R.id.login_frame);
+                    }
+
                     break;
             }
         }
@@ -72,6 +77,37 @@ public class RegistrationFragment extends BaseFragment {
     private void registerUser() {
         HashMap<String, String> hashMap = new HashMap<>();
 //        hashMap.put("name",bind)
+    }
+
+    private boolean isValidDetails() {
+        if (isEmpty(bind.name)) {
+            DDAlerts.showToast(getActivity(), "enter name.");
+            return false;
+        }
+
+        if (isEmpty(bind.email)) {
+            DDAlerts.showToast(getActivity(), "enter email.");
+            return false;
+        }
+
+        if (isEmpty(bind.mobile)) {
+            DDAlerts.showToast(getActivity(), "enter mobile number.");
+            return false;
+        }
+
+
+        if (bind.mobile.getText().toString().length() < 10) {
+            DDAlerts.showToast(getActivity(), "enter valid mobile number.");
+            return false;
+        }
+
+        if (isEmpty(bind.location)) {
+            DDAlerts.showToast(getActivity(), "enter location or college name.");
+            return false;
+        }
+
+
+        return true;
     }
 
 }

@@ -18,6 +18,7 @@ import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.BaseModel;
 import brainwiz.gobrainwiz.databinding.FragmentForgotPasswordBinding;
 import brainwiz.gobrainwiz.databinding.FragmentOtpPasswordBinding;
+import brainwiz.gobrainwiz.utils.DDAlerts;
 import retrofit2.Response;
 
 public class ForgotPasswordFragment extends BaseFragment {
@@ -44,7 +45,7 @@ public class ForgotPasswordFragment extends BaseFragment {
 
     private void initViews() {
 
-//        bind.confirm.setOnClickListener(onClickListener);
+        bind.confirm.setOnClickListener(onClickListener);
     }
 
     private final View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -52,13 +53,26 @@ public class ForgotPasswordFragment extends BaseFragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.confirm:
-                    resetPassword();
-                    activity.finish();
-                    startActivity(new Intent(activity, MainActivity.class));
+                    if (isValidDetails()) {
+                        resetPassword();
+                        ((LoginActivity) activity).getSupportFragmentManager().popBackStack();
+                    }
                     break;
             }
         }
     };
+
+    private boolean isValidDetails() {
+
+
+        if (isEmpty(bind.emailMobileNo)) {
+            DDAlerts.showToast(getActivity(), "enter valid mobile no or email id.");
+            return false;
+        }
+
+
+        return true;
+    }
 
     private void resetPassword() {
         HashMap<String, String> hashMap = getBaseBodyMap();

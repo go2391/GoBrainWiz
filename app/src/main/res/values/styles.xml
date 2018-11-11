@@ -60,6 +60,7 @@
         <item name="android:textSize">@dimen/dimen_16</item>
         <item name="android:singleLine">true</item>
         <item name="android:maxLength">50</item>
+        <item name="android:drawablePadding">@dimen/dimen_10</item>
         <item name="android:longClickable">false</item>
         <item name="android:layout_marginBottom">@dimen/dimen_10</item>
 

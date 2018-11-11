@@ -130,9 +130,11 @@ sections
     <string name="pick_image_intent_text">Pick your profile image</string>
     <string name="choose_photo_title">Choose Photos</string>
     <string name="register">register</string>
-    <string name="confirm_otp">Confirm OTP</string>
+    <string name="confirm_otp">Confirm OTP and create your password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="confirm">Confirm</string>
     <string name="email_mobile_no">Email/Mobile no</string>
     <string name="reset_my_password">Reset My Password</string>
+    <string name="request_password">Request Password</string>
+    <string name="welcome_to_brainwiz">Welcome to BRAINWIZ</string>
 </resources>

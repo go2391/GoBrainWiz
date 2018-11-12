@@ -54,6 +54,7 @@
         <item name="android:fitsSystemWindows">true</item>
     </style>
 
+    <!--style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
     <style name="EditTextStyle" parent="MatchWrap">
         <item name="android:textColor">@color/colorPrimaryText</item>
         <item name="android:cacheColorHint">@color/colorSecondaryText</item>

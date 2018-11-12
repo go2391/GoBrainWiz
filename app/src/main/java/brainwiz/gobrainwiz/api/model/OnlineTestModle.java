@@ -76,6 +76,10 @@ public class OnlineTestModle extends BaseModel {
         @SerializedName("count_q")
         @Expose
         private String countQ;
+        @SerializedName("TestStatus")
+        @Expose
+        private int status;
+
 
         public String getBrainTestId() {
             return brainTestId;
@@ -117,5 +121,12 @@ public class OnlineTestModle extends BaseModel {
             this.countQ = countQ;
         }
 
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
     }
 }

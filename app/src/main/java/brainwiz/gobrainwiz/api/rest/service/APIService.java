@@ -12,6 +12,7 @@ import brainwiz.gobrainwiz.api.model.OnlineTestModle;
 import brainwiz.gobrainwiz.api.model.OnlineTestSetModel;
 import brainwiz.gobrainwiz.api.model.PracticeTestModel;
 import brainwiz.gobrainwiz.api.model.PractiseTestResultModel;
+import brainwiz.gobrainwiz.api.model.RegistrationModel;
 import brainwiz.gobrainwiz.api.model.ScoreCardModel;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.api.model.TestsModel;
@@ -35,7 +36,7 @@ public interface APIService {
 
 
     @POST("/register")
-    Call<DashBoardModel> register(@Body HashMap<String, String> hashMap);
+    Call<RegistrationModel> register(@Body HashMap<String, String> hashMap);
 
     @GET("/videos")
     Call<VideoListModel> getVideos();

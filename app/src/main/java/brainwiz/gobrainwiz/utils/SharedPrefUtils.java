@@ -40,12 +40,12 @@ public class SharedPrefUtils {
     }
 
     public static String getUserEmail(Context context) {
-        return getString(context, ApiStringConstants.EMAIL, "");
+        return getString(context, USER_EMAIL, "");
     }
 
 
     public static String getUserPhone(Context context) {
-        return getString(context, ApiStringConstants.PHONE, "");
+        return getString(context, USER_MOBILE, "");
     }
 //    public static void putData(Context context, String key, Set<String> value) {
 //        getSharedPref(context).edit().putStringSet(key, value).commit();

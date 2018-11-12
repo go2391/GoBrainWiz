@@ -17,6 +17,7 @@ import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.BaseModel;
 import brainwiz.gobrainwiz.api.model.LoginModel;
+import brainwiz.gobrainwiz.api.model.RegistrationModel;
 import brainwiz.gobrainwiz.databinding.FragmentOtpPasswordBinding;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
@@ -64,8 +65,8 @@ public class OtpPasswordFragment extends BaseFragment {
                 case R.id.confirm:
 
                     if (verifyFileds()) {
-//                        confirmUser();
-                        userLogin();
+                        registerUser();
+//                        userLogin();
 //                        activity.finish();
 //                        startActivity(new Intent(activity, MainActivity.class));
 
@@ -86,8 +87,8 @@ public class OtpPasswordFragment extends BaseFragment {
 //            "user_name" : "6785435787",
 //             "password" : "alex1234"
         HashMap<String, String> hashMap = getBaseBodyMap();
-        hashMap.put("user_name", "6785435787");
-        hashMap.put("password", "alex1234");
+        hashMap.put("user_name", getArguments().getString("mobile"));
+        hashMap.put("password", bind.password.getText().toString());
         RetrofitManager.getRestApiMethods().login(hashMap).enqueue(new ApiCallback<LoginModel>(activity) {
             @Override
             public void onApiResponse(Response<LoginModel> response, boolean isSuccess, String message) {
@@ -121,7 +122,7 @@ public class OtpPasswordFragment extends BaseFragment {
             return false;
         }
 
-        if (bind.otp.getText().toString().length() < 4) {
+        if (bind.otp.getText().toString().length() < 6) {
             DDAlerts.showToast(getActivity(), "enter valid OTP.");
             return false;
         }
@@ -147,16 +148,42 @@ public class OtpPasswordFragment extends BaseFragment {
     }
 
 
-    private void confirmUser() {
-        HashMap<String, String> hashMap = getBaseBodyMap();
-        hashMap.put("otp", bind.otp.getText().toString());
+    private void registerUser() {
+//        {
+//"name":"werty",
+//"mobile":8769054576,
+//"mail_id":"alet@gmail.com",
+//"college_name":"sampleNAme"
+
+        if (!NetWorkUtil.isConnected(context)) {
+            DDAlerts.showNetworkAlert(activity);
+            return;
+        }
+
+        showProgress();
+        Bundle arguments = getArguments();
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("name", arguments.getString("name"));
+        hashMap.put("mobile", arguments.getString("mobile"));
+        hashMap.put("mail_id", arguments.getString("mail_id"));
+        hashMap.put("college_name", arguments.getString("college_name"));
+        hashMap.put("verify_otp", bind.otp.getText().toString());
         hashMap.put("password", bind.password.getText().toString());
-        hashMap.put("confirmPassword", bind.confirmPassword.getText().toString());
 
-        RetrofitManager.getRestApiMethods().verifyOTP(hashMap).enqueue(new ApiCallback<BaseModel>(getActivity()) {
+
+        RetrofitManager.getRestApiMethods().register(hashMap).enqueue(new ApiCallback<RegistrationModel>(getActivity()) {
             @Override
-            public void onApiResponse(Response<BaseModel> response, boolean isSuccess, String message) {
+            public void onApiResponse(Response<RegistrationModel> response, boolean isSuccess, String message) {
+                if (isSuccess) {
+                    if (response.body().getData().getData().getMessage().equalsIgnoreCase("Password Updated")) {
+                        userLogin();
+//                        activity.finish();
+//                        startActivity(new Intent(activity, MainActivity.class));
+                    }else
+                    {
 
+                    }
+                }
             }
 
             @Override
@@ -166,5 +193,7 @@ public class OtpPasswordFragment extends BaseFragment {
         });
 
     }
+
+
 
 }

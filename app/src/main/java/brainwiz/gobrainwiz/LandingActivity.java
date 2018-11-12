@@ -52,7 +52,7 @@ public class LandingActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.skip:
-                    startActivity(new Intent(LandingActivity.this, LoginActivity.class));
+                    startActivity(new Intent(LandingActivity.this, RegistrationActivity.class));
                     SharedPrefUtils.putData(getApplicationContext(), SharedPrefUtils.IS_FIRST_LAUNCH, false);
                     finish();
                     break;
@@ -60,7 +60,7 @@ public class LandingActivity extends BaseActivity {
                     int count = viewPager.getAdapter().getCount();
 
                     if (viewPager.getCurrentItem() == count - 1) {
-                        startActivity(new Intent(LandingActivity.this, LoginActivity.class));
+                        startActivity(new Intent(LandingActivity.this, RegistrationActivity.class));
                         SharedPrefUtils.putData(getApplicationContext(), SharedPrefUtils.IS_FIRST_LAUNCH, false);
                         finish();
                     } else {

@@ -26,8 +26,6 @@ import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import retrofit2.Response;
 
-import static brainwiz.gobrainwiz.R.color.blueSecondary;
-import static brainwiz.gobrainwiz.R.color.colorAccent;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.IS_LOGIN;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_EMAIL;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_ID;
@@ -40,6 +38,8 @@ public class LoginFragment extends BaseFragment {
     private Context context;
     private FragmentActivity activity;
     private FragmentLoginBinding bind;
+
+    public static final String KEY_ISREGISTRATION = "isRegistration";
 
     @Override
     public void onAttach(Context context) {
@@ -70,9 +70,13 @@ public class LoginFragment extends BaseFragment {
     private final View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+            Intent intent = new Intent(getActivity(), RegistrationActivity.class);
             switch (v.getId()) {
                 case R.id.registration_here:
-                    ((LoginActivity) activity).fragmentTransaction(new RegistrationFragment(), R.id.login_frame, true);
+                    intent.putExtra(KEY_ISREGISTRATION,true);
+                    getActivity().startActivity(intent);
+//                    ((RegistrationActivity) activity).fragmentTransaction(new RegistrationFragment(), R.id.login_frame, true);
                     break;
                 case R.id.login_arrow:
 
@@ -81,7 +85,9 @@ public class LoginFragment extends BaseFragment {
 //                    startActivity(new Intent(activity, MainActivity.class));
                     break;
                 case R.id.forgot_password:
-                    ((LoginActivity) activity).fragmentTransaction(new ForgotPasswordFragment(), R.id.login_frame, true);
+                    intent.putExtra(KEY_ISREGISTRATION,false);
+                    getActivity().startActivity(intent);
+//                    ((RegistrationActivity) activity).fragmentTransaction(new ForgotPasswordFragment(), R.id.login_frame, true);
                     break;
 
             }

@@ -136,5 +136,6 @@ sections
     <string name="email_mobile_no">Email/Mobile no</string>
     <string name="reset_my_password">Reset My Password</string>
     <string name="request_password">Request Password</string>
-    <string name="welcome_to_brainwiz">Welcome to BRAINWIZ</string>
+    <string name="welcome_to_brainwiz">Welcome to</string>
+    <string name="inprogress">InProgress</string>
 </resources>

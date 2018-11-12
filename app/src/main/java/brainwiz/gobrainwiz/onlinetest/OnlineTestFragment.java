@@ -106,8 +106,17 @@ public class OnlineTestFragment extends BaseFragment {
         }
 
         @Override
-        public void onReviewTest(int position) {
-
+        public void onReviewTest(OnlineTestModle.TestList test) {
+            Intent intent = new Intent(getActivity(), TestActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(COMPANY_NAME, test.getTestName());
+            bundle.putString(DURATION, test.getDuration());
+            bundle.putString(ID, test.getBrainTestId());
+            bundle.putString(CAT_ID, "");
+            bundle.putBoolean(IS_COMPANY_TEST, true);
+            bundle.putBoolean(IS_REVIEW, true);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     };
 

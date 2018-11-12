@@ -1,7 +1,6 @@
 package brainwiz.gobrainwiz;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,7 +16,6 @@ import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.BaseModel;
 import brainwiz.gobrainwiz.databinding.FragmentForgotPasswordBinding;
-import brainwiz.gobrainwiz.databinding.FragmentOtpPasswordBinding;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import retrofit2.Response;
 
@@ -55,7 +53,7 @@ public class ForgotPasswordFragment extends BaseFragment {
                 case R.id.confirm:
                     if (isValidDetails()) {
                         resetPassword();
-                        ((LoginActivity) activity).getSupportFragmentManager().popBackStack();
+                        ((RegistrationActivity) activity).getSupportFragmentManager().popBackStack();
                     }
                     break;
             }

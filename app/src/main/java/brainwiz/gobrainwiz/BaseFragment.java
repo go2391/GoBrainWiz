@@ -27,8 +27,8 @@ public class BaseFragment extends Fragment {
 
         if (activity instanceof MainActivity) {
             ((MainActivity) activity).showProgress();
-        } else if (activity instanceof LoginActivity) {
-            ((LoginActivity) activity).showProgress();
+        } else if (activity instanceof RegistrationActivity) {
+            ((RegistrationActivity) activity).showProgress();
         } else if (activity instanceof TestActivity) {
             ((TestActivity) activity).showProgress();
         }
@@ -42,8 +42,8 @@ public class BaseFragment extends Fragment {
 
         if (activity instanceof MainActivity) {
             ((MainActivity) activity).dismissProgress();
-        } else if (activity instanceof LoginActivity) {
-            ((LoginActivity) activity).dismissProgress();
+        } else if (activity instanceof RegistrationActivity) {
+            ((RegistrationActivity) activity).dismissProgress();
         } else if (activity instanceof TestActivity) {
             ((TestActivity) activity).dismissProgress();
         }

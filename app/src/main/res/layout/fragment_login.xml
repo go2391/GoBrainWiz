@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:padding="@dimen/dimen_10">
+        android:padding="@dimen/dimen_20">
 
         <ImageView
             android:id="@+id/logo_image"
@@ -20,11 +20,12 @@
 
         <TextView
             android:id="@+id/login_label"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@id/logo_image"
-            android:layout_marginTop="@dimen/dimen_30"
+            android:layout_centerHorizontal="true"
             android:fontFamily="@font/bold"
+            android:gravity="center"
             android:text="@string/welcome_to_brainwiz"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/font_16" />

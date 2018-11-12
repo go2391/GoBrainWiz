@@ -46,6 +46,19 @@ public class OnlineTestTestsAdapter extends RecyclerView.Adapter<OnlineTestTests
         holder.bind.testItemTitle.setText(testList.getTestName());
         holder.bind.testQuestions.setText(String.format(context.getString(R.string.questions), testList.getCountQ()));
         holder.bind.testMins.setText(String.format(context.getString(R.string.mins), testList.getDuration()));
+        String type = "";
+        switch (data.get(position).getStatus()) {
+            case 0:
+                type = context.getString(R.string.start);
+                break;
+            case 1:
+                type = context.getString(R.string.inprogress);
+                break;
+            case 2:
+                type = context.getString(R.string.review);
+                break;
+        }
+        holder.bind.testTopicItemStart.setText(type);
     }
 
     @Override
@@ -66,7 +79,15 @@ public class OnlineTestTestsAdapter extends RecyclerView.Adapter<OnlineTestTests
         @Override
         public void onClick(View v) {
             if (testListener != null) {
-                testListener.onTestStart(data.get(getAdapterPosition()));
+                switch (data.get(getAdapterPosition()).getStatus()) {
+                    case 0:
+                    case 1:
+                        testListener.onTestStart(data.get(getAdapterPosition()));
+                        break;
+                    case 2:
+                        testListener.onReviewTest(data.get(getAdapterPosition()));
+                        break;
+                }
             }
         }
     }
@@ -74,7 +95,7 @@ public class OnlineTestTestsAdapter extends RecyclerView.Adapter<OnlineTestTests
     interface TestListener {
         void onTestStart(OnlineTestModle.TestList test);
 
-        void onReviewTest(int position);
+        void onReviewTest(OnlineTestModle.TestList test);
     }
 
 }

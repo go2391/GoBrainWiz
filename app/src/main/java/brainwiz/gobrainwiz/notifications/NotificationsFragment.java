@@ -1,4 +1,4 @@
-package brainwiz.gobrainwiz.sidemenu;
+package brainwiz.gobrainwiz.notifications;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,20 +18,21 @@ import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
-import brainwiz.gobrainwiz.api.model.HistoryOnlineTestModel;
 import brainwiz.gobrainwiz.api.model.HistoryPractiseTestModel;
-import brainwiz.gobrainwiz.databinding.FragmentMyTestsBinding;
+import brainwiz.gobrainwiz.api.model.NotificationsModel;
+import brainwiz.gobrainwiz.databinding.FragmentNotificationsBinding;
+import brainwiz.gobrainwiz.sidemenu.PractiseTestHistoryAdapter;
 import brainwiz.gobrainwiz.test.TestActivity;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import retrofit2.Response;
 
-public class MyPracticeTestsFragment extends BaseFragment {
+public class NotificationsFragment extends BaseFragment {
 
     private Context context;
     private FragmentActivity activity;
-    private FragmentMyTestsBinding bind;
-    private PractiseTestHistoryAdapter testTestsAdapter;
+    private NotificationsAdapter notificationsAdapter;
+    FragmentNotificationsBinding bind;
 
     @Override
     public void onAttach(Context context) {
@@ -43,15 +45,15 @@ public class MyPracticeTestsFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View inflate = inflater.inflate(R.layout.fragment_my_tests, container, false);
+        View inflate = inflater.inflate(R.layout.fragment_notifications, container, false);
         bind = DataBindingUtil.bind(inflate);
         initViews();
 
-        getTests();
+        getNotifications();
         return inflate;
     }
 
-    private void getTests() {
+    private void getNotifications() {
 
         if (!NetWorkUtil.isConnected(context)) {
             DDAlerts.showNetworkAlert(activity);
@@ -61,13 +63,13 @@ public class MyPracticeTestsFragment extends BaseFragment {
 //        showProgress();
         HashMap<String, String> baseBodyMap = getBaseBodyMap();
 //        (getArguments().getString(TOPIC_ID))
-        RetrofitManager.getRestApiMethods().getPastPractiseTests(baseBodyMap).enqueue(new ApiCallback<HistoryPractiseTestModel>(activity) {
+        RetrofitManager.getRestApiMethods().getNotifications(baseBodyMap).enqueue(new ApiCallback<NotificationsModel>(activity) {
             @Override
-            public void onApiResponse(Response<HistoryPractiseTestModel> response, boolean isSuccess, String message) {
+            public void onApiResponse(Response<NotificationsModel> response, boolean isSuccess, String message) {
 //                dismissProgress();
                 if (isSuccess) {
-                    testTestsAdapter.setData(response.body().getData());
-                    testTestsAdapter.notifyDataSetChanged();
+                    notificationsAdapter.setData(response.body().getData());
+                    notificationsAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -81,30 +83,15 @@ public class MyPracticeTestsFragment extends BaseFragment {
 
     private void initViews() {
 
-        testTestsAdapter = new PractiseTestHistoryAdapter(context);
-        bind.recycleMyTests.setAdapter(testTestsAdapter);
-        testTestsAdapter.setTestListener(testListener);
+        notificationsAdapter = new NotificationsAdapter(context);
+        bind.recycleNotifications.setAdapter(notificationsAdapter);
+
+
+        bind.recycleNotifications.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+
+//        notificationsAdapter.set(testListener);
 //        bind.recycleTopics.addItemDecoration(new DividerItemDecoration(context, RecyclerView.VERTICAL));
     }
-
-    private final PractiseTestHistoryAdapter.TestListener testListener = new PractiseTestHistoryAdapter.TestListener() {
-
-        @Override
-        public void onReviewTest(int position) {
-            Intent intent = new Intent(getActivity(), TestActivity.class);
-            Bundle bundle = new Bundle();
-            HistoryPractiseTestModel.PractiseTestHistory testList = testTestsAdapter.getData().get(position);
-            bundle.putString(ID, testList.getTestId());
-            bundle.putString(CAT_ID, "");
-            bundle.putBoolean(IS_COMPANY_TEST, false);
-            bundle.putBoolean(IS_REVIEW, true);
-
-            bundle.putString(DURATION, String.valueOf(0));
-            intent.putExtras(bundle);
-            startActivity(intent);
-
-        }
-    };
 
 
 }

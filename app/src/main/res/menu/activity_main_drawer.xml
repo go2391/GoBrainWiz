@@ -7,7 +7,8 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
-            android:title="Home" />
+            android:title="Home"
+            android:visible="false"/>
 
         <item
             android:id="@+id/nav_camera"
@@ -25,7 +26,7 @@
 
         <item
             android:id="@+id/nav_notifications"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/ic_notifications"
             android:title="Notifications" />
 
 
@@ -42,7 +43,8 @@
             <item
                 android:id="@+id/nav_contact_us"
                 android:icon="@drawable/ic_call"
-                android:title="Contact Us" />
+                android:title="Contact Us"
+                android:visible="false"/>
 
             <item
                 android:id="@+id/nav_about_us"

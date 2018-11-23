@@ -48,8 +48,14 @@ public class PracticeTestTopicsFragment extends BaseFragment {
         bind = DataBindingUtil.bind(inflate);
         initViews();
 
-        getTests();
+
         return inflate;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getTests();
     }
 
     private void getTests() {
@@ -83,20 +89,25 @@ public class PracticeTestTopicsFragment extends BaseFragment {
     private void initViews() {
 
         int bgResource = 0;
+        int iconColor = 0;
         switch (getArguments().getInt(PracticeTestCategoryFragment.TYPE)) {
             case PracticeTestCategoryFragment.TYPE_ARITHMETIC:
-                bgResource = R.drawable.gradient_orange;
+                bgResource = R.drawable.bg_arth;
+                iconColor = R.color.orangeSecondary;
                 break;
             case PracticeTestCategoryFragment.TYPE_LOGICAL:
-                bgResource = R.drawable.gradient_blue;
+                bgResource = R.drawable.bg_logic;
+                iconColor = R.color.blueSecondary;
                 break;
             case PracticeTestCategoryFragment.TYPE_VERBAL:
-                bgResource = R.drawable.gradient_red;
+                bgResource = R.drawable.bg_verbal;
+                iconColor = R.color.red_primary;
                 break;
         }
         bind.topicTitle.setBackgroundResource(bgResource);
         bind.topicTitle.setText(getArguments().getString(PracticeTestCategoryFragment.TOPIC_NAME));
         testTestsAdapter = new PracticeTestTestsAdapter(context);
+        testTestsAdapter.setIconColor(iconColor);
         bind.recycleTopics.setAdapter(testTestsAdapter);
         testTestsAdapter.setTestListener(testListener);
 //        bind.recycleTopics.addItemDecoration(new DividerItemDecoration(context, RecyclerView.VERTICAL));
@@ -123,14 +134,15 @@ public class PracticeTestTopicsFragment extends BaseFragment {
         @Override
         public void onReviewTest(int position) {
             Intent intent = new Intent(getActivity(), TestActivity.class);
+
             Bundle bundle = new Bundle();
             TestsModel.TestList testList = testTestsAdapter.getData().get(position);
             bundle.putString(ID, testList.getTestId());
             bundle.putString(CAT_ID, "");
             bundle.putBoolean(IS_COMPANY_TEST, false);
             bundle.putBoolean(IS_REVIEW, true);
-
             bundle.putString(DURATION, String.valueOf(parseTimeToMinutes(testList.getTestTime())));
+
             intent.putExtras(bundle);
             startActivity(intent);
 

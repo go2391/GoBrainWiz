@@ -8,16 +8,6 @@
         android:background="@color/white">
 
 
-        <ImageView
-            android:id="@+id/logo_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/login_layout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dimen_30"
-            android:layout_marginTop="@dimen/dimen_20"
-            android:src="@drawable/logo_text" />
-
         <TextView
             android:id="@+id/registration_label"
             android:layout_width="wrap_content"
@@ -95,7 +85,7 @@
                     style="@style/EditTextStyle"
                     android:drawableStart="@drawable/ic_college"
                     android:drawableTint="@color/blueSecondary"
-                    android:hint="@string/location" />
+                    android:hint="@string/college_name" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -114,7 +104,7 @@
 
             <Button
                 android:id="@+id/registration_arrow"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/dimen_20"

@@ -1,4 +1,4 @@
-package brainwiz.gobrainwiz.fcm;
+package brainwiz.gobrainwiz;
 
 /**
  * Copyright 2016 Google Inc. All Rights Reserved.
@@ -33,6 +33,8 @@ import android.util.Log;
 //import com.firebase.jobdispatcher.Job;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.Map;
 
 import brainwiz.gobrainwiz.MainActivity;
 import brainwiz.gobrainwiz.R;
@@ -71,14 +73,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+        Map<String, String> data = remoteMessage.getData();
+        if (data.size() > 0) {
+            Log.d(TAG, "Message data payload: " + data);
 
             if (/* Check if data needs to be processed by long running job */ false) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
 //                scheduleJob();
             } else {
                 // Handle message within 10 seconds
+                sendNotification(data);
                 handleNow();
             }
 
@@ -89,7 +93,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
-        sendNotification("my notification body");
+
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
@@ -154,7 +158,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(String messageBody) {
+    private void sendNotification(Map<String, String> messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -165,8 +169,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.logo)
-                        .setContentTitle(getString(R.string.app_name))
-                        .setContentText(messageBody)
+                        .setContentTitle(messageBody.get("title"))
+                        .setContentText(messageBody.get("message"))
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);

@@ -19,11 +19,12 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/bg_gradient_green"
                 android:fontFamily="@font/semibold"
-                android:gravity="center"
-                android:minHeight="200dp"
+                android:gravity="start|center"
+                android:minHeight="180dp"
+                android:padding="@dimen/dimen_16"
                 android:text="Topic Title"
                 android:textColor="@color/white"
-                android:textSize="@dimen/font_50" />
+                android:textSize="@dimen/font_24" />
 
             <View
                 android:layout_width="match_parent"

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import brainwiz.gobrainwiz.R;
+import brainwiz.gobrainwiz.api.model.BaseModel;
 
 /**
  */
@@ -130,9 +131,9 @@ public class DDAlerts {
         showAlert(context, message, context.getString(R.string.ok));
     }
 
-    public static void showResponseError(Context context, JSONObject jsonObject) {
-        String message = jsonObject.optString("discription");
-        String text = message.isEmpty() ? jsonObject.optString("description") : message;
+    public static void showResponseError(Context context, BaseModel baseModel) {
+        String text = baseModel.getMessage();
+
         if (!text.isEmpty()) {
             Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
         }
@@ -144,7 +145,7 @@ public class DDAlerts {
         }
     }
 
-    public static void showResponseError(Activity context, JSONObject jsonObject, boolean alert) {
+    /*public static void showResponseError(Activity context, JSONObject jsonObject, boolean alert) {
         if (alert) {
 
             String message = jsonObject.optString("description");
@@ -152,7 +153,7 @@ public class DDAlerts {
         } else {
             showResponseError(context, jsonObject);
         }
-    }
+    }*/
 
     public static void showNetworkAlert(Activity context) {
         Toast.makeText(context, R.string.no_internet, Toast.LENGTH_SHORT).show();

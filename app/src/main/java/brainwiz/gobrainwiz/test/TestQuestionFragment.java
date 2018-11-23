@@ -53,6 +53,8 @@ public class TestQuestionFragment extends BaseFragment {
     private int fragmentCurrentPosition = -1;
     private boolean isReview;
     private Context context;
+    private View next;
+    private View previews;
 
 
     public static TestQuestionFragment getInstance(String id, boolean isReview) {
@@ -151,10 +153,12 @@ public class TestQuestionFragment extends BaseFragment {
             HashMap<String, String> baseBodyMap = getBaseBodyMap();
             baseBodyMap.put("sets_id", catId);
             baseBodyMap.put("exam_id", id);
+            baseBodyMap.put("is_review",isReview ? "1" : "0");
             RetrofitManager.getRestApiMethods().getCompanyTests(baseBodyMap).enqueue(callback);
         } else {
             HashMap<String, String> baseBodyMap = getBaseBodyMap();
             baseBodyMap.put("testId", id);
+            baseBodyMap.put("is_review",isReview ? "1" : "0");
             RetrofitManager.getRestApiMethods().getPracticeTests(baseBodyMap).enqueue(callback);
         }
 
@@ -202,9 +206,11 @@ public class TestQuestionFragment extends BaseFragment {
         viewPager = (ViewPager) inflate.findViewById(R.id.view_pager_questions);
 
 
-        inflate.findViewById(R.id.test_next).setOnClickListener(onClickListener);
+        next = inflate.findViewById(R.id.test_next);
+        next.setOnClickListener(onClickListener);
 
-        inflate.findViewById(R.id.test_previous).setOnClickListener(onClickListener);
+        previews = inflate.findViewById(R.id.test_previous);
+        previews.setOnClickListener(onClickListener);
 
         viewPager.addOnPageChangeListener(onPageChangeListener);
 
@@ -224,6 +230,12 @@ public class TestQuestionFragment extends BaseFragment {
         @Override
         public void onPageSelected(final int position) {
 
+
+            next.setVisibility(position == viewPagerAdapter.getCount() - 1 ? View.INVISIBLE : View.VISIBLE);
+            previews.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
+
+            if (getActivity() == null)
+                return;
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -295,7 +307,7 @@ public class TestQuestionFragment extends BaseFragment {
                     if (isSuccess) {
                         Intent data = new Intent();
                         data.putExtra(CAT_ID, getArguments().getString(CAT_ID, ""));
-                        data.putParcelableArrayListExtra("data", new ArrayList<>(response.body().getData()));
+                        data.putExtra("data", response.body().getData());
                         Fragment targetFragment = getTargetFragment();
                         if (targetFragment != null) {
                             targetFragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
@@ -316,7 +328,7 @@ public class TestQuestionFragment extends BaseFragment {
                 @Override
                 public void onApiResponse(Response<PractiseTestResultModel> response, boolean isSuccess, String message) {
                     if (isSuccess) {
-                        ScoreCardFragment instance = ScoreCardFragment.getInstance(response.body().getData());
+                        ScoreCardFragment instance = ScoreCardFragment.getInstance(response.body().getData(),isReview,getArguments().getString("id", ""));
 
                         ((TestActivity) getActivity()).fragmentTransaction(instance);
                     }
@@ -390,7 +402,7 @@ public class TestQuestionFragment extends BaseFragment {
             question.setQId(datum.getQuestionId());
             String selectedOption = datum.getSelectedOption();
             if (selectedOption != null && !selectedOption.isEmpty()) {
-                question.setSelected_option(Integer.parseInt(selectedOption));
+                question.setSelected_option(Integer.parseInt(selectedOption + 1));
             }
 
             question.setTime_taken((int) datum.getSpentTime());

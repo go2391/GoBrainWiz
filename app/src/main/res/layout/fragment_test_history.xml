@@ -9,46 +9,41 @@
         <RadioGroup
             android:id="@+id/rg_notifications"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_notification_title"
-            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_height="@dimen/dimen_50"
+            android:layout_margin="@dimen/dimen_16"
             android:background="@drawable/primary_border_rounded_border"
             android:orientation="horizontal"
-            android:padding="@dimen/dimen_6"
+            android:padding="1dp"
             android:weightSum="2">
 
             <RadioButton
                 android:id="@+id/rb_practice"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_50"
                 android:layout_weight="1"
                 android:background="@drawable/my_notification_tab_selector"
                 android:button="@null"
                 android:checked="true"
                 android:fontFamily="@font/bold"
                 android:gravity="center"
-                android:paddingBottom="@dimen/dimen_12"
-                android:paddingTop="@dimen/dimen_12"
                 android:text="@string/practicetests"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@drawable/my_notification_tab_text_selector"
-                android:textSize="@dimen/font_16" />
+                android:textSize="@dimen/font_12" />
 
             <RadioButton
                 android:id="@+id/rb_online"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_50"
                 android:layout_weight="1"
                 android:background="@drawable/my_notification_tab_selector"
                 android:button="@null"
                 android:fontFamily="@font/bold"
                 android:gravity="center"
-                android:paddingBottom="@dimen/dimen_12"
-                android:paddingTop="@dimen/dimen_12"
                 android:text="@string/onlinetest"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@drawable/my_notification_tab_text_selector"
-                android:textSize="@dimen/font_16" />
+                android:textSize="@dimen/font_12" />
         </RadioGroup>
 
 

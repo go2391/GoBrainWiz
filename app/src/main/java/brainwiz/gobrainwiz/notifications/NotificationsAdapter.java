@@ -1,4 +1,4 @@
-package brainwiz.gobrainwiz.sidemenu;
+package brainwiz.gobrainwiz.notifications;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -12,41 +12,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 import brainwiz.gobrainwiz.R;
-import brainwiz.gobrainwiz.api.model.HistoryOnlineTestModel;
 import brainwiz.gobrainwiz.api.model.HistoryPractiseTestModel;
-import brainwiz.gobrainwiz.databinding.InflateTestItemBinding;
-import brainwiz.gobrainwiz.utils.AppUtils;
+import brainwiz.gobrainwiz.api.model.NotificationsModel;
+import brainwiz.gobrainwiz.databinding.InflateNotificationsItemBinding;
 
-public class PractiseTestHistoryAdapter extends RecyclerView.Adapter<PractiseTestHistoryAdapter.TestViewHolder> {
+public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.TestViewHolder> {
 
     Context context;
 
-    private TestListener testListener;
-    private List<HistoryPractiseTestModel.PractiseTestHistory> data = new ArrayList<>();
+    private NotificationListener notificationListener;
+    private List<NotificationsModel.Datum> data = new ArrayList<>();
 
 
-    public PractiseTestHistoryAdapter(Context context) {
+    public NotificationsAdapter(Context context) {
 
         this.context = context;
     }
 
-    public void setTestListener(TestListener testListener) {
-        this.testListener = testListener;
+    public void setNotificationListener(NotificationListener notificationListener) {
+        this.notificationListener = notificationListener;
     }
 
     @NonNull
     @Override
     public TestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new TestViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.inflate_test_item, parent, false));
+        return new TestViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.inflate_notifications_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
 
-        HistoryPractiseTestModel.PractiseTestHistory testList = data.get(position);
-        holder.bind.testItemTitle.setText(testList.getTestName());
-        holder.bind.testQuestions.setText(String.format(context.getString(R.string.total_questions), Integer.parseInt(testList.getTotalQuestions())));
-        holder.bind.testMins.setText(String.format(context.getString(R.string.questions_attempted), Integer.parseInt(testList.getAttempted())));
+        NotificationsModel.Datum testList = data.get(position);
+        holder.bind.notificationItemTitle.setText(testList.getTitle());
+        holder.bind.notificationDesc.setText(testList.getMessage());
     }
 
     @Override
@@ -54,36 +52,37 @@ public class PractiseTestHistoryAdapter extends RecyclerView.Adapter<PractiseTes
         return data.size();
     }
 
-    public void setData(List<HistoryPractiseTestModel.PractiseTestHistory> data) {
+    public void setData(List<NotificationsModel.Datum> data) {
 
         this.data = data;
     }
 
-    public List<HistoryPractiseTestModel.PractiseTestHistory> getData() {
+    public List<NotificationsModel.Datum> getData() {
         return data;
     }
 
     class TestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        InflateTestItemBinding bind;
+
+
+        private final InflateNotificationsItemBinding bind;
 
         public TestViewHolder(View itemView) {
             super(itemView);
             bind = DataBindingUtil.bind(itemView);
-            bind.testTopicItemStart.setText(context.getString(R.string.review));
-            bind.testTopicItemStart.setOnClickListener(this);
+            bind.getRoot().setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if (testListener != null) {
-                testListener.onReviewTest(getAdapterPosition());
+            if (notificationListener != null) {
+                notificationListener.onViewNotification(getAdapterPosition());
             }
         }
     }
 
-    public interface TestListener {
+    public interface NotificationListener {
 
-        void onReviewTest(int position);
+        void onViewNotification(int position);
     }
 
 }

@@ -1,14 +1,6 @@
 package brainwiz.gobrainwiz.utils;
 
 
-import java.util.ArrayList;
-
-import com.bumptech.glide.GenericRequestBuilder;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -17,6 +9,14 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Html.ImageGetter;
 import android.widget.TextView;
+
+import com.bumptech.glide.GenericRequestBuilder;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+
+import java.util.ArrayList;
 
 public class URLImageParserNew implements ImageGetter {
 

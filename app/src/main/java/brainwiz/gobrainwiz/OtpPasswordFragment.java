@@ -33,9 +33,11 @@ import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_TOKEN;
 
 public class OtpPasswordFragment extends BaseFragment {
 
+
     private Context context;
     private FragmentActivity activity;
     private FragmentOtpPasswordBinding bind;
+    private boolean isRegistration;
 
     @Override
     public void onAttach(Context context) {
@@ -55,6 +57,7 @@ public class OtpPasswordFragment extends BaseFragment {
 
     private void initViews() {
 
+        isRegistration = getArguments().getBoolean(LoginFragment.KEY_ISREGISTRATION, true);
         bind.confirm.setOnClickListener(onClickListener);
     }
 
@@ -65,7 +68,11 @@ public class OtpPasswordFragment extends BaseFragment {
                 case R.id.confirm:
 
                     if (verifyFileds()) {
-                        registerUser();
+                        if (isRegistration) {
+                            registerUser();
+                        } else {
+                            resetPassword();
+                        }
 //                        userLogin();
 //                        activity.finish();
 //                        startActivity(new Intent(activity, MainActivity.class));
@@ -148,6 +155,49 @@ public class OtpPasswordFragment extends BaseFragment {
     }
 
 
+    private void resetPassword() {
+//        {
+//"name":"werty",
+//"mobile":8769054576,
+//"mail_id":"alet@gmail.com",
+//"college_name":"sampleNAme"
+
+        if (!NetWorkUtil.isConnected(context)) {
+            DDAlerts.showNetworkAlert(activity);
+            return;
+        }
+
+        showProgress();
+        Bundle arguments = getArguments();
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("mobile", arguments.getString("mobile"));
+        hashMap.put("verify_otp", bind.otp.getText().toString());
+        hashMap.put("password", bind.password.getText().toString());
+
+
+        RetrofitManager.getRestApiMethods().resetPassword(hashMap).enqueue(new ApiCallback<BaseModel>(getActivity()) {
+            @Override
+            public void onApiResponse(Response<BaseModel> response, boolean isSuccess, String message) {
+                dismissProgress();
+                if (isSuccess) {
+//                    if (response.body().getData().getMessage().equalsIgnoreCase("Password Updated")) {
+                    userLogin();
+//                        activity.finish();
+//                        startActivity(new Intent(activity, MainActivity.class));
+                } else {
+
+                }
+//                }
+            }
+
+            @Override
+            public void onApiFailure(boolean isSuccess, String message) {
+                dismissProgress();
+            }
+        });
+
+    }
+
     private void registerUser() {
 //        {
 //"name":"werty",
@@ -179,8 +229,7 @@ public class OtpPasswordFragment extends BaseFragment {
                         userLogin();
 //                        activity.finish();
 //                        startActivity(new Intent(activity, MainActivity.class));
-                    }else
-                    {
+                    } else {
 
                     }
                 }
@@ -193,7 +242,6 @@ public class OtpPasswordFragment extends BaseFragment {
         });
 
     }
-
 
 
 }

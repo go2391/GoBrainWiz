@@ -74,7 +74,7 @@ public class LoginFragment extends BaseFragment {
             Intent intent = new Intent(getActivity(), RegistrationActivity.class);
             switch (v.getId()) {
                 case R.id.registration_here:
-                    intent.putExtra(KEY_ISREGISTRATION,true);
+                    intent.putExtra(KEY_ISREGISTRATION, true);
                     getActivity().startActivity(intent);
 //                    ((RegistrationActivity) activity).fragmentTransaction(new RegistrationFragment(), R.id.login_frame, true);
                     break;
@@ -85,7 +85,7 @@ public class LoginFragment extends BaseFragment {
 //                    startActivity(new Intent(activity, MainActivity.class));
                     break;
                 case R.id.forgot_password:
-                    intent.putExtra(KEY_ISREGISTRATION,false);
+                    intent.putExtra(KEY_ISREGISTRATION, false);
                     getActivity().startActivity(intent);
 //                    ((RegistrationActivity) activity).fragmentTransaction(new ForgotPasswordFragment(), R.id.login_frame, true);
                     break;
@@ -107,6 +107,7 @@ public class LoginFragment extends BaseFragment {
             HashMap<String, String> hashMap = getBaseBodyMap();
             hashMap.put("user_name", bind.mobile.getText().toString().trim());
             hashMap.put("password", bind.password.getText().toString().trim());
+            hashMap.put("fcm_token", SharedPrefUtils.getString(context, SharedPrefUtils.FIREBASE_TOKEN, ""));
             RetrofitManager.getRestApiMethods().login(hashMap).enqueue(new ApiCallback<LoginModel>(activity) {
                 @Override
                 public void onApiResponse(Response<LoginModel> response, boolean isSuccess, String message) {
@@ -115,6 +116,8 @@ public class LoginFragment extends BaseFragment {
                         saveUserDetails(response.body().getData());
                         activity.finish();
                         startActivity(new Intent(activity, MainActivity.class));
+                    } else {
+                        DDAlerts.showResponseError(getActivity(), response.body());
                     }
                 }
 

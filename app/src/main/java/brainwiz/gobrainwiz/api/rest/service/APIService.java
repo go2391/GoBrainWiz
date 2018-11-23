@@ -8,6 +8,7 @@ import brainwiz.gobrainwiz.api.model.DashBoardModel;
 import brainwiz.gobrainwiz.api.model.HistoryOnlineTestModel;
 import brainwiz.gobrainwiz.api.model.HistoryPractiseTestModel;
 import brainwiz.gobrainwiz.api.model.LoginModel;
+import brainwiz.gobrainwiz.api.model.NotificationsModel;
 import brainwiz.gobrainwiz.api.model.OnlineTestModle;
 import brainwiz.gobrainwiz.api.model.OnlineTestSetModel;
 import brainwiz.gobrainwiz.api.model.PracticeTestModel;
@@ -82,12 +83,20 @@ public interface APIService {
     Call<BaseModel> uploadImage(@Body HashMap<String, String> baseBodyMap);
 
 
-    @POST("/reset_password")
+    @POST("/forgot")
     Call<BaseModel> resetPassword(@Body HashMap<String, String> baseBodyMap);
 
 
     @POST("/verifyOTP")
-    Call<BaseModel> verifyOTP(@Body HashMap<String, String> baseBodyMap);
+    Call<RegistrationModel> verifyOTP(@Body HashMap<String, String> baseBodyMap);
+
+    @POST("/score-card")
+    Call<ScoreCardModel> getScoreCard(@Body HashMap<String, String> baseBodyMap);
+
+    @POST("/score-card")
+    Call<PractiseTestResultModel> getPractiseScoreCard(@Body HashMap<String, String> baseBodyMap);
 
 
+    @POST("/notification-history")
+    Call<NotificationsModel> getNotifications(@Body HashMap<String, String> baseBodyMap);
 }

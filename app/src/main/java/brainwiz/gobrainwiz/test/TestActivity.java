@@ -110,10 +110,18 @@ public class TestActivity extends BaseActivity
         String string = extras.getString(BaseFragment.DURATION);
         targetTime = Integer.parseInt(string) * 60;
 
+
         if (isCompanyTest) {
-            fragmentTransaction(InstructionsFragment.getInstance(extras), R.id.content_frame, false);
+
+            if (isReview) {
+                fragmentTransaction(ScoreCardOnlineFragment.getInstance(null, true, extras.getString(BaseFragment.ID)), R.id.content_frame, false);
+            } else
+                fragmentTransaction(InstructionsFragment.getInstance(extras), R.id.content_frame, false);
         } else {
-            fragmentTransaction(TestQuestionFragment.getInstance(extras.getString(BaseFragment.ID), extras.getBoolean(BaseFragment.IS_REVIEW)), R.id.content_frame, false);
+            if (isReview) {
+                fragmentTransaction(ScoreCardFragment.getInstance(null, true, extras.getString(BaseFragment.ID)), R.id.content_frame, false);
+            } else
+                fragmentTransaction(TestQuestionFragment.getInstance(extras.getString(BaseFragment.ID), extras.getBoolean(BaseFragment.IS_REVIEW)), R.id.content_frame, false);
         }
     }
 
@@ -205,13 +213,16 @@ public class TestActivity extends BaseActivity
     public void onBackPressed() {
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-        if (fragmentById != null) {
-            if ((fragmentById instanceof ScoreCardFragment || fragmentById instanceof ScoreCardOnlineFragment) && backStackEntryCount > 0) {
+        if (fragmentById != null && backStackEntryCount > 0) {
+
+            if (fragmentById instanceof TestQuestionFragment && !((TestQuestionFragment) fragmentById).isReview()) {
+                DDAlerts.showAlert(this, "You can't go back at this movement, Please submit you test to finish.", getString(R.string.ok));
+                return;
+            }
+            if (((fragmentById instanceof ScoreCardFragment && !((ScoreCardFragment) fragmentById).isReview()) || (fragmentById instanceof ScoreCardOnlineFragment) && !((ScoreCardOnlineFragment) fragmentById).isReview())) {
                 finish();
                 return;
             }
-        }
-        if (backStackEntryCount > 0) {
             getSupportFragmentManager().popBackStack();
         } else
             super.onBackPressed();
@@ -230,11 +241,13 @@ public class TestActivity extends BaseActivity
 //                            runTimer();
             } else if (fragmentById instanceof TestQuestionFragment) {
 
-                submitView.setVisibility(((TestQuestionFragment) fragmentById).isReview() ? View.INVISIBLE : View.VISIBLE);
-                timerTextView.setVisibility(((TestQuestionFragment) fragmentById).isReview() ? View.INVISIBLE : View.VISIBLE);
-            } else if (fragmentById instanceof ScoreCardFragment) {
+                boolean review = ((TestQuestionFragment) fragmentById).isReview();
+                submitView.setVisibility(review ? View.INVISIBLE : View.VISIBLE);
+//                timerTextView.setVisibility(review ? View.INVISIBLE : View.VISIBLE);
+                timerTextView.setText(getString(R.string.review));
+            } else if (fragmentById instanceof ScoreCardFragment || fragmentById instanceof ScoreCardOnlineFragment) {
                 submitView.setVisibility(View.INVISIBLE);
-                timerTextView.setText(R.string.your_result);
+                timerTextView.setText(R.string.score_card);
                 timerTextView.setVisibility(View.VISIBLE);
             }
         }

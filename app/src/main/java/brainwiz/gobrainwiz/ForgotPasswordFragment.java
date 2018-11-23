@@ -15,6 +15,7 @@ import java.util.HashMap;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.BaseModel;
+import brainwiz.gobrainwiz.api.model.RegistrationModel;
 import brainwiz.gobrainwiz.databinding.FragmentForgotPasswordBinding;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import retrofit2.Response;
@@ -79,7 +80,20 @@ public class ForgotPasswordFragment extends BaseFragment {
         RetrofitManager.getRestApiMethods().resetPassword(hashMap).enqueue(new ApiCallback<BaseModel>(getActivity()) {
             @Override
             public void onApiResponse(Response<BaseModel> response, boolean isSuccess, String message) {
+                dismissProgress();
+                if (isSuccess) {
+//                    if (response.body().getData().getData().getMessage().contains("Successfully")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean(LoginFragment.KEY_ISREGISTRATION, false);
+                    bundle.putString("mobile", bind.emailMobileNo.getText().toString());
 
+                    OtpPasswordFragment newFragment = new OtpPasswordFragment();
+                    newFragment.setArguments(bundle);
+                    ((RegistrationActivity) getActivity()).fragmentTransaction(newFragment, R.id.login_frame);
+                } else {
+
+                }
+//                }
             }
 
             @Override

@@ -20,7 +20,7 @@
                 android:fontFamily="@font/bold"
                 android:text="@string/instructions"
                 android:textColor="@color/black"
-                android:textSize="@dimen/font_20" />
+                android:textSize="@dimen/font_18" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -31,7 +31,20 @@
                 android:lineSpacingExtra="4dp"
                 android:text="@string/instructions_text"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/font_16" />
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:id="@+id/break_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:fontFamily="@font/bold"
+                android:text="@string/break_time"
+                android:textColor="@color/red"
+                android:textSize="@dimen/font_20"
+                android:visibility="invisible" />
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/instruction_recycler"

@@ -1,37 +1,51 @@
 package brainwiz.gobrainwiz.test;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import brainwiz.gobrainwiz.BaseFragment;
+import brainwiz.gobrainwiz.MainActivity;
 import brainwiz.gobrainwiz.R;
+import brainwiz.gobrainwiz.api.ApiCallback;
+import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.PractiseTestResultModel;
-import brainwiz.gobrainwiz.api.model.TestModel;
+import brainwiz.gobrainwiz.api.model.ScoreCardModel;
 import brainwiz.gobrainwiz.databinding.FragmentScoreCardBinding;
+import brainwiz.gobrainwiz.utils.DDAlerts;
+import brainwiz.gobrainwiz.utils.NetWorkUtil;
+import retrofit2.Response;
 
 public class ScoreCardFragment extends BaseFragment {
 
     FragmentScoreCardBinding bind;
 
+    private boolean isReview;
 
-    public static ScoreCardFragment getInstance(PractiseTestResultModel.Data datum) {
+    private Context context;
+
+    public static ScoreCardFragment getInstance(PractiseTestResultModel.Data datum, boolean isReview, String id) {
         ScoreCardFragment scoreCardFragment = new ScoreCardFragment();
         Bundle args = new Bundle();
         args.putParcelable("object", datum);
+        args.putBoolean(IS_REVIEW, isReview);
+        args.putString(ID, id);
         scoreCardFragment.setArguments(args);
         return scoreCardFragment;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        this.context = context;
+        super.onAttach(context);
+    }
 
     @Nullable
     @Override
@@ -43,14 +57,81 @@ public class ScoreCardFragment extends BaseFragment {
         return inflate;
     }
 
+    public boolean isReview() {
+        return isReview;
+    }
+
+    public void setReview(boolean review) {
+        isReview = review;
+    }
+
     private void initViews() {
 
-        PractiseTestResultModel.Data object = getArguments().getParcelable("object");
+        isReview = getArguments().getBoolean(IS_REVIEW);
+        if (isReview) {
+            getScoreCard();
+
+        } else {
+            PractiseTestResultModel.Data object = getArguments().getParcelable("object");
+            showScorecard(object);
+
+        }
+
+        bind.reviewQuestions.setText(isReview ? getString(R.string.review_questions) : getString(R.string.done));
+
+        bind.reviewQuestions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isReview) {
+                    Bundle extras = getArguments();
+                    ((TestActivity) getActivity()).fragmentTransaction(TestQuestionFragment.getInstance(extras.getString(BaseFragment.ID), extras.getBoolean(BaseFragment.IS_REVIEW)), R.id.content_frame, true);
+                } else {
+                    getActivity().onBackPressed();
+                }
+            }
+        });
+
+    }
+
+    private void showScorecard(PractiseTestResultModel.Data object) {
 
         bind.scoreCardCorrect.setText(String.format(getString(R.string.correct), object.getCorrect()));
         bind.scoreCardWrong.setText(String.format(getString(R.string.wrong), object.getIncorrect()));
         bind.scoreCardQuestionsAttempted.setText(String.format(getString(R.string.questions_attempted), object.getAttemptedQuestions()));
         bind.scoreCardTotalQuestions.setText(String.format(getString(R.string.total_questions), object.getTotalQuestions()));
-        bind.scoreCardProgress.setProgress((object.getCorrect() / object.getTotalQuestions()) * 100);
+        float i = (float) object.getCorrect() / object.getTotalQuestions();
+        bind.scoreCardProgress.setProgress(Math.round(i * 100f));
+
+        bind.rank.setText(String.valueOf(object.getRank()));
+
+    }
+
+
+    private void getScoreCard() {
+
+        if (!NetWorkUtil.isConnected(getActivity())) {
+            DDAlerts.showNetworkAlert(getActivity());
+            return;
+        }
+
+        showProgress();
+        HashMap<String, String> baseBodyMap = getBaseBodyMap();
+        baseBodyMap.put("practice_id", getArguments().getString(ID, ""));
+        RetrofitManager.getRestApiMethods().getPractiseScoreCard(baseBodyMap).enqueue(new ApiCallback<PractiseTestResultModel>(getActivity()) {
+            @Override
+            public void onApiResponse(Response<PractiseTestResultModel> response, boolean isSuccess, String message) {
+                if (isSuccess) {
+
+                    showScorecard(response.body().getData());
+
+                }
+                dismissProgress();
+            }
+
+            @Override
+            public void onApiFailure(boolean isSuccess, String message) {
+                dismissProgress();
+            }
+        });
     }
 }

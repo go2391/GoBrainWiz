@@ -1,5 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<layout>
 
-</RelativeLayout>
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/map_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="180dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/brainwiz_map" />
+
+
+            <TextView
+                android:id="@+id/contact_us_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dimen_10"
+                android:drawableStart="@drawable/ic_current_location"
+                android:fontFamily="@font/medium"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="@string/brainwiz_address"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/font_12" />
+
+            <TextView
+                android:id="@+id/contact_us_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dimen_10"
+                android:drawableStart="@drawable/ic_email"
+                android:fontFamily="@font/medium"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="@string/gobrainwiz_gmail_com"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/font_12" />
+
+            <TextView
+                android:id="@+id/contact_us_call"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dimen_10"
+                android:drawableStart="@drawable/ic_call"
+                android:fontFamily="@font/medium"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="@string/_81421_23938"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/font_12" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:background="@color/gray" />
+
+
+            <EditText
+                android:id="@+id/name"
+                style="@style/EditTextStyle"
+                android:layout_margin="@dimen/dimen_16"
+                android:background="@drawable/edit_text_bg"
+                android:hint="@string/name"
+                android:inputType="textPersonName"
+                android:padding="@dimen/dimen_10" />
+
+
+            <EditText
+                android:id="@+id/message"
+                style="@style/EditTextStyle"
+                android:layout_margin="@dimen/dimen_16"
+                android:background="@drawable/edit_text_bg"
+                android:gravity="start|top"
+                android:hint="@string/leave_any_query"
+                android:inputType="textMultiLine"
+                android:maxLength="220"
+                android:minHeight="@dimen/dimen_100"
+                android:padding="@dimen/dimen_10"
+                android:singleLine="false" />
+
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_marginEnd="@dimen/dimen_10"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@drawable/button_bg_green"
+                android:padding="@dimen/dimen_5"
+                android:src="@drawable/ic_arrow_forward"
+                android:text="@string/request_call_back"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:translationZ="@dimen/dimen_10" />
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

@@ -62,7 +62,14 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
             holder.bind.optionText.setText(Html.fromHtml(source, new URLImageParserNew(holder.bind.optionText, context), null));
         }
         String selectedOption = selectedData.getSelectedOption();
-        boolean selected = selectedOption != null && selectedOption.equals(String.valueOf(position));
+
+        boolean selected;
+        if (isReviewMode()) {
+            position = position + 1;
+        } /*else {
+
+        }*/
+        selected = selectedOption != null && selectedOption.equals(String.valueOf(position));
         holder.bind.optionNo.setSelected(selected);
         holder.bind.optionLayout.setSelected(selected);
 
@@ -71,10 +78,13 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
             boolean selectedCorrect = selectedAnswer != null && selectedOption != null && selectedAnswer.equals(selectedOption);
             holder.bind.optionNo.setSelected(selectedCorrect);
             holder.bind.optionIcon.setVisibility(View.VISIBLE);
-            if (selectedOption != null) {
-                holder.bind.optionIcon.setImageResource(selectedOption.equalsIgnoreCase(String.valueOf(position)) ? R.drawable.ic_wrong : 0);
+
+//            if () {
+                holder.bind.optionIcon.setImageResource(selected && !selectedAnswer.equalsIgnoreCase(String.valueOf(position)) ?  R.drawable.ic_wrong : 0);
+//            }
+            if (selectedAnswer != null && selectedAnswer.equalsIgnoreCase(String.valueOf(position))) {
+                holder.bind.optionIcon.setImageResource( R.drawable.ic_tick );
             }
-            holder.bind.optionIcon.setImageResource(selectedAnswer.equalsIgnoreCase(String.valueOf(position)) ? R.drawable.ic_tick : 0);
         }
 
     }

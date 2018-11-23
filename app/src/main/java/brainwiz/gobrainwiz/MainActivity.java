@@ -30,6 +30,7 @@ import java.util.HashMap;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.BaseModel;
+import brainwiz.gobrainwiz.notifications.NotificationsFragment;
 import brainwiz.gobrainwiz.profile.ProfileFragment;
 import brainwiz.gobrainwiz.sidemenu.TestHistoryFragment;
 import brainwiz.gobrainwiz.utils.LogUtils;
@@ -250,6 +251,9 @@ public class MainActivity extends BaseActivity
             case R.id.action_call:
                 call();
                 break;
+            case R.id.action_notifications:
+                fragmentTransaction(new NotificationsFragment());
+                break;
         }
 
 
@@ -322,7 +326,8 @@ public class MainActivity extends BaseActivity
             case R.id.nav_my_tests:
                 fragmentTransaction(new TestHistoryFragment(), R.id.content_frame, true);
                 break;
-            case R.id.nav_slideshow:
+            case R.id.nav_notifications:
+                fragmentTransaction(new NotificationsFragment(),R.id.content_frame, true);
                 break;
             case R.id.nav_contact_us:
                 fragmentTransaction(new ContactUsFragment(), R.id.content_frame, true);

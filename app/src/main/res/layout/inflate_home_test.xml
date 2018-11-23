@@ -86,7 +86,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/dimen_5"
             android:elevation="@dimen/dimen_5"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             android:translationZ="@dimen/dimen_5"
             android:src="@drawable/circle_gray_bg"
             app:cornerRadius="@dimen/dimen_40"

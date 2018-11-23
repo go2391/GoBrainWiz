@@ -8,6 +8,9 @@
     <color name="colorSecondaryText">#666666</color>
 
     <color name="red">#f44336</color>
+    <color name="red_primary">#ed6f62</color>
+
+
 
     <color name="background">#EAEAE9</color>
     <color name="light_background">#FCFCFB</color>

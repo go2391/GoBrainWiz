@@ -16,7 +16,7 @@ import brainwiz.gobrainwiz.databinding.InflateOnlineScoreCardBinding;
 
 public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.ScoreCardHolder> {
 
-    private ArrayList<ScoreCardModel.Datum> scoreCards = new ArrayList<>();
+    private ArrayList<ScoreCardModel.Sets> scoreCards = new ArrayList<>();
 
     private Context context;
     private int selectedOption = -1;
@@ -32,7 +32,7 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.Scor
         this.selectedOption = selectedOption;
     }
 
-    public ScoreCardAdapter(Context context, ArrayList<ScoreCardModel.Datum> scoreCards) {
+    public ScoreCardAdapter(Context context, ArrayList<ScoreCardModel.Sets> scoreCards) {
         this.context = context;
         this.scoreCards = scoreCards;
     }
@@ -46,8 +46,8 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.Scor
     @Override
     public void onBindViewHolder(@NonNull ScoreCardHolder holder, int position) {
 
-        ScoreCardModel.Datum source = scoreCards.get(position);
-        int bgResource = 0;
+        ScoreCardModel.Sets source = scoreCards.get(position);
+        /*int bgResource = 0;
         switch (position) {
             case 0:
                 bgResource = R.drawable.gradient_orange;
@@ -59,13 +59,14 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.Scor
                 bgResource = R.drawable.gradient_red;
                 break;
         }
-//        holder.bind.testCategory1.setBackgroundResource(bgResource);
-        holder.bind.scoreCardCorrect.setText(String.format(context.getString(R.string.correct), source.getCorrectAnswers()));
-        holder.bind.scoreCardWrong.setText(String.format(context.getString(R.string.wrong), source.getIncorrectAnswers()));
+        holder.bind.scoreCardLayout.setBackgroundResource(bgResource);
+        */
+        holder.bind.scoreCardCorrect.setText(String.format(context.getString(R.string.correct), Integer.parseInt(source.getCorrectAnswers())));
+        holder.bind.scoreCardWrong.setText(String.format(context.getString(R.string.wrong), Integer.parseInt(source.getIncorrectAnswers())));
         holder.bind.scoreCardQuestionsAttempted.setText(String.format(context.getString(R.string.questions_attempted), Integer.parseInt(source.getAttemptedQues())));
         holder.bind.scoreCardTotalQuestions.setText(String.format(context.getString(R.string.total_questions), Integer.parseInt(source.getAllQuestions())));
-        float progress = (source.getCorrectAnswers() / Float.parseFloat(source.getAllQuestions())) * 100f;
-        holder.bind.scoreCardProgress.setProgress(progress);
+        float progress = (Integer.parseInt(source.getCorrectAnswers()) / Float.parseFloat(source.getAllQuestions())) * 100f;
+        holder.bind.scoreCardProgress.setProgress(Math.round(progress));
 
     }
 
@@ -97,8 +98,9 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.Scor
         public ScoreCardHolder(View itemView) {
             super(itemView);
             bind = DataBindingUtil.bind(itemView);
-            if (!isReviewMode()) {
-                itemView.setOnClickListener(this);
+            if (isReviewMode()) {
+                bind.reviewQuestions.setVisibility(View.VISIBLE);
+                bind.reviewQuestions.setOnClickListener(this);
             }
         }
 

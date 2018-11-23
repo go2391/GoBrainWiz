@@ -21,6 +21,7 @@ public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestT
 
     private TestListener testListener;
     private List<TestsModel.TestList> data = new ArrayList<>();
+    private int iconColor;
 
 
     public PracticeTestTestsAdapter(Context context) {
@@ -43,6 +44,7 @@ public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestT
 
         TestsModel.TestList testList = data.get(position);
         holder.bind.testItemTitle.setText(testList.getTestName());
+        holder.bind.testItemTitle.setTextColor(getIconColor());
         holder.bind.testQuestions.setText(String.format(context.getString(R.string.questions), testList.getCountque()));
         holder.bind.testMins.setText(String.format(context.getString(R.string.mins), testList.getTestTime()));
         holder.bind.testTopicItemStart.setText(data.get(position).getTestAttempted() == 0 ? context.getString(R.string.start) : context.getString(R.string.review));
@@ -60,6 +62,14 @@ public class PracticeTestTestsAdapter extends RecyclerView.Adapter<PracticeTestT
 
     public List<TestsModel.TestList> getData() {
         return data;
+    }
+
+    public void setIconColor(int iconColor) {
+        this.iconColor = iconColor;
+    }
+
+    public int getIconColor() {
+        return iconColor;
     }
 
     class TestViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

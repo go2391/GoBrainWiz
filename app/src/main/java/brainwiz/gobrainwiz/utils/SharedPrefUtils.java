@@ -16,6 +16,8 @@ public class SharedPrefUtils {
     public static final String USER_TOKEN = "UserToken";
     public static final String USER_EMAIL = "UserEmail";
     public static final String PROFILE_IMAGE = "ProfileImage";
+    public static final String FIREBASE_TOKEN = "FirebaseToken";
+
 
 
     public static SharedPreferences getSharedPref(Context context) {

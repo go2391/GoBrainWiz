@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -26,7 +25,6 @@ import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.OnlineTestSetModel;
 import brainwiz.gobrainwiz.api.model.ScoreCardModel;
-import brainwiz.gobrainwiz.test.ScoreCardFragment;
 import brainwiz.gobrainwiz.test.ScoreCardOnlineFragment;
 import brainwiz.gobrainwiz.test.TestActivity;
 import brainwiz.gobrainwiz.test.TestQuestionFragment;
@@ -43,6 +41,7 @@ public class InstructionsFragment extends BaseFragment {
     private InstructionTestTypeAdapter adapter;
     private String selectedCatId = "";
     private boolean isReview;
+    TextView breakTime;
     int TEST_REQUESTCODE = 100;
 
     public static InstructionsFragment getInstance(Bundle bundle) {
@@ -78,6 +77,8 @@ public class InstructionsFragment extends BaseFragment {
 
         isReview = getArguments().getBoolean(BaseFragment.IS_REVIEW);
 
+        breakTime = inflate.findViewById(R.id.break_time);
+
 
         RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.instruction_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -97,12 +98,9 @@ public class InstructionsFragment extends BaseFragment {
                 }
                 if (!isReview)
                     ((TestActivity) activity).startTest();
-
                 TestQuestionFragment instance = TestQuestionFragment.getInstance(testID, selectedCatId, true, isReview);
-
                 instance.setTargetFragment(InstructionsFragment.this, TEST_REQUESTCODE);
                 ((TestActivity) activity).fragmentTransaction(instance);
-
             }
         });
     }
@@ -120,22 +118,32 @@ public class InstructionsFragment extends BaseFragment {
                 }
                 adapter.notifyDataSetChanged();
 
+//                breakTime.setVisibility(View.VISIBLE);
 
-                final ArrayList<ScoreCardModel.Datum> resultList = data.getParcelableArrayListExtra("data");
-                if (resultList != null && !resultList.isEmpty() && resultList.size() > 1) {
-                    ((TestActivity) activity).stopTest();
+//                breakTime.setText();
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            ScoreCardOnlineFragment instance = ScoreCardOnlineFragment.getInstance(resultList);
-                            ((TestActivity) getActivity()).fragmentTransaction(instance);
 
-                        }
-                    }, 2000);
+                try {
+                    final ScoreCardModel.Datum parcelableExtra = (ScoreCardModel.Datum) data.getParcelableExtra("data");
+                    final ArrayList<ScoreCardModel.Sets> resultList = new ArrayList<>(parcelableExtra.getSets());
 
+                    if (!resultList.isEmpty()) {
+                        ((TestActivity) activity).stopTest();
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                ScoreCardOnlineFragment instance = ScoreCardOnlineFragment.getInstance(parcelableExtra,isReview,testID);
+                                ((TestActivity) getActivity()).fragmentTransaction(instance);
+
+                            }
+                        }, 2000);
+
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
             }
         }
     }

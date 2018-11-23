@@ -106,6 +106,7 @@ public class RegistrationFragment extends BaseFragment {
                 if (isSuccess) {
                     if (response.body().getData().getData().getMessage().contains("Successfully")) {
                         Bundle bundle = new Bundle();
+                        bundle.putBoolean(LoginFragment.KEY_ISREGISTRATION, true);
                         bundle.putString("name", bind.name.getText().toString());
                         bundle.putString("mobile", bind.mobile.getText().toString());
                         bundle.putString("mail_id", bind.email.getText().toString());
@@ -151,7 +152,7 @@ public class RegistrationFragment extends BaseFragment {
         }
 
         if (isEmpty(bind.location)) {
-            DDAlerts.showToast(getActivity(), "enter location or college name.");
+            DDAlerts.showToast(getActivity(), "enter college name.");
             return false;
         }
 

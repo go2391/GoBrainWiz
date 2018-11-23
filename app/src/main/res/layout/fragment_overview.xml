@@ -18,18 +18,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/medium"
+                android:drawableStart="@drawable/circle_green"
+                android:fontFamily="@font/bold"
                 android:gravity="center"
                 android:padding="@dimen/dimen_5"
                 android:text="Current"
                 android:textColor="@color/greenSecondary"
-                android:textSize="@dimen/font_12" />
+                android:textSize="@dimen/font_14" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/medium"
+                android:drawableStart="@drawable/circle_gray"
+                android:fontFamily="@font/bold"
                 android:gravity="center"
                 android:padding="@dimen/dimen_5"
                 android:text="Attempted"
@@ -41,7 +43,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/medium"
+                android:drawableStart="@drawable/circle_orange"
+                android:fontFamily="@font/bold"
                 android:gravity="center"
                 android:padding="@dimen/dimen_5"
                 android:text="Review"

@@ -62,7 +62,7 @@ public class ContactUsFragment extends BaseFragment {
                 case R.id.contact_us_email:
 
 
-                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.gobrainwiz_gmail_com), null));
+                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "gobrainwiz@gmail.com", null));
                     intent.putExtra(Intent.EXTRA_SUBJECT, "");
                     intent.putExtra(Intent.EXTRA_TEXT, "");
                     final PackageManager pm = context.getPackageManager();

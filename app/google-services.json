@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "497942108442",
+    "firebase_url": "https://testbrainwiz.firebaseio.com",
+    "project_id": "testbrainwiz",
+    "storage_bucket": "testbrainwiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497942108442:android:aa6854294b0f097c",
+        "android_client_info": {
+          "package_name": "brainwiz.gobrainwiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497942108442-h7mrk8hrdkt7rg3j0rhc574idn193l71.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYsE8Qv2be5bdA37jWGnbbwZBeoxIQKuI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

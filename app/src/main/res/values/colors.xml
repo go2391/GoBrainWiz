@@ -11,7 +11,6 @@
     <color name="red_primary">#ed6f62</color>
 
 
-
     <color name="background">#EAEAE9</color>
     <color name="light_background">#FCFCFB</color>
 
@@ -40,4 +39,13 @@
     <color name="greenPrimary">#159a60</color>
 
     <color name="black_overlay">#66000000</color>
+
+
+    <color name="circular_progress_default_progress">#e18309</color>
+    <color name="circular_progress_default_background">#e6e6e9</color>
+    <color name="circular_progress_default_title">#e18309</color>
+    <color name="circular_progress_default_subtitle">#D1D1D1</color>
+
+    <color name="badge_background_color">#f44336</color>
+
 </resources>

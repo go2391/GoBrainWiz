@@ -81,6 +81,9 @@ public class TestHistoryFragment extends BaseFragment {
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         bind.viewPagerHistory.setAdapter(viewPagerAdapter);
 
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        bind.slidingTabs.setupWithViewPager(bind.viewPagerHistory);
+
 
     }
 

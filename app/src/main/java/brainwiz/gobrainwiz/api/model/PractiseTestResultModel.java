@@ -52,6 +52,10 @@ public class PractiseTestResultModel extends BaseModel {
         @Expose
         private int rank;
 
+        @SerializedName("total_rank")
+        @Expose
+        private int totalRank;
+
         protected Data(Parcel in) {
             userId = in.readInt();
             testId = in.readInt();
@@ -63,6 +67,7 @@ public class PractiseTestResultModel extends BaseModel {
             totalMarks = in.readInt();
             totalTime = in.readInt();
             rank = in.readInt();
+            totalRank = in.readInt();
         }
 
         public static final Creator<Data> CREATOR = new Creator<Data>() {
@@ -166,6 +171,7 @@ public class PractiseTestResultModel extends BaseModel {
             dest.writeInt(totalMarks);
             dest.writeInt(totalTime);
             dest.writeInt(rank);
+            dest.writeInt(totalRank);
         }
 
         public int getRank() {
@@ -174,6 +180,14 @@ public class PractiseTestResultModel extends BaseModel {
 
         public void setRank(int rank) {
             this.rank = rank;
+        }
+
+        public int getTotalRank() {
+            return totalRank;
+        }
+
+        public void setTotalRank(int totalRank) {
+            this.totalRank = totalRank;
         }
     }
 }

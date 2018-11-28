@@ -102,12 +102,12 @@ sections
     <string name="explanation">Explanation</string>
     <string name="previous">Previous</string>
     <string name="submit">Submit</string>
-    <string name="total_questions">%d Total </string>
-    <string name="questions_attempted">%d Attempted </string>
+    <string name="total_questions">%1$02d Total </string>
+    <string name="questions_attempted">%1$02d Attempted </string>
     <string name="correct">%d Correct </string>
     <string name="welcome">Welcome</string>
     <string name="your_score">Your Score</string>
-    <string name="your_rank">Your Rank</string>
+    <string name="your_rank">Your Rank %d out of %d</string>
     <string name="title_activity_sample">SampleActivity</string>
     <string name="review">Review</string>
     <string name="sets">%s Sets</string>
@@ -126,7 +126,7 @@ sections
     <string name="email_">Email : %s</string>
     <string name="mobile_number_">Mobile Number : %s</string>
     <string name="location_">Location : %s</string>
-    <string name="wrong">%d Wrong </string>
+    <string name="wrong">%1$02d Wrong </string>
     <string name="pick_image_intent_text">Pick your profile image</string>
     <string name="choose_photo_title">Choose Photos</string>
     <string name="register">register</string>
@@ -143,9 +143,16 @@ sections
     <string name="review_questions">Review Questions</string>
     <string name="score_card">Score Card</string>
     <string name="done">Done</string>
-    <string name="default_notification_channel_id" >10000</string>
+    <string name="default_notification_channel_id">10000</string>
     <string name="leave_any_query">any queries</string>
     <string name="request_call_back">Request a Call Back</string>
     <string name="college_name">College Name</string>
+    <string name="current">Current</string>
+    <string name="attempted">Attempted</string>
+
+
+    <string name="html_content">
+
+    </string>
 
 </resources>

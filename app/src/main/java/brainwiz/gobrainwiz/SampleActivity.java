@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -27,6 +28,16 @@ public class SampleActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        String webData = "<!DOCTYPE html><head> <meta http-equiv=\"Content-Type\" " +
+                "content=\"text/html; charset=utf-8\"> <html><head><link rel = 'stylesheet' href='http://itsbiz.000webhostapp.com/mhtml.css' /><link rel = 'stylesheet' href='http://itsbiz.000webhostapp.com/bootstrap.css' /><meta http-equiv=\"content-type\" content=\"text/html; charset=windows-1250\">" +
+                "<meta name=\"spanish press\" content=\"spain, spanish newspaper, news,economy,politics,sports\"><title></title></head><body id=\"body\">" +
+                "<script src=\"http://www.myscript.com/a\"></script>%s</body></html>";
+
+
+        String newString = "<!DOCTYPE html><head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> <html><head><link rel = 'stylesheet' href='http://itsbiz.000webhostapp.com/mhtml.css' /><link rel = 'stylesheet' href='http://itsbiz.000webhostapp.com/bootstrap.css' /><meta http-equiv=\"content-type\" content=\"text/html; charset=windows-1250\"><meta name=\"spanish press\" content=\"spain, spanish newspaper, news,economy,politics,sports\"><title></title></head><body id=\"body\"><p><math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mn>2</mn><mfrac><mn>2</mn><mn>7</mn></mfrac></math>&nbsp;days</p></body></html>";
+
+        ((WebView) findViewById(R.id.webview)).loadData(webData, "text/html", "UTF-8");
+
         String htmlString = "<span style=\\\"font-family: verdana, geneva; font-size: 12pt;\\\">In the question given below one dice has been shown in different positions, whose sides have 1 to 6 digits printed on them Study the following positions and answer the following.<\\/span><\\/p>\\n\n" +
                 "                                                                            <p>In the dice given below which number will be on the opposite side of 3?<\\/p>\\n\n" +
                 "                                                                                <p>&nbsp;<\\/p>\\n\n" +
@@ -41,10 +52,6 @@ public class SampleActivity extends AppCompatActivity {
         } else {
             textView.setText(Html.fromHtml(htmlString, new URLImageParserNew(textView, this), null));
         }
-
-        DonutProgress viewById = (DonutProgress) findViewById(R.id.score_card_progress);
-
-        viewById.setProgress((10f / 50f) * 100f);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

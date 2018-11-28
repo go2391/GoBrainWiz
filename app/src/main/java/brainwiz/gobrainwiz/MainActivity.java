@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -23,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -33,6 +37,7 @@ import brainwiz.gobrainwiz.api.model.BaseModel;
 import brainwiz.gobrainwiz.notifications.NotificationsFragment;
 import brainwiz.gobrainwiz.profile.ProfileFragment;
 import brainwiz.gobrainwiz.sidemenu.TestHistoryFragment;
+import brainwiz.gobrainwiz.ui.CountDrawable;
 import brainwiz.gobrainwiz.utils.LogUtils;
 import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import retrofit2.Response;
@@ -53,6 +58,7 @@ public class MainActivity extends BaseActivity
     private AlertDialog alertDialog;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private RoundishImageView roundishImageView;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +109,33 @@ public class MainActivity extends BaseActivity
 
         findViewById(R.id.logo).setOnClickListener(onClickListener);
         fragmentTransaction(new HomeFragment(), R.id.content_frame, false);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        setCount(menu, SharedPrefUtils.getNotificationCount(this));
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void setCount(Menu defaultMenu, int count) {
+        MenuItem menuItem = defaultMenu.findItem(R.id.action_notifications);
+        LayerDrawable icon = (LayerDrawable) menuItem.getIcon();
+
+
+        CountDrawable badge;
+
+        // Reuse drawable if possible
+        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_group_count);
+        reuse.setVisible(count > 0, true);
+        if (reuse != null && reuse instanceof CountDrawable) {
+            badge = (CountDrawable) reuse;
+        } else {
+            badge = new CountDrawable(this);
+        }
+
+        badge.setCount(String.valueOf(count));
+        icon.mutate();
+        icon.setDrawableByLayerId(R.id.ic_group_count, badge);
     }
 
     private void dispatchTakePictureIntent() {
@@ -225,8 +258,25 @@ public class MainActivity extends BaseActivity
             drawer.closeDrawer(GravityCompat.START);
         } else if (backStackEntryCount > 0) {
             getSupportFragmentManager().popBackStack();
-        } else
+        } else {
+
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
             super.onBackPressed();
+        }
     }
 
     @Override
@@ -327,7 +377,7 @@ public class MainActivity extends BaseActivity
                 fragmentTransaction(new TestHistoryFragment(), R.id.content_frame, true);
                 break;
             case R.id.nav_notifications:
-                fragmentTransaction(new NotificationsFragment(),R.id.content_frame, true);
+                fragmentTransaction(new NotificationsFragment(), R.id.content_frame, true);
                 break;
             case R.id.nav_contact_us:
                 fragmentTransaction(new ContactUsFragment(), R.id.content_frame, true);
@@ -343,7 +393,7 @@ public class MainActivity extends BaseActivity
                 fragmentTransaction(new JoinFragment(), R.id.content_frame, true);
                 break;
             case R.id.nav_logout:
-                SharedPrefUtils.putData(this,IS_LOGIN,false);
+                SharedPrefUtils.putData(this, IS_LOGIN, false);
                 finish();
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);

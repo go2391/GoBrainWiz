@@ -68,10 +68,10 @@
             android:name=".TimerService"
             android:exported="true" />
 
-        <activity
-            android:name=".SampleActivity"
-            android:label="@string/title_activity_sample"
-            android:theme="@style/AppTheme"></activity>3
+        <!-- <activity
+             android:name=".SampleActivity"
+             android:label="@string/title_activity_sample"
+             android:theme="@style/AppTheme"></activity>3-->
 
 
         <provider

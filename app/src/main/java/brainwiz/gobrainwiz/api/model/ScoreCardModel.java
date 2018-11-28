@@ -52,6 +52,9 @@ public class ScoreCardModel extends BaseModel {
         @SerializedName("rank")
         @Expose
         private int rank;
+        @SerializedName("total_rank")
+        @Expose
+        private int totalRank;
         public final static Parcelable.Creator<Datum> CREATOR = new Creator<Datum>() {
 
 
@@ -78,6 +81,7 @@ public class ScoreCardModel extends BaseModel {
             this.totalMarks = ((int) in.readValue((int.class.getClassLoader())));
             this.timeAttempt = ((int) in.readValue((int.class.getClassLoader())));
             this.rank = ((int) in.readValue((int.class.getClassLoader())));
+            this.totalRank = ((int) in.readValue((int.class.getClassLoader())));
         }
 
         public Datum() {
@@ -165,10 +169,19 @@ public class ScoreCardModel extends BaseModel {
             dest.writeValue(totalMarks);
             dest.writeValue(timeAttempt);
             dest.writeValue(rank);
+            dest.writeValue(totalRank);
         }
 
         public int describeContents() {
             return 0;
+        }
+
+        public int getTotalRank() {
+            return totalRank;
+        }
+
+        public void setTotalRank(int totalRank) {
+            this.totalRank = totalRank;
         }
     }
 
@@ -214,6 +227,11 @@ public class ScoreCardModel extends BaseModel {
         @SerializedName("time")
         @Expose
         private String time;
+        @SerializedName("category_name")
+        @Expose
+        private String category_name;
+
+
         public final static Parcelable.Creator<Sets> CREATOR = new Creator<Sets>() {
 
 
@@ -244,6 +262,7 @@ public class ScoreCardModel extends BaseModel {
             this.incorrectAnswers = ((String) in.readValue((String.class.getClassLoader())));
             this.marks = ((String) in.readValue((String.class.getClassLoader())));
             this.time = ((String) in.readValue((String.class.getClassLoader())));
+            this.category_name = ((String) in.readValue((String.class.getClassLoader())));
         }
 
         public Sets() {
@@ -367,11 +386,20 @@ public class ScoreCardModel extends BaseModel {
             dest.writeValue(incorrectAnswers);
             dest.writeValue(marks);
             dest.writeValue(time);
+            dest.writeValue(category_name);
+
         }
 
         public int describeContents() {
             return 0;
         }
 
+        public String getCategory_name() {
+            return category_name;
+        }
+
+        public void setCategory_name(String category_name) {
+            this.category_name = category_name;
+        }
     }
 }

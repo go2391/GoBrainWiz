@@ -3,6 +3,7 @@ package brainwiz.gobrainwiz.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import brainwiz.gobrainwiz.MainActivity;
 import brainwiz.gobrainwiz.api.ApiStringConstants;
 
 
@@ -17,7 +18,7 @@ public class SharedPrefUtils {
     public static final String USER_EMAIL = "UserEmail";
     public static final String PROFILE_IMAGE = "ProfileImage";
     public static final String FIREBASE_TOKEN = "FirebaseToken";
-
+    public static final String NOTIFICATION_COUNT = "NotificationCount";
 
 
     public static SharedPreferences getSharedPref(Context context) {
@@ -84,6 +85,10 @@ public class SharedPrefUtils {
 
     public static String getStudentID(Context context) {
         return getString(context, USER_ID, "");
+    }
+
+    public static int getNotificationCount(Context context) {
+        return getSharedPref(context).getInt(NOTIFICATION_COUNT, 0);
     }
 
 

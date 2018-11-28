@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:circular="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -16,109 +17,18 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </RelativeLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/score_card_recycler"
-                style="@style/RecyclerStyle"
-                contentPadding="@dimen/dimen_10"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true"
-                tools:listitem="@layout/inflate_online_score_card" />
+                android:background="@drawable/score_card_logo_bg"
+                android:minHeight="@dimen/dimen_100">
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/dimen_10">
-
-                <TextView
-                    android:id="@+id/your_score"
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dimen_16"
-                    android:layout_marginTop="@dimen/dimen_16"
-                    android:fontFamily="@font/semibold"
-                    android:text="Total Score"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_16" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/score_card_fg_icon" />
 
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <com.github.lzyzsd.circleprogress.DonutProgress
-                        android:id="@+id/score_card_progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:donut_finished_color="@color/greenPrimary"
-                        app:donut_text_color="@color/white"
-                        app:donut_unfinished_color="@color/white"
-                        custom:donut_progress="30" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_toEndOf="@id/score_card_progress"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:id="@+id/score_card_total_questions"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/dimen_5"
-                            android:gravity="end"
-                            android:text="@string/total_questions"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/font_14" />
-
-                        <TextView
-                            android:id="@+id/score_card_questions_attempted"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/dimen_5"
-                            android:gravity="end"
-                            android:text="@string/questions_attempted"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/font_14" />
-
-                        <TextView
-                            android:id="@+id/score_card_correct"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/dimen_5"
-                            android:gravity="end"
-                            android:text="@string/correct"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/font_14" />
-
-                        <TextView
-                            android:id="@+id/score_card_wrong"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/dimen_5"
-                            android:gravity="end"
-                            android:text="@string/wrong"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/font_14" />
-
-
-                    </LinearLayout>
-
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
+            </RelativeLayout>
 
             <android.support.v7.widget.CardView
                 style="@style/CardViewStyle"
@@ -137,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_16"
                         android:fontFamily="@font/semibold"
-                        android:text="@string/your_rank"
+                        android:text="Rank"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/font_16" />
 
@@ -152,10 +62,86 @@
                         android:fontFamily="@font/bold"
                         android:gravity="center"
                         android:text="1"
-                        android:textColor="@color/blueSecondary"
-                        android:textSize="@dimen/font_36" />
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/font_20" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/score_card_recycler"
+                style="@style/RecyclerStyle"
+                contentPadding="@dimen/dimen_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardUseCompatPadding="true"
+                tools:listitem="@layout/inflate_online_score_card" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_10">
+
+                <TextView
+                    android:id="@+id/your_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_16"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:fontFamily="@font/bold"
+                    android:text="Total Score"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/font_16" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <brainwiz.gobrainwiz.ui.CircularProgressBar
+                        android:id="@+id/score_card_progress"
+                        style="@style/progress_style"
+                        circular:cpb_subtitle="subtitle"
+                        circular:cpb_title="Title" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_toEndOf="@id/score_card_progress"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/score_card_total_questions"
+                            style="@style/marks_style" />
+
+                        <TextView
+                            android:id="@+id/score_card_questions_attempted"
+                            style="@style/marks_style" />
+
+                        <TextView
+                            android:id="@+id/score_card_correct"
+                            style="@style/marks_style" />
+
+                        <TextView
+                            android:id="@+id/score_card_wrong"
+                            style="@style/marks_style" />
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
 
 
             <Button

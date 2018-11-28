@@ -23,6 +23,7 @@
                 android:minHeight="180dp"
                 android:padding="@dimen/dimen_16"
                 android:text="Topic Title"
+                android:paddingEnd="120dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_24" />
 

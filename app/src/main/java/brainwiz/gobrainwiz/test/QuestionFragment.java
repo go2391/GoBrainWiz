@@ -18,6 +18,7 @@ import brainwiz.gobrainwiz.YoutubeVideoActivity;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.databinding.FragmentTestContentBinding;
 import brainwiz.gobrainwiz.utils.LogUtils;
+import brainwiz.gobrainwiz.utils.StringUtills;
 import brainwiz.gobrainwiz.utils.URLImageParserNew;
 
 public class QuestionFragment extends BaseFragment implements TestQuestionFragment.FragmentStateListener {
@@ -29,9 +30,19 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
     private boolean isReview;
 
 
+    public QuestionFragment() {
+        super();
+    }
+
+
     public static QuestionFragment getInstance(TestModel.Datum datum, Bundle bundle) {
         QuestionFragment questionFragment = new QuestionFragment();
-        Bundle args = bundle;
+        Bundle args = new Bundle();
+
+        args.putString(ID, bundle.getString(ID));
+        args.putBoolean(IS_COMPANY_TEST, bundle.getBoolean(IS_COMPANY_TEST));
+        args.putBoolean(IS_REVIEW, bundle.getBoolean(IS_REVIEW));
+//        args.putBundle(bundle);
         args.putParcelable("object", datum);
         questionFragment.setArguments(args);
         return questionFragment;
@@ -89,13 +100,15 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
 
         contentBinding.testExplanationLayout.setVisibility(isReviewMode && !data.getExplanation().isEmpty() ? View.VISIBLE : View.GONE);
         contentBinding.testVideoExplanationLayout.setVisibility(isReviewMode && !data.getVideoLink().isEmpty() ? View.VISIBLE : View.GONE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(contentBinding.testExplanation, getActivity()), null));
-            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(contentBinding.testQuestion, getActivity()), null));
-        } else {
-            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), new URLImageParserNew(contentBinding.testQuestion, getActivity()), null));
-            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), new URLImageParserNew(contentBinding.testExplanation, getActivity()), null));
-        }
+        contentBinding.testQuestion.loadData(StringUtills.getHtmlContent(data.getQuestion()), "text/html", "UTF-8");
+        contentBinding.testExplanation.loadData(StringUtills.getHtmlContent(data.getExplanation()), "text/html", "UTF-8");
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(contentBinding.testExplanation, getActivity()), null));
+//            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(contentBinding.testQuestion, getActivity()), null));
+//        } else {
+//            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), new URLImageParserNew(contentBinding.testQuestion, getActivity()), null));
+//            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), new URLImageParserNew(contentBinding.testExplanation, getActivity()), null));
+//        }
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {

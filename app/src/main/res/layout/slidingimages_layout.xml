@@ -11,7 +11,7 @@
         android:layout_height="fill_parent"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher"
         app:cornerRadius="@dimen/dimen_5"
         app:roundedCorners="ALL" />

@@ -1,11 +1,11 @@
 package brainwiz.gobrainwiz.test;
 
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
@@ -13,23 +13,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
-import brainwiz.gobrainwiz.api.model.OnlineTestSetModel;
-import brainwiz.gobrainwiz.api.model.PractiseTestResultModel;
 import brainwiz.gobrainwiz.api.model.ScoreCardModel;
-import brainwiz.gobrainwiz.databinding.FragmentScoreCardBinding;
 import brainwiz.gobrainwiz.databinding.FragmentScoreCardOnlineBinding;
-import brainwiz.gobrainwiz.onlinetest.InstructionsFragment;
+import brainwiz.gobrainwiz.ui.CircularProgressBar;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
+import brainwiz.gobrainwiz.utils.StringUtills;
 import retrofit2.Response;
 
 public class ScoreCardOnlineFragment extends BaseFragment {
@@ -128,6 +126,7 @@ public class ScoreCardOnlineFragment extends BaseFragment {
         }
     }
 
+    @SuppressLint("ObjectAnimatorBinding")
     private void showScoreCard(final ScoreCardModel.Datum object) {
         bind.scoreCardRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -146,13 +145,32 @@ public class ScoreCardOnlineFragment extends BaseFragment {
         bind.scoreCardRecycler.setAdapter(adapter);
         bind.scoreCardRecycler.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
-        bind.scoreCardCorrect.setText(String.format(getString(R.string.correct), object.getCorrectAnswers()));
-        bind.scoreCardWrong.setText(String.format(getString(R.string.wrong), object.getIncorrectAnswers()));
-        bind.scoreCardQuestionsAttempted.setText(String.format(getString(R.string.questions_attempted), object.getAttemptedQuestions()));
-        bind.scoreCardTotalQuestions.setText(String.format(getString(R.string.total_questions), object.getTotalQuestions()));
+        bind.scoreCardCorrect.setText(StringUtills.getSpanMarks(String.format(getString(R.string.correct), object.getCorrectAnswers())));
+        bind.scoreCardWrong.setText(StringUtills.getSpanMarks(String.format(getString(R.string.wrong), object.getIncorrectAnswers())));
+        bind.scoreCardQuestionsAttempted.setText(StringUtills.getSpanMarks(String.format(getString(R.string.questions_attempted), object.getAttemptedQuestions())));
+        bind.scoreCardTotalQuestions.setText(StringUtills.getSpanMarks(String.format(getString(R.string.total_questions), object.getTotalQuestions())));
         float i = (float) object.getCorrectAnswers() / object.getTotalQuestions();
-        bind.scoreCardProgress.setProgress(Math.round(i * 100f));
-        bind.rank.setText(String.valueOf(object.getRank()));
+        int round = Math.round(i * 100f);
+
+        bind.scoreCardProgress.animateProgressTo(0, (int) round, new CircularProgressBar.ProgressAnimationListener() {
+
+            @Override
+            public void onAnimationStart() {
+            }
+
+            @Override
+            public void onAnimationProgress(int progress) {
+                bind.scoreCardProgress.setTitle(progress + "");
+            }
+
+            @Override
+            public void onAnimationFinish() {
+                bind.scoreCardProgress.setSubTitle("percentage");
+            }
+        });
+
+        bind.rank.setText(StringUtills.getRankText(getActivity(), object.getRank(), object.getTotalRank()));
+
     }
 
 

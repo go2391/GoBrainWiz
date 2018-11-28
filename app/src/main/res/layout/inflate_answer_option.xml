@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <RelativeLayout
@@ -9,10 +10,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_5"
         android:background="@drawable/answer_selector"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="center_vertical"
-
+        android:minHeight="@dimen/dimen_20"
         android:orientation="horizontal"
-        android:padding="@dimen/dimen_10">
+        android:padding="@dimen/dimen_10"
+        tools:ignore="WebViewLayout">
 
         <TextView
             android:id="@+id/option_no"
@@ -37,10 +41,10 @@
             android:layout_centerVertical="true"
             android:layout_gravity="end"
             android:scaleType="fitCenter"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:srcCompat="@drawable/ic_wrong" />
 
-        <TextView
+        <WebView
             android:id="@+id/option_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,11 +53,12 @@
             android:layout_marginStart="@dimen/dimen_5"
             android:layout_toEndOf="@id/option_no"
             android:layout_toStartOf="@id/option_icon"
-            android:gravity="center_vertical"
+            android:clickable="false"
+            android:focusable="false"
+            android:gravity="center_vertical|start"
+            android:minHeight="@dimen/dimen_50"
             android:text="option1"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/font_14" />
+            android:textSize="@dimen/font_18" />
 
     </RelativeLayout>
 </layout>

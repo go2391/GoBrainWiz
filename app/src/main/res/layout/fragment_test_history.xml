@@ -14,6 +14,7 @@
             android:background="@drawable/primary_border_rounded_border"
             android:orientation="horizontal"
             android:padding="1dp"
+            android:visibility="gone"
             android:weightSum="2">
 
             <RadioButton
@@ -45,6 +46,13 @@
                 android:textColor="@drawable/my_notification_tab_text_selector"
                 android:textSize="@dimen/font_12" />
         </RadioGroup>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/sliding_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:tabMode="fixed" />
 
 
         <android.support.v4.view.ViewPager

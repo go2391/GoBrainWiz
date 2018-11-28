@@ -93,6 +93,12 @@ public class TestActivity extends BaseActivity
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopTimer();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
@@ -133,6 +139,12 @@ public class TestActivity extends BaseActivity
         }
         super.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.clear();
     }
 
     public void startTest() {

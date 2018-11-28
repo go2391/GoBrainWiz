@@ -14,10 +14,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,12 +155,12 @@ public class TestQuestionFragment extends BaseFragment {
             HashMap<String, String> baseBodyMap = getBaseBodyMap();
             baseBodyMap.put("sets_id", catId);
             baseBodyMap.put("exam_id", id);
-            baseBodyMap.put("is_review",isReview ? "1" : "0");
+            baseBodyMap.put("is_review", isReview ? "1" : "0");
             RetrofitManager.getRestApiMethods().getCompanyTests(baseBodyMap).enqueue(callback);
         } else {
             HashMap<String, String> baseBodyMap = getBaseBodyMap();
             baseBodyMap.put("testId", id);
-            baseBodyMap.put("is_review",isReview ? "1" : "0");
+            baseBodyMap.put("is_review", isReview ? "1" : "0");
             RetrofitManager.getRestApiMethods().getPracticeTests(baseBodyMap).enqueue(callback);
         }
 
@@ -215,7 +217,9 @@ public class TestQuestionFragment extends BaseFragment {
         viewPager.addOnPageChangeListener(onPageChangeListener);
 
 
-        inflate.findViewById(R.id.questions_overview).setOnClickListener(onClickListener);
+        View overViewQuestions = inflate.findViewById(R.id.questions_overview);
+        overViewQuestions.setOnClickListener(onClickListener);
+        overViewQuestions.setVisibility(isReview ? View.GONE : View.VISIBLE);
 
 
     }
@@ -328,7 +332,7 @@ public class TestQuestionFragment extends BaseFragment {
                 @Override
                 public void onApiResponse(Response<PractiseTestResultModel> response, boolean isSuccess, String message) {
                     if (isSuccess) {
-                        ScoreCardFragment instance = ScoreCardFragment.getInstance(response.body().getData(),isReview,getArguments().getString("id", ""));
+                        ScoreCardFragment instance = ScoreCardFragment.getInstance(response.body().getData(), isReview, getArguments().getString("id", ""));
 
                         ((TestActivity) getActivity()).fragmentTransaction(instance);
                     }
@@ -434,7 +438,8 @@ public class TestQuestionFragment extends BaseFragment {
     private final class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         private List<TestModel.Datum> data;
-        QuestionFragment[] questionFragments;
+        SparseArray<QuestionFragment> questionFragments = new SparseArray<>();
+//        QuestionFragment[] questionFragments;
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -444,11 +449,22 @@ public class TestQuestionFragment extends BaseFragment {
         @Override
         public Fragment getItem(int position) {
 
+
 //            QuestionFragment instance = questionFragments[position];
             QuestionFragment instance = QuestionFragment.getInstance(data.get(position), getArguments());
+//            QuestionFragment questionFragment = new QuestionFragment();
+//            Bundle args = getArguments();
+//            args.putParcelable("object", data.get(position));
+//            questionFragment.setArguments(args);
+
             instance.setListener(questionStatusListener);
             return instance;
         }
+
+       /* @Override
+        public int getItemPosition(@NonNull Object object) {
+            return POSITION_NONE;
+        }*/
 
         @Override
         public int getCount() {
@@ -463,9 +479,9 @@ public class TestQuestionFragment extends BaseFragment {
 */
         public void setData(List<TestModel.Datum> data) {
             this.data = data;
-            questionFragments = new QuestionFragment[data.size()];
+//            questionFragments = new QuestionFragment[data.size()];
             for (int i = 0; i < data.size(); i++) {
-                questionFragments[i] = QuestionFragment.getInstance(data.get(i), getArguments());
+//                questionFragments.put(i, QuestionFragment.getInstance(data.get(i), getArguments()));
             }
         }
 

@@ -3,12 +3,16 @@ package brainwiz.gobrainwiz.test;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +20,8 @@ import java.util.List;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.model.TestModel;
 import brainwiz.gobrainwiz.databinding.InflateAnswerOptionBinding;
+import brainwiz.gobrainwiz.utils.LogUtils;
+import brainwiz.gobrainwiz.utils.StringUtills;
 import brainwiz.gobrainwiz.utils.URLImageParserNew;
 
 public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHolder> {
@@ -53,14 +59,15 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
     public void onBindViewHolder(@NonNull OptionHolder holder, int position) {
         holder.bind.optionNo.setText(optionsIndicator[position]);
         String source = options.get(position);
+        source = StringUtills.getHtmlContent(source);
 //        source = source.replaceAll("<\\/span><\\/p>", "");
-
-//        LogUtils.e(source);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.bind.optionText.setText(Html.fromHtml(source, Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(holder.bind.optionText, context), null));
-        } else {
-            holder.bind.optionText.setText(Html.fromHtml(source, new URLImageParserNew(holder.bind.optionText, context), null));
-        }
+        holder.bind.optionText.loadData(source, "text/html", "UTF-8");
+        LogUtils.e(source);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            holder.bind.optionText.setText(Html.fromHtml(source, Html.FROM_HTML_OPTION_USE_CSS_COLORS, new URLImageParserNew(holder.bind.optionText, context), null));
+//        } else {
+//            holder.bind.optionText.setText(Html.fromHtml(source, new URLImageParserNew(holder.bind.optionText, context), null));
+//        }
         String selectedOption = selectedData.getSelectedOption();
 
         boolean selected;
@@ -75,15 +82,15 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
 
         if (isReviewMode()) {
             String selectedAnswer = selectedData.getSelectedAnswer();
-            boolean selectedCorrect = selectedAnswer != null && selectedOption != null && selectedAnswer.equals(selectedOption);
+            boolean selectedCorrect = selectedOption != null && selectedOption.equalsIgnoreCase(String.valueOf(position));
             holder.bind.optionNo.setSelected(selectedCorrect);
             holder.bind.optionIcon.setVisibility(View.VISIBLE);
 
 //            if () {
-                holder.bind.optionIcon.setImageResource(selected && !selectedAnswer.equalsIgnoreCase(String.valueOf(position)) ?  R.drawable.ic_wrong : 0);
+            holder.bind.optionIcon.setImageResource(selected && !selectedAnswer.equalsIgnoreCase(String.valueOf(position)) ? R.drawable.ic_wrong : 0);
 //            }
             if (selectedAnswer != null && selectedAnswer.equalsIgnoreCase(String.valueOf(position))) {
-                holder.bind.optionIcon.setImageResource( R.drawable.ic_tick );
+                holder.bind.optionIcon.setImageResource(R.drawable.ic_tick);
             }
         }
 
@@ -118,15 +125,28 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
         return selectedData;
     }
 
-    class OptionHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class OptionHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnTouchListener, Handler.Callback {
+        private static final int CLICK_ON_WEBVIEW = 10;
         InflateAnswerOptionBinding bind;
+        private final Handler handler = new Handler(this);
 
         public OptionHolder(View itemView) {
             super(itemView);
             bind = DataBindingUtil.bind(itemView);
             if (!isReviewMode()) {
-                itemView.setOnClickListener(this);
+                bind.optionLayout.setOnClickListener(this);
             }
+
+//            bind.optionText.getSettings().setUseWideViewPort(true);
+            bind.optionText.setOnTouchListener(this);
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                handler.sendEmptyMessageDelayed(CLICK_ON_WEBVIEW, 500);
+            }
+            return false;
         }
 
         @Override
@@ -140,6 +160,16 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
                 }
                 notifyDataSetChanged();
             }
+        }
+
+        @Override
+        public boolean handleMessage(Message msg) {
+//            Toast.makeText(this, "WebView clicked", Toast.LENGTH_SHORT).show();
+            if (msg.what == CLICK_ON_WEBVIEW) {
+                bind.optionLayout.performClick();
+                return true;
+            }
+            return true;
         }
     }
 

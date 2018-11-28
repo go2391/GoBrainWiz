@@ -132,11 +132,10 @@ public class DDAlerts {
     }
 
     public static void showResponseError(Context context, BaseModel baseModel) {
+
         String text = baseModel.getMessage();
 
-        if (!text.isEmpty()) {
-            Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(context, text != null && !text.isEmpty() ? text : "Internal server error.", Toast.LENGTH_SHORT).show();
     }
 
     public static void showResponseError(Activity activity, String message) {

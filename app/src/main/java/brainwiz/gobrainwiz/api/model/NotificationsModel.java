@@ -46,6 +46,8 @@ public class NotificationsModel extends BaseModel {
         @SerializedName("time_update")
         @Expose
         private String timeUpdate;
+        @Expose
+        private int type;
 
         public String getLogId() {
             return logId;
@@ -111,5 +113,12 @@ public class NotificationsModel extends BaseModel {
             this.timeUpdate = timeUpdate;
         }
 
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
     }
 }

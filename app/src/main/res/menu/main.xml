@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/action_notifications"
-        android:icon="@drawable/ic_notifications"
+        android:icon="@drawable/notification_badge_icon"
         android:orderInCategory="101"
         android:title="@string/notications"
         android:visible="true"

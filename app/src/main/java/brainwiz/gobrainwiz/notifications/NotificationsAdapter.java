@@ -42,9 +42,31 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     @Override
     public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
 
-        NotificationsModel.Datum testList = data.get(position);
-        holder.bind.notificationItemTitle.setText(testList.getTitle());
-        holder.bind.notificationDesc.setText(testList.getMessage());
+        NotificationsModel.Datum datum = data.get(position);
+        holder.bind.notificationItemTitle.setText(datum.getTitle());
+        holder.bind.notificationDesc.setText(datum.getMessage());
+        holder.bind.notificationItemTime.setText(datum.getTimeUpdate());
+
+        int imgresourse;
+        switch (datum.getType()) {
+            case 0:
+                imgresourse = R.drawable.ic_calendar;
+                break;
+            case 1:
+                imgresourse = R.drawable.video_gallery;
+                break;
+
+            case 2:
+                imgresourse = R.drawable.online_tests;
+                break;
+            case 3:
+                imgresourse = R.drawable.practice_tests;
+                break;
+            default:
+                imgresourse = R.drawable.logo;
+                break;
+        }
+        holder.bind.notificationItemImage.setImageResource(imgresourse);
     }
 
     @Override

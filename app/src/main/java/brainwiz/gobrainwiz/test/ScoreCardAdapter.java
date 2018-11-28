@@ -1,18 +1,28 @@
 package brainwiz.gobrainwiz.test;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.model.ScoreCardModel;
 import brainwiz.gobrainwiz.databinding.InflateOnlineScoreCardBinding;
+import brainwiz.gobrainwiz.ui.CircularProgressBar;
+import brainwiz.gobrainwiz.utils.StringUtills;
 
 public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.ScoreCardHolder> {
 
@@ -43,8 +53,9 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.Scor
         return new ScoreCardHolder(LayoutInflater.from(context).inflate(R.layout.inflate_online_score_card, parent, false));
     }
 
+    @SuppressLint("ObjectAnimatorBinding")
     @Override
-    public void onBindViewHolder(@NonNull ScoreCardHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ScoreCardHolder holder, int position) {
 
         ScoreCardModel.Sets source = scoreCards.get(position);
         /*int bgResource = 0;
@@ -61,14 +72,36 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.Scor
         }
         holder.bind.scoreCardLayout.setBackgroundResource(bgResource);
         */
-        holder.bind.scoreCardCorrect.setText(String.format(context.getString(R.string.correct), Integer.parseInt(source.getCorrectAnswers())));
-        holder.bind.scoreCardWrong.setText(String.format(context.getString(R.string.wrong), Integer.parseInt(source.getIncorrectAnswers())));
-        holder.bind.scoreCardQuestionsAttempted.setText(String.format(context.getString(R.string.questions_attempted), Integer.parseInt(source.getAttemptedQues())));
-        holder.bind.scoreCardTotalQuestions.setText(String.format(context.getString(R.string.total_questions), Integer.parseInt(source.getAllQuestions())));
-        float progress = (Integer.parseInt(source.getCorrectAnswers()) / Float.parseFloat(source.getAllQuestions())) * 100f;
-        holder.bind.scoreCardProgress.setProgress(Math.round(progress));
+        int totalTime = Integer.parseInt(source.getTime());
+        holder.bind.timeTaken.setText(String.format("%02d:%02d", totalTime / 60, totalTime % 60));
+        holder.bind.yourScore.setText(source.getCategory_name());
+        holder.bind.scoreCardCorrect.setText(StringUtills.getSpanMarks(String.format(context.getString(R.string.correct), Integer.parseInt(source.getCorrectAnswers()))));
+        holder.bind.scoreCardWrong.setText(StringUtills.getSpanMarks(String.format(context.getString(R.string.wrong), Integer.parseInt(source.getIncorrectAnswers()))));
+        holder.bind.scoreCardQuestionsAttempted.setText(StringUtills.getSpanMarks(String.format(context.getString(R.string.questions_attempted), Integer.parseInt(source.getAttemptedQues()))));
+        holder.bind.scoreCardTotalQuestions.setText(StringUtills.getSpanMarks(String.format(context.getString(R.string.total_questions), Integer.parseInt(source.getAllQuestions()))));
+        final float progress = (Integer.parseInt(source.getCorrectAnswers()) / Float.parseFloat(source.getAllQuestions())) * 100f;
+
+
+        holder.bind.scoreCardProgress.animateProgressTo(0, (int) progress, new CircularProgressBar.ProgressAnimationListener() {
+
+            @Override
+            public void onAnimationStart() {
+            }
+
+            @Override
+            public void onAnimationProgress(int progress) {
+                holder.bind.scoreCardProgress.setTitle(progress + "");
+            }
+
+            @Override
+            public void onAnimationFinish() {
+                holder.bind.scoreCardProgress.setSubTitle("percentage");
+            }
+        });
+
 
     }
+
 
     @Override
     public int getItemCount() {

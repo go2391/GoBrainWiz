@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -40,16 +41,17 @@
                     android:text="@string/watch_it_later"
                     android:textColor="@color/colorSecondaryText" />
 
-                <TextView
+                <WebView
                     android:id="@+id/test_question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/bookmark"
-
+                    android:layout_margin="@dimen/dimen_10"
                     android:padding="@dimen/dimen_10"
                     android:text="@string/help_your_friends_to_know_this_app_and_make_them_so_benefices_as_you_in_case_of_crt"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/font_16" />
+                    android:textSize="@dimen/font_16"
+                    tools:ignore="WebViewLayout" />
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -68,7 +70,8 @@
                 android:layout_margin="@dimen/dimen_10"
                 android:background="@drawable/stroke_blue_bg"
                 android:orientation="vertical"
-                android:padding="@dimen/dimen_5">
+                android:padding="@dimen/dimen_5"
+                tools:ignore="WebViewLayout">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -79,7 +82,7 @@
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/font_16" />
 
-                <TextView
+                <WebView
                     android:id="@+id/test_explanation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

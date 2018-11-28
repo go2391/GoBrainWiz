@@ -79,7 +79,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void playVideo() {
-        bind.videoView.setVideoURI(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.demo));
+        bind.videoView.setVideoURI(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.demo_no_audio));
         bind.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer m) {
@@ -89,9 +89,9 @@ public class HomeFragment extends BaseFragment {
                         m.release();
                         m = new MediaPlayer();
                     }
-                    AudioManager mAm = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
-                    mAm.setStreamMute(AudioManager.STREAM_MUSIC, false);
-                    m.setVolume(0f, 0f);
+//                    AudioManager mAm = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+//                    mAm.setStreamMute(AudioManager.STREAM_MUSIC, false);
+//                    m.setVolume(0f, 0f);
                     m.setLooping(true);
                     m.start();
                 } catch (Exception e) {

@@ -19,8 +19,10 @@ import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.PractiseTestResultModel;
 import brainwiz.gobrainwiz.api.model.ScoreCardModel;
 import brainwiz.gobrainwiz.databinding.FragmentScoreCardBinding;
+import brainwiz.gobrainwiz.ui.CircularProgressBar;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
+import brainwiz.gobrainwiz.utils.StringUtills;
 import retrofit2.Response;
 
 public class ScoreCardFragment extends BaseFragment {
@@ -95,14 +97,32 @@ public class ScoreCardFragment extends BaseFragment {
 
     private void showScorecard(PractiseTestResultModel.Data object) {
 
-        bind.scoreCardCorrect.setText(String.format(getString(R.string.correct), object.getCorrect()));
-        bind.scoreCardWrong.setText(String.format(getString(R.string.wrong), object.getIncorrect()));
-        bind.scoreCardQuestionsAttempted.setText(String.format(getString(R.string.questions_attempted), object.getAttemptedQuestions()));
-        bind.scoreCardTotalQuestions.setText(String.format(getString(R.string.total_questions), object.getTotalQuestions()));
-        float i = (float) object.getCorrect() / object.getTotalQuestions();
-        bind.scoreCardProgress.setProgress(Math.round(i * 100f));
+        bind.scoreCardCorrect.setText(StringUtills.getSpanMarks(String.format(getString(R.string.correct), object.getCorrect())));
+        bind.scoreCardWrong.setText(StringUtills.getSpanMarks(String.format(getString(R.string.wrong), object.getIncorrect())));
+        bind.scoreCardQuestionsAttempted.setText(StringUtills.getSpanMarks(String.format(getString(R.string.questions_attempted), object.getAttemptedQuestions())));
+        bind.scoreCardTotalQuestions.setText(StringUtills.getSpanMarks(String.format(getString(R.string.total_questions), object.getTotalQuestions())));
+        float progress = (float) object.getCorrect() / object.getTotalQuestions();
+        bind.scoreCardProgress.setProgress(Math.round(progress * 100f));
 
-        bind.rank.setText(String.valueOf(object.getRank()));
+
+        bind.scoreCardProgress.animateProgressTo(0, Math.round(progress * 100f), new CircularProgressBar.ProgressAnimationListener() {
+
+            @Override
+            public void onAnimationStart() {
+            }
+
+            @Override
+            public void onAnimationProgress(int progress) {
+                bind.scoreCardProgress.setTitle(progress + "");
+            }
+
+            @Override
+            public void onAnimationFinish() {
+                bind.scoreCardProgress.setSubTitle("percentage");
+            }
+        });
+
+        bind.rank.setText(StringUtills.getRankText(getActivity(), object.getRank(), object.getTotalRank()));
 
     }
 

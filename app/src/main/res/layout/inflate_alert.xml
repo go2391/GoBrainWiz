@@ -33,18 +33,19 @@
         android:padding="@dimen/dimen_16"
         android:weightSum="2">
 
-        <Button
-            android:id="@+id/alert_positive"
-            style="@style/ButtonStyle"
-            android:layout_weight="1"
-            android:text="@string/ok"
-            android:visibility="gone" />
 
         <Button
             android:id="@+id/alert_negative"
             style="@style/ButtonBlackStyle"
             android:layout_weight="1"
             android:text="@string/cancel"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/alert_positive"
+            style="@style/ButtonStyle"
+            android:layout_weight="1"
+            android:text="@string/ok"
             android:visibility="gone" />
 
     </LinearLayout>

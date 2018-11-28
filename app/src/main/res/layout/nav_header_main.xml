@@ -40,10 +40,9 @@
         android:id="@+id/welcome_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_above="@+id/textView_user_name"
         android:layout_toEndOf="@id/imageView_layout"
         android:fontFamily="@font/bold"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/welcome"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="@dimen/font_18" />
@@ -52,11 +51,12 @@
         android:id="@+id/textView_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/welcome_label"
+        android:layout_centerVertical="true"
         android:layout_toEndOf="@id/imageView_layout"
         android:fontFamily="@font/bold"
         android:text="User"
-        android:textSize="@dimen/font_18" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_16" />
 
 
     <TextView
@@ -67,7 +67,8 @@
         android:layout_toEndOf="@id/imageView_layout"
         android:fontFamily="@font/semibold"
         android:text="User"
-        android:textSize="@dimen/font_14" />
+
+        android:textSize="@dimen/font_10" />
 
     <TextView
         android:id="@+id/textView_user_phone"
@@ -77,7 +78,7 @@
         android:layout_toEndOf="@id/imageView_layout"
         android:fontFamily="@font/semibold"
         android:text="User"
-        android:textSize="@dimen/font_14" />
+        android:textSize="@dimen/font_10" />
 
     <TextView
         android:id="@+id/textView_user_location"
@@ -86,8 +87,8 @@
         android:layout_below="@id/textView_user_phone"
         android:layout_toEndOf="@id/imageView_layout"
         android:fontFamily="@font/semibold"
-        android:text="User"
-        android:textSize="@dimen/font_14" />
+        android:text="Location"
+        android:textSize="@dimen/font_10" />
 
 
 </RelativeLayout>

@@ -31,6 +31,8 @@ public class BaseFragment extends Fragment {
             ((RegistrationActivity) activity).showProgress();
         } else if (activity instanceof TestActivity) {
             ((TestActivity) activity).showProgress();
+        } else if (activity instanceof LoginActivity) {
+            ((LoginActivity) activity).showProgress();
         }
 
 

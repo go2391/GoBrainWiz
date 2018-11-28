@@ -8,21 +8,22 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
             android:title="Home"
-            android:visible="false"/>
+            android:visible="false" />
 
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
             android:title="Profile"
-            android:visible="false"/>
+            android:visible="false" />
         <item
             android:id="@+id/nav_my_tests"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_assignment"
             android:title="My Tests" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Subscribe" />
+            android:title="Subscribe"
+            android:visible="true" />
 
         <item
             android:id="@+id/nav_notifications"
@@ -44,7 +45,7 @@
                 android:id="@+id/nav_contact_us"
                 android:icon="@drawable/ic_call"
                 android:title="Contact Us"
-                android:visible="false"/>
+                android:visible="false" />
 
             <item
                 android:id="@+id/nav_about_us"

@@ -36,6 +36,15 @@ public class OverViewFragment extends android.support.v4.app.DialogFragment {
         this.questionListener = questionListener;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.80);
+
+        getDialog().getWindow().setLayout(width, height);
+    }
+
     private QuestionNoAdapter.QuestionListener questionListener;
 
     @Nullable

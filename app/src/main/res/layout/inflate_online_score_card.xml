@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:circular="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/tools">
 
 
@@ -8,8 +9,8 @@
         android:id="@+id/score_card_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@color/white"
+        android:orientation="vertical"
         android:padding="@dimen/dimen_10">
 
         <TextView
@@ -18,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen_16"
             android:layout_marginTop="@dimen/dimen_16"
-            android:fontFamily="@font/semibold"
+            android:fontFamily="@font/bold"
             android:text="@string/your_score"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/font_16" />
@@ -29,15 +30,11 @@
             android:layout_height="wrap_content">
 
 
-            <com.github.lzyzsd.circleprogress.DonutProgress
+            <brainwiz.gobrainwiz.ui.CircularProgressBar
                 android:id="@+id/score_card_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:donut_circle_starting_degree="270"
-                app:donut_finished_color="@color/red"
-                app:donut_text_color="@color/colorPrimaryText"
-                app:donut_unfinished_color="@color/divider"
-                custom:donut_progress="30" />
+                style="@style/progress_style"
+                circular:cpb_subtitle="percentage"
+                circular:cpb_title="0" />
 
 
             <LinearLayout
@@ -50,67 +47,67 @@
 
                 <TextView
                     android:id="@+id/score_card_total_questions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen_5"
-                    android:gravity="end"
-                    android:text="@string/total_questions"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/font_14" />
+                    style="@style/marks_style" />
 
                 <TextView
                     android:id="@+id/score_card_questions_attempted"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen_5"
-                    android:gravity="end"
-                    android:text="@string/questions_attempted"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/font_14" />
+                    style="@style/marks_style" />
 
                 <TextView
                     android:id="@+id/score_card_correct"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen_5"
-                    android:gravity="end"
-                    android:text="@string/correct"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/font_14" />
+                    style="@style/marks_style" />
 
                 <TextView
                     android:id="@+id/score_card_wrong"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen_5"
-                    android:gravity="end"
-                    android:text="@string/wrong"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/font_14" />
+                    style="@style/marks_style" />
 
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/time_taken"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/bold"
+                android:gravity="center"
+                android:text="00:00"
+                android:textColor="@color/blueSecondary"
+                android:textSize="@dimen/font_24" />
+
+            <TextView
+                android:id="@+id/time_taken_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/time_taken"
+                android:fontFamily="@font/semibold"
+                android:gravity="center"
+                android:padding="@dimen/dimen_10"
+                android:text="Time Taken"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/font_8" />
+
+
+            <Button
+                android:id="@+id/review_questions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:background="@drawable/gradient_blue_button"
+                android:fontFamily="@font/semibold"
+                android:gravity="center"
+                android:minHeight="@dimen/dimen_30"
+                android:text="@string/review"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_10"
+                android:visibility="visible" />
 
         </RelativeLayout>
-
-
-        <Button
-            android:id="@+id/review_questions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginBottom="@dimen/dimen_16"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:background="@drawable/button_bg_white"
-            android:fontFamily="@font/semibold"
-            android:gravity="center"
-            android:minHeight="@dimen/dimen_30"
-            android:text="@string/review"
-            android:textAllCaps="false"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/font_14"
-            android:visibility="gone" />
 
 
     </LinearLayout>

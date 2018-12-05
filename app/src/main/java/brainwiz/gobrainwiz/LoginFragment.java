@@ -27,6 +27,7 @@ import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import retrofit2.Response;
 
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.IS_LOGIN;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_COLLEGE;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_EMAIL;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_ID;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_MOBILE;
@@ -156,6 +157,7 @@ public class LoginFragment extends BaseFragment {
         SharedPrefUtils.putData(context, USER_MOBILE, body.getExamuserMobile());
         SharedPrefUtils.putData(context, USER_NAME, body.getExamuserName());
         SharedPrefUtils.putData(context, USER_TOKEN, body.getExamUserToken());
+        SharedPrefUtils.putData(context, USER_COLLEGE, body.getExamuser_cname());
     }
 
 

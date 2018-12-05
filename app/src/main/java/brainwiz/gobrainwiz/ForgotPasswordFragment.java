@@ -75,7 +75,7 @@ public class ForgotPasswordFragment extends BaseFragment {
 
     private void resetPassword() {
         HashMap<String, String> hashMap = getBaseBodyMap();
-//        hashMap.put("user_name", bind.confirm.getText().toString());
+        hashMap.put("forgot_password", bind.emailMobileNo.getText().toString());
 
         RetrofitManager.getRestApiMethods().resetPassword(hashMap).enqueue(new ApiCallback<BaseModel>(getActivity()) {
             @Override

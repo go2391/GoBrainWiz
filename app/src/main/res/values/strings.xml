@@ -65,7 +65,7 @@
     <string name="tests_label">Tests</string>
     <string name="logical_reasoning">Logical Reasoning</string>
     <string name="verbal_ability">Verbal Ability</string>
-    <string name="password">password</string>
+    <string name="password">Password</string>
     <string name="start">Start</string>
     <string name="questions">%s Questions</string>
     <string name="mins">%s Mins</string>
@@ -102,9 +102,9 @@ sections
     <string name="explanation">Explanation</string>
     <string name="previous">Previous</string>
     <string name="submit">Submit</string>
-    <string name="total_questions">%1$02d Total </string>
-    <string name="questions_attempted">%1$02d Attempted </string>
-    <string name="correct">%d Correct </string>
+    <string name="total_questions">%d  Total </string>
+    <string name="questions_attempted">%d  Attempted </string>
+    <string name="correct">%d  Correct </string>
     <string name="welcome">Welcome</string>
     <string name="your_score">Your Score</string>
     <string name="your_rank">Your Rank %d out of %d</string>
@@ -126,7 +126,7 @@ sections
     <string name="email_">Email : %s</string>
     <string name="mobile_number_">Mobile Number : %s</string>
     <string name="location_">Location : %s</string>
-    <string name="wrong">%1$02d Wrong </string>
+    <string name="wrong">%d  Wrong </string>
     <string name="pick_image_intent_text">Pick your profile image</string>
     <string name="choose_photo_title">Choose Photos</string>
     <string name="register">register</string>
@@ -154,5 +154,6 @@ sections
     <string name="html_content">
 
     </string>
+    <string name="no_tests_found">No tests found.</string>
 
 </resources>

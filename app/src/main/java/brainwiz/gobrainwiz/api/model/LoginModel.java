@@ -38,6 +38,10 @@ public class LoginModel extends BaseModel {
         @SerializedName("examUser_token")
         @Expose
         private String examUserToken;
+        @SerializedName("examuser_cname")
+        @Expose
+        private String examuser_cname;
+
         @SerializedName("status")
         @Expose
         private boolean status;
@@ -112,6 +116,13 @@ public class LoginModel extends BaseModel {
             this.message = message;
         }
 
+        public String getExamuser_cname() {
+            return examuser_cname;
+        }
+
+        public void setExamuser_cname(String examuser_cname) {
+            this.examuser_cname = examuser_cname;
+        }
     }
 }
 

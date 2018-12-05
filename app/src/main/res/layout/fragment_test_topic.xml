@@ -17,13 +17,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/bg_gradient_green"
                 android:fontFamily="@font/semibold"
                 android:gravity="start|center"
                 android:minHeight="180dp"
                 android:padding="@dimen/dimen_16"
-                android:text="Topic Title"
                 android:paddingEnd="120dp"
+                android:text="Topic Title"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_24" />
 

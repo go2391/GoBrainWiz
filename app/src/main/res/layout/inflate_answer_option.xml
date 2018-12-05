@@ -44,6 +44,7 @@
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_wrong" />
 
+
         <WebView
             android:id="@+id/option_text"
             android:layout_width="wrap_content"
@@ -53,10 +54,12 @@
             android:layout_marginStart="@dimen/dimen_5"
             android:layout_toEndOf="@id/option_no"
             android:layout_toStartOf="@id/option_icon"
+            android:alwaysDrawnWithCache="true"
             android:clickable="false"
             android:focusable="false"
             android:gravity="center_vertical|start"
             android:minHeight="@dimen/dimen_50"
+            android:scrollbars="none"
             android:text="option1"
             android:textSize="@dimen/font_18" />
 

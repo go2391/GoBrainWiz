@@ -1,5 +1,6 @@
 package brainwiz.gobrainwiz;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -102,6 +103,7 @@ public class OtpPasswordFragment extends BaseFragment {
                 dismissProgress();
                 if (isSuccess) {
                     saveUserDetails(response.body().getData());
+                    activity.setResult(Activity.RESULT_OK);
                     activity.finish();
                     startActivity(new Intent(activity, MainActivity.class));
                 }
@@ -129,7 +131,7 @@ public class OtpPasswordFragment extends BaseFragment {
             return false;
         }
 
-        if (bind.otp.getText().toString().length() < 6) {
+        if (bind.otp.getText().toString().length() < 4) {
             DDAlerts.showToast(getActivity(), "enter valid OTP.");
             return false;
         }
@@ -225,19 +227,20 @@ public class OtpPasswordFragment extends BaseFragment {
             @Override
             public void onApiResponse(Response<RegistrationModel> response, boolean isSuccess, String message) {
                 if (isSuccess) {
-                    if (response.body().getData().getData().getMessage().equalsIgnoreCase("Password Updated")) {
+                    String message1 = response.body().getData().getData().getMessage();
+                    if (message1.equalsIgnoreCase("")) {
                         userLogin();
 //                        activity.finish();
 //                        startActivity(new Intent(activity, MainActivity.class));
                     } else {
-
+                        DDAlerts.showToast(context, message1);
                     }
                 }
             }
 
             @Override
             public void onApiFailure(boolean isSuccess, String message) {
-
+                dismissProgress();
             }
         });
 

@@ -15,6 +15,7 @@ public class SharedPrefUtils {
     public static final String USER_MOBILE = "UserMObile";
     public static final String USER_NAME = "UserName";
     public static final String USER_TOKEN = "UserToken";
+    public static final String USER_COLLEGE = "UserCollege";
     public static final String USER_EMAIL = "UserEmail";
     public static final String PROFILE_IMAGE = "ProfileImage";
     public static final String FIREBASE_TOKEN = "FirebaseToken";
@@ -49,6 +50,10 @@ public class SharedPrefUtils {
 
     public static String getUserPhone(Context context) {
         return getString(context, USER_MOBILE, "");
+    }
+
+    public static String getUserCollege(Context context) {
+        return getString(context, USER_COLLEGE, "");
     }
 //    public static void putData(Context context, String key, Set<String> value) {
 //        getSharedPref(context).edit().putStringSet(key, value).commit();
@@ -87,8 +92,8 @@ public class SharedPrefUtils {
         return getString(context, USER_ID, "");
     }
 
-    public static int getNotificationCount(Context context) {
-        return getSharedPref(context).getInt(NOTIFICATION_COUNT, 0);
+    public static String getNotificationCount(Context context) {
+        return getSharedPref(context).getString(NOTIFICATION_COUNT, "0");
     }
 
 

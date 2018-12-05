@@ -212,7 +212,8 @@ public class TestActivity extends BaseActivity
             currentRunningTime = targetTime - timerService.elapsedTime();
             timerTextView.setText(String.format("%02d:%02d", currentRunningTime / 60, currentRunningTime % 60));
             final Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
-            if (timerTextView.getText().toString().equalsIgnoreCase("00:00")) {
+            if (timerTextView.getText().toString().equalsIgnoreCase("00:00") || timerTextView.getText().toString().contains("-")) {
+                timerTextView.setText("Score Card");
                 if (fragmentById != null && fragmentById instanceof TestQuestionFragment) {
                     ((TestQuestionFragment) fragmentById).submitTest();
                     stopTimer();
@@ -225,7 +226,7 @@ public class TestActivity extends BaseActivity
     public void onBackPressed() {
         Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-        if (fragmentById != null && backStackEntryCount > 0) {
+        if (fragmentById != null /*&& backStackEntryCount > 0*/) {
 
             if (fragmentById instanceof TestQuestionFragment && !((TestQuestionFragment) fragmentById).isReview()) {
                 DDAlerts.showAlert(this, "You can't go back at this movement, Please submit you test to finish.", getString(R.string.ok));
@@ -236,6 +237,8 @@ public class TestActivity extends BaseActivity
                 return;
             }
             getSupportFragmentManager().popBackStack();
+            if (backStackEntryCount == 0)
+                super.onBackPressed();
         } else
             super.onBackPressed();
     }

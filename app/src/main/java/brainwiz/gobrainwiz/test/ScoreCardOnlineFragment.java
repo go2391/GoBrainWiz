@@ -137,7 +137,7 @@ public class ScoreCardOnlineFragment extends BaseFragment {
             public void onOptionSelected(int position) {
                 ScoreCardModel.Sets data = object.getSets().get(position);
 
-                TestQuestionFragment instance = TestQuestionFragment.getInstance(data.getTestId(), data.getCatId(), true, isReview);
+                TestQuestionFragment instance = TestQuestionFragment.getInstance(data.getTestId(), data.getCatId(), true, true);
                 instance.setTargetFragment(ScoreCardOnlineFragment.this, TEST_REQUESTCODE);
                 ((TestActivity) getActivity()).fragmentTransaction(instance);
             }

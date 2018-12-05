@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import java.util.HashMap;
 import java.util.List;
 
+import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.DashBoardModel;
 import brainwiz.gobrainwiz.databinding.FragmentHomeBinding;
@@ -26,11 +27,11 @@ import brainwiz.gobrainwiz.practicetest.PracticeTestCategoryFragment;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import brainwiz.gobrainwiz.utils.SharedPrefUtils;
+import brainwiz.gobrainwiz.videos.VideoCategoryFragment;
 import brainwiz.gobrainwiz.videos.VideosFragment;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.NOTIFICATION_COUNT;
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.PROFILE_IMAGE;
 
 public class HomeFragment extends BaseFragment {
@@ -58,6 +59,12 @@ public class HomeFragment extends BaseFragment {
         return inflate;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+//        AppInstructionFragment appInstructionFragment = new AppInstructionFragment();
+//        appInstructionFragment.show(getChildFragmentManager(), "new");
+    }
 
     private void initViews(View inflate) {
 
@@ -79,7 +86,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void playVideo() {
-        bind.videoView.setVideoURI(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.demo_no_audio));
+        bind.videoView.setVideoURI(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.demo));
         bind.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer m) {
@@ -89,9 +96,9 @@ public class HomeFragment extends BaseFragment {
                         m.release();
                         m = new MediaPlayer();
                     }
-//                    AudioManager mAm = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
-//                    mAm.setStreamMute(AudioManager.STREAM_MUSIC, false);
-//                    m.setVolume(0f, 0f);
+                    AudioManager mAm = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+                    mAm.setStreamMute(AudioManager.STREAM_MUSIC, false);
+                    m.setVolume(0f, 0f);
                     m.setLooping(true);
                     m.start();
                 } catch (Exception e) {
@@ -109,9 +116,9 @@ public class HomeFragment extends BaseFragment {
 
         showProgress();
         HashMap<String, String> baseBodyMap = getBaseBodyMap();
-        RetrofitManager.getRestApiMethods().getDashBoard(baseBodyMap).enqueue(new Callback<DashBoardModel>() {
+        RetrofitManager.getRestApiMethods().getDashBoard(baseBodyMap).enqueue(new ApiCallback<DashBoardModel>(getActivity()) {
             @Override
-            public void onResponse(Call<DashBoardModel> call, Response<DashBoardModel> response) {
+            public void onApiResponse(Response<DashBoardModel> response, boolean isSuccess, String message) {
                 Log.e("", response.toString());
                 data = response.body().getData();
                 bannerList = data.getBanners();
@@ -121,15 +128,19 @@ public class HomeFragment extends BaseFragment {
 
 
                 SharedPrefUtils.putData(getActivity(), PROFILE_IMAGE, data.getProfile_link());
+                SharedPrefUtils.putData(getActivity(), NOTIFICATION_COUNT, data.getNotification_count());
                 dismissProgress();
 
             }
 
             @Override
-            public void onFailure(Call<DashBoardModel> call, Throwable t) {
-                Log.e("", call.toString());
+            public void onApiFailure(boolean isSuccess, String message) {
+                Log.e("", message);
                 dismissProgress();
+
             }
+
+
         });
     }
 
@@ -138,7 +149,7 @@ public class HomeFragment extends BaseFragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.tv_video_gallery_layout:
-                    ((MainActivity) activity).fragmentTransaction(new VideosFragment());
+                    ((MainActivity) activity).fragmentTransaction(new VideoCategoryFragment());
                     break;
 
                 case R.id.tv_online_tests_layout:

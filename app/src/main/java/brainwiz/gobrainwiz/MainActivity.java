@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity
         ((TextView) header.findViewById(R.id.textView_user_name)).setText(SharedPrefUtils.getUserName(this));
         ((TextView) header.findViewById(R.id.textView_user_email)).setText(SharedPrefUtils.getUserEmail(this));
         ((TextView) header.findViewById(R.id.textView_user_phone)).setText(SharedPrefUtils.getUserPhone(this));
-//        ((TextView) header.findViewById(R.id.textView_user_location)).setText(SharedPrefUtils.getUser(this));
+        ((TextView) header.findViewById(R.id.textView_user_location)).setText(SharedPrefUtils.getUserCollege(this));
         roundishImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +117,7 @@ public class MainActivity extends BaseActivity
         return super.onPrepareOptionsMenu(menu);
     }
 
-    public void setCount(Menu defaultMenu, int count) {
+    public void setCount(Menu defaultMenu, String count) {
         MenuItem menuItem = defaultMenu.findItem(R.id.action_notifications);
         LayerDrawable icon = (LayerDrawable) menuItem.getIcon();
 
@@ -126,7 +126,7 @@ public class MainActivity extends BaseActivity
 
         // Reuse drawable if possible
         Drawable reuse = icon.findDrawableByLayerId(R.id.ic_group_count);
-        reuse.setVisible(count > 0, true);
+        reuse.setVisible(Integer.parseInt(count) > 0, true);
         if (reuse != null && reuse instanceof CountDrawable) {
             badge = (CountDrawable) reuse;
         } else {
@@ -275,7 +275,7 @@ public class MainActivity extends BaseActivity
                     doubleBackToExitPressedOnce = false;
                 }
             }, 2000);
-            super.onBackPressed();
+//            super.onBackPressed();
         }
     }
 
@@ -354,6 +354,15 @@ public class MainActivity extends BaseActivity
                 }
                 return;
             }
+            case PERMISSIONS_REQUEST_CAMERA:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    dispatchTakePictureIntent();
+                } else {
+
+                }
+
+                break;
 
             // other 'case' lines to check for other
             // permissions this app might request.

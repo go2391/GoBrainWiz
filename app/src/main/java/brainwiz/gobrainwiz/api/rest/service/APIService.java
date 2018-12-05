@@ -29,74 +29,80 @@ import retrofit2.http.Path;
 /**
  */
 public interface APIService {
-    @POST("/dashboard")
-    Call<DashBoardModel> getDashBoard(@Body HashMap<String, String> hashMap);
+    String URL = ".php";
 
-    @POST("/login")
+    @POST("login" + URL)
     Call<LoginModel> login(@Body HashMap<String, String> hashMap);
 
 
-    @POST("/register")
+    @POST("register" + URL)
     Call<RegistrationModel> register(@Body HashMap<String, String> hashMap);
 
-    @GET("/videos")
+    @POST("dashboard" + URL)
+    Call<DashBoardModel> getDashBoard(@Body HashMap<String, String> hashMap);
+
+    @GET("videos_list" + URL)
     Call<VideoListModel> getVideos();
 
-    @GET("/practice_tests/2")
+
+//    @GET("videos_list"+URL+"?id=?")
+//    Call<VideoListModel> getVideos();
+
+    @GET("practice_test_content" + URL)
     Call<PracticeTestModel> getPractiveTestCategories();
 
-    @POST("/practice")
+    @POST("practise-list" + URL)
     Call<TestsModel> getTests(@Body HashMap<String, String> hashMap);
 
-    @POST("/company")
+    @POST("companies_testList" + URL)
     Call<OnlineTestModle> getCompanies(@Body HashMap<String, String> hashMap);
 
-    @POST("/company_sets")
+    @POST("companies_testList" + URL)
     Call<OnlineTestSetModel> getCompanySets(@Body HashMap<String, String> hashMap);
 
 
-    @POST("/company-test")
+    @POST("company_test" + URL)
     Call<TestModel> getCompanyTests(@Body HashMap<String, String> hashMap);
 
-    @POST("/practise-test")
+    @POST("practise_test" + URL)
     Call<TestModel> getPracticeTests(@Body HashMap<String, String> hashMap);
 
-    @POST("/past_tests_company")
+    @POST("test_history" + URL)
     Call<HistoryOnlineTestModel> getPastTests(@Body HashMap<String, String> baseBodyMap);
 
 
-    @POST("/past_tests_practise")
+    @POST("practise_test_history" + URL)
     Call<HistoryPractiseTestModel> getPastPractiseTests(@Body HashMap<String, String> baseBodyMap);
 
 
-    @POST("/practice-save")
+    @POST("practise-list" + URL)
     Call<PractiseTestResultModel> postPracticeTest(@Body PractiseTestPostModel model);
 
-    @POST("/company-test")
+    @POST("company_test" + URL)
     Call<ScoreCardModel> postOnlineTest(@Body OnlineTestPostModel model);
 
-    @POST("/send_enquiry")
+    @POST("send_enquiry" + URL)
     Call<BaseModel> postJoinRequest(@Body HashMap<String, String> baseBodyMap);
 
     //    upload_image
-    @POST("/upload_image")
+    @POST("upload_image" + URL)
     Call<BaseModel> uploadImage(@Body HashMap<String, String> baseBodyMap);
 
 
-    @POST("/forgot")
+    @POST("forgot_password" + URL)
     Call<BaseModel> resetPassword(@Body HashMap<String, String> baseBodyMap);
 
 
-    @POST("/verifyOTP")
-    Call<RegistrationModel> verifyOTP(@Body HashMap<String, String> baseBodyMap);
+//    @POST("verifyOTP" + URL)
+//    Call<RegistrationModel> verifyOTP(@Body HashMap<String, String> baseBodyMap);
 
-    @POST("/score-card")
+    @POST("get_score_card" + URL)
     Call<ScoreCardModel> getScoreCard(@Body HashMap<String, String> baseBodyMap);
 
-    @POST("/score-card")
+    @POST("get_score_card" + URL)
     Call<PractiseTestResultModel> getPractiseScoreCard(@Body HashMap<String, String> baseBodyMap);
 
 
-    @POST("/notification-history")
+    @POST("get_notifications_list" + URL)
     Call<NotificationsModel> getNotifications(@Body HashMap<String, String> baseBodyMap);
 }

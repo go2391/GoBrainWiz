@@ -25,6 +25,7 @@ import brainwiz.gobrainwiz.sidemenu.PractiseTestHistoryAdapter;
 import brainwiz.gobrainwiz.test.TestActivity;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
+import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import retrofit2.Response;
 
 public class NotificationsFragment extends BaseFragment {
@@ -60,16 +61,18 @@ public class NotificationsFragment extends BaseFragment {
             return;
         }
 
-//        showProgress();
+        showProgress();
         HashMap<String, String> baseBodyMap = getBaseBodyMap();
 //        (getArguments().getString(TOPIC_ID))
         RetrofitManager.getRestApiMethods().getNotifications(baseBodyMap).enqueue(new ApiCallback<NotificationsModel>(activity) {
             @Override
             public void onApiResponse(Response<NotificationsModel> response, boolean isSuccess, String message) {
-//                dismissProgress();
+                dismissProgress();
                 if (isSuccess) {
                     notificationsAdapter.setData(response.body().getData());
                     notificationsAdapter.notifyDataSetChanged();
+                    SharedPrefUtils.putData(context, SharedPrefUtils.NOTIFICATION_COUNT, "0");
+                    getActivity().invalidateOptionsMenu();
                 }
             }
 

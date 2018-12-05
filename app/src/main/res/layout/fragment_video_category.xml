@@ -1,80 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/recycle_videos_topic_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
-        <LinearLayout
+    <!--
+        <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView style="@style/CardViewStyle">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/dimen_16">
+                <android.support.v7.widget.CardView style="@style/CardViewStyle">
 
-                    <TextView
-                        android:id="@+id/video_category_name"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dimen_10"
-                        android:fontFamily="@font/bold"
-                        android:gravity="start"
-                        android:text="@string/arithmetic"
-                        android:textColor="@color/blueSecondary"
-                        android:textSize="@dimen/font_24" />
+                        android:padding="@dimen/dimen_16">
+
+                        <TextView
+                            android:id="@+id/video_category_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/dimen_10"
+                            android:fontFamily="@font/bold"
+                            android:gravity="start"
+                            android:text="@string/arithmetic"
+                            android:textColor="@color/blueSecondary"
+                            android:textSize="@dimen/font_24" />
 
 
-                    <TextView
-                        android:id="@+id/video_category_topics"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@id/video_category_name"
-                        android:fontFamily="@font/regular"
-                        android:gravity="start"
-                        android:text="@string/topics"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="@dimen/font_12" />
+                        <TextView
+                            android:id="@+id/video_category_topics"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@id/video_category_name"
+                            android:fontFamily="@font/regular"
+                            android:gravity="start"
+                            android:text="@string/topics"
+                            android:textColor="@color/colorSecondaryText"
+                            android:textSize="@dimen/font_12" />
 
-                    <View
-                        android:id="@+id/divider"
-                        android:layout_width="0.5dp"
-                        android:layout_height="@dimen/dimen_15"
-                        android:layout_below="@id/video_category_name"
-                        android:layout_marginEnd="@dimen/dimen_10"
-                        android:layout_marginStart="@dimen/dimen_10"
-                        android:layout_toEndOf="@id/video_category_topics"
-                        android:background="@color/gray" />
+                        <View
+                            android:id="@+id/divider"
+                            android:layout_width="0.5dp"
+                            android:layout_height="@dimen/dimen_15"
+                            android:layout_below="@id/video_category_name"
+                            android:layout_marginEnd="@dimen/dimen_10"
+                            android:layout_marginStart="@dimen/dimen_10"
+                            android:layout_toEndOf="@id/video_category_topics"
+                            android:background="@color/gray" />
 
-                    <TextView
-                        android:id="@+id/video_category_videos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/video_category_name"
-                        android:layout_toEndOf="@id/divider"
-                        android:fontFamily="@font/regular"
-                        android:gravity="start"
-                        android:text="@string/videos"
-                        android:textColor="@color/colorSecondaryText"
-                        android:textSize="@dimen/font_12" />
+                        <TextView
+                            android:id="@+id/video_category_videos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/video_category_name"
+                            android:layout_toEndOf="@id/divider"
+                            android:fontFamily="@font/regular"
+                            android:gravity="start"
+                            android:text="@string/videos"
+                            android:textColor="@color/colorSecondaryText"
+                            android:textSize="@dimen/font_12" />
 
-                    <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        app:srcCompat="@drawable/ic_arrow_right" />
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_arrow_right" />
 
-                </RelativeLayout>
+                    </RelativeLayout>
 
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    -->
 </layout>

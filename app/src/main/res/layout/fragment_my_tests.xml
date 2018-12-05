@@ -7,9 +7,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
 
@@ -22,6 +22,16 @@
                 android:orientation="vertical"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/empty_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/no_tests_found"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/font_16"
+                android:visibility="gone" />
+
+        </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

@@ -40,6 +40,7 @@ public class VideosFragment extends BaseFragment {
     private HashMap<String, List<VideoListModel.VideosList>> categories = new LinkedHashMap<>();
     private ArrayAdapter adapter;
     private List<String> categoryNames = new ArrayList<>();
+    private String categoryName;
 
     @Override
     public void onAttach(Context context) {
@@ -70,19 +71,21 @@ public class VideosFragment extends BaseFragment {
         videosAdapter.setListener(videoSelectedListener);
         bind.recycleVideosList.setAdapter(videosAdapter);
 
-
-        bind.videosCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                loadList(categories.get(categoryNames.get(position)));
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        categoryName = getArguments().getString(CAT_ID);
+        bind.videosTopic.setText(categoryName);
+//        bind.videosCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                categoryName = categoryNames.get(position);
+//                loadList(categories.get(categoryName));
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
 
     }
@@ -101,12 +104,12 @@ public class VideosFragment extends BaseFragment {
                     List<VideoListModel.Video> videos = response.body().getData().getVideos();
 
                     categories = getCategories(videos);
-                    categoryNames = new ArrayList<>(categories.keySet());
-                    adapter = new ArrayAdapter<>(activity, R.layout.inflate_spinner_item, R.id.spinner_title, categoryNames);
-                    bind.videosCategories.setAdapter(adapter);
+//                    categoryNames = new ArrayList<>(categories.keySet());
+//                    adapter = new ArrayAdapter<>(activity, R.layout.inflate_spinner_item, R.id.spinner_title, categoryNames);
+//                    bind.videosCategories.setAdapter(adapter);
 
                     if (!videos.isEmpty()) {
-                        loadList(videos.get(0).getVideosList());
+                        loadList(categories.get(categoryName));
                     }
 
                 } else {

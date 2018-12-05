@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +105,8 @@ public class RegistrationFragment extends BaseFragment {
             public void onApiResponse(Response<RegistrationModel> response, boolean isSuccess, String message) {
                 dismissProgress();
                 if (isSuccess) {
-                    if (response.body().getData().getData().getMessage().contains("Successfully")) {
+                    String message1 = response.body().getData().getData().getMessage();
+                    if (message1 != null && message.isEmpty()) {
                         Bundle bundle = new Bundle();
                         bundle.putBoolean(LoginFragment.KEY_ISREGISTRATION, true);
                         bundle.putString("name", bind.name.getText().toString());
@@ -116,14 +118,14 @@ public class RegistrationFragment extends BaseFragment {
                         newFragment.setArguments(bundle);
                         ((RegistrationActivity) getActivity()).fragmentTransaction(newFragment, R.id.login_frame);
                     } else {
-
+                        DDAlerts.showToast(context, message1);
                     }
                 }
             }
 
             @Override
             public void onApiFailure(boolean isSuccess, String message) {
-
+                dismissProgress();
             }
         });
 
@@ -137,6 +139,11 @@ public class RegistrationFragment extends BaseFragment {
 
         if (isEmpty(bind.email)) {
             DDAlerts.showToast(getActivity(), "enter email.");
+            return false;
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(bind.email.getText().toString().trim()).matches()) {
+            DDAlerts.showToast(getActivity(), "enter valid email.");
             return false;
         }
 

@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -62,7 +64,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
         source = StringUtills.getHtmlContent(source);
 //        source = source.replaceAll("<\\/span><\\/p>", "");
         holder.bind.optionText.loadData(source, "text/html", "UTF-8");
-        LogUtils.e(source);
+//        LogUtils.e(source);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 //            holder.bind.optionText.setText(Html.fromHtml(source, Html.FROM_HTML_OPTION_USE_CSS_COLORS, new URLImageParserNew(holder.bind.optionText, context), null));
 //        } else {
@@ -94,6 +96,12 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
             }
         }
 
+    }
+
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
@@ -136,15 +144,27 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
             if (!isReviewMode()) {
                 bind.optionLayout.setOnClickListener(this);
             }
+            bind.optionText.setWebViewClient(new WebViewClient() {
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    // do your handling codes here, which url is the requested url
+                    // probably you need to open that url rather than redirect:
+//                    view.loadUrl(url);
+                    return false; // then it is not handled by default action
+                }
+            });
+//            bind.optionText.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//            bind.optionText.getSettings().setJavaScriptEnabled(true);
+//            bind.optionText.getSettings().setDomStorageEnabled(true);
 
-//            bind.optionText.getSettings().setUseWideViewPort(true);
+            bind.optionText.getSettings().setUseWideViewPort(true);
             bind.optionText.setOnTouchListener(this);
+            bind.optionText.setScrollbarFadingEnabled(true);
         }
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                handler.sendEmptyMessageDelayed(CLICK_ON_WEBVIEW, 500);
+                handler.sendEmptyMessageDelayed(CLICK_ON_WEBVIEW, 200);
             }
             return false;
         }

@@ -21,7 +21,8 @@ import com.google.android.youtube.player.YouTubePlayerView;
 public class VideoPlayFragment extends com.google.android.youtube.player.YouTubePlayerSupportFragment implements YouTubePlayer.OnInitializedListener {
 
     private static final int RECOVERY_DIALOG_REQUEST = 1;
-    private static final String DEVELOPER_KEY = "AIzaSyAjot8sctzWxFvvMOlLsyjJC8CoY8s6YWw";
+
+    private static final String DEVELOPER_KEY = "AIzaSyBIdEzp4gNeDAPpLzPraaBs4fDtzmOwDbY";
     public static final String VIDEO_ID = "video_id";
 
     private String mVideoId = "HL32sd9J9X0";

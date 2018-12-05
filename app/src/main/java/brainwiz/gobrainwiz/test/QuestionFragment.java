@@ -86,6 +86,7 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
         data = ((TestModel.Datum) getArguments().getParcelable("object"));
         contentBinding.answerOptionsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         OptionsAdapter adapter = new OptionsAdapter(getActivity(), data.getOptions());
+        adapter.setHasStableIds(true);
         adapter.setListener(optionListener);
         boolean isReviewMode = getArguments().getBoolean(IS_REVIEW);
         adapter.setReviewMode(isReviewMode);
@@ -101,6 +102,10 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
         contentBinding.testExplanationLayout.setVisibility(isReviewMode && !data.getExplanation().isEmpty() ? View.VISIBLE : View.GONE);
         contentBinding.testVideoExplanationLayout.setVisibility(isReviewMode && !data.getVideoLink().isEmpty() ? View.VISIBLE : View.GONE);
         contentBinding.testQuestion.loadData(StringUtills.getHtmlContent(data.getQuestion()), "text/html", "UTF-8");
+        contentBinding.testQuestion.getSettings().setUseWideViewPort(false);
+        contentBinding.testQuestion.getSettings().setJavaScriptEnabled(true);
+        contentBinding.testQuestion.getSettings().setLoadWithOverviewMode(true);
+        contentBinding.testQuestion.setScrollbarFadingEnabled(true);
         contentBinding.testExplanation.loadData(StringUtills.getHtmlContent(data.getExplanation()), "text/html", "UTF-8");
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 //            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), Html.FROM_HTML_MODE_LEGACY, new URLImageParserNew(contentBinding.testExplanation, getActivity()), null));

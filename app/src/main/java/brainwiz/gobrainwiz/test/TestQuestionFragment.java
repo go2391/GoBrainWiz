@@ -302,11 +302,17 @@ public class TestQuestionFragment extends BaseFragment {
         if (viewPagerAdapter.getData() == null) {
             return;
         }
+        if (!NetWorkUtil.isConnected(context)) {
+            DDAlerts.showNetworkAlert(getActivity());
+            return;
+        }
 
         if (isCompanyTest) {
+            showProgress();
             RetrofitManager.getRestApiMethods().postOnlineTest(getOnlineTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<ScoreCardModel>(getActivity()) {
                 @Override
                 public void onApiResponse(Response<ScoreCardModel> response, boolean isSuccess, String message) {
+                    dismissProgress();
                     LogUtils.e(response.body().getMessage());
                     if (isSuccess) {
                         Intent data = new Intent();
@@ -323,14 +329,17 @@ public class TestQuestionFragment extends BaseFragment {
                 @Override
                 public void onApiFailure(boolean isSuccess, String message) {
                     LogUtils.e(message);
+                    dismissProgress();
                 }
             });
 
         } else {
             ((TestActivity) getActivity()).stopTest();
+//            showProgress();
             RetrofitManager.getRestApiMethods().postPracticeTest(getPraticeTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<PractiseTestResultModel>(getActivity()) {
                 @Override
                 public void onApiResponse(Response<PractiseTestResultModel> response, boolean isSuccess, String message) {
+                    dismissProgress();
                     if (isSuccess) {
                         ScoreCardFragment instance = ScoreCardFragment.getInstance(response.body().getData(), isReview, getArguments().getString("id", ""));
 
@@ -341,6 +350,7 @@ public class TestQuestionFragment extends BaseFragment {
                 @Override
                 public void onApiFailure(boolean isSuccess, String message) {
                     LogUtils.e(message);
+                    dismissProgress();
                 }
             });
         }
@@ -380,7 +390,7 @@ public class TestQuestionFragment extends BaseFragment {
             question.setQId(datum.getQuestionId());
             String selectedOption = datum.getSelectedOption();
             if (selectedOption != null && !selectedOption.isEmpty()) {
-                question.setSelected_option(Integer.parseInt(selectedOption));
+                question.setSelected_option(Integer.parseInt(selectedOption) + 1);
             }
             question.setTime_taken((int) datum.getSpentTime());
             questions.add(question);
@@ -406,7 +416,7 @@ public class TestQuestionFragment extends BaseFragment {
             question.setQId(datum.getQuestionId());
             String selectedOption = datum.getSelectedOption();
             if (selectedOption != null && !selectedOption.isEmpty()) {
-                question.setSelected_option(Integer.parseInt(selectedOption + 1));
+                question.setSelected_option(Integer.parseInt(selectedOption) + 1);
             }
 
             question.setTime_taken((int) datum.getSpentTime());

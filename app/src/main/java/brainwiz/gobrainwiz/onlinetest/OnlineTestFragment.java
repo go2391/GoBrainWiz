@@ -47,8 +47,13 @@ public class OnlineTestFragment extends BaseFragment {
         bind = DataBindingUtil.bind(inflate);
         initViews();
 
-        getOnlineTests();
         return inflate;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getOnlineTests();
     }
 
     private void getOnlineTests() {

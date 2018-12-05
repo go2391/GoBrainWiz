@@ -30,13 +30,18 @@ public class DashBoardModel extends BaseModel {
         @Expose
         private List<Testinomial> testinomials = new ArrayList<Testinomial>();
 
-        @SerializedName("weekSchedule")
+        @SerializedName("weekly_schedule")
         @Expose
         private WeekSchedule weekSchedule = new WeekSchedule();
 
         @SerializedName("profile_link")
         @Expose
         private String profile_link = "";
+
+        @SerializedName("notification_count")
+        @Expose
+        private String notification_count = "0";
+
 
         public String getProfile_link() {
             return profile_link;
@@ -68,6 +73,14 @@ public class DashBoardModel extends BaseModel {
 
         public void setWeekSchedule(WeekSchedule weekSchedule) {
             this.weekSchedule = weekSchedule;
+        }
+
+        public String getNotification_count() {
+            return notification_count;
+        }
+
+        public void setNotification_count(String notification_count) {
+            this.notification_count = notification_count;
         }
     }
 

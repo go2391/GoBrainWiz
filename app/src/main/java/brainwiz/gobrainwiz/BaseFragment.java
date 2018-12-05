@@ -48,6 +48,8 @@ public class BaseFragment extends Fragment {
             ((RegistrationActivity) activity).dismissProgress();
         } else if (activity instanceof TestActivity) {
             ((TestActivity) activity).dismissProgress();
+        } else if (activity instanceof LoginActivity) {
+            ((LoginActivity) activity).dismissProgress();
         }
 //        ((MainActivity) getActivity()).dismissProgress();
     }

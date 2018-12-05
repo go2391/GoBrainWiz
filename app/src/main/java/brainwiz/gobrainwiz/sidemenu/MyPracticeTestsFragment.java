@@ -69,6 +69,8 @@ public class MyPracticeTestsFragment extends BaseFragment {
                     testTestsAdapter.setData(response.body().getData());
                     testTestsAdapter.notifyDataSetChanged();
                 }
+
+//                testTestsAdapter.getItemCount() = 0;
             }
 
             @Override

@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="none">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
-            android:title="Home"
+            android:title="@string/home"
             android:visible="false" />
 
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Profile"
+            android:title="@string/profile"
             android:visible="false" />
         <item
             android:id="@+id/nav_my_tests"
             android:icon="@drawable/ic_assignment"
-            android:title="My Tests" />
+            android:title="@string/my_tests" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Subscribe"
+            android:title="@string/subscribe"
             android:visible="true" />
 
         <item
             android:id="@+id/nav_notifications"
             android:icon="@drawable/ic_notifications"
-            android:title="Notifications" />
+            android:title="@string/notifications"
+            app:actionViewClass="android.widget.TextView" />
 
 
     </group>
@@ -39,23 +41,23 @@
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Join Brainwiz" />
+                android:title="@string/join_brainwiz" />
 
             <item
                 android:id="@+id/nav_contact_us"
                 android:icon="@drawable/ic_call"
-                android:title="Contact Us"
+                android:title="@string/contact_us"
                 android:visible="false" />
 
             <item
                 android:id="@+id/nav_about_us"
                 android:icon="@drawable/ic_call"
-                android:title="About Us" />
+                android:title="@string/about_us" />
 
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share with friends" />
+                android:title="@string/share_with_friends" />
 
 
         </menu>

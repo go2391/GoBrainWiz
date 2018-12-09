@@ -119,16 +119,20 @@ public class HomeFragment extends BaseFragment {
         RetrofitManager.getRestApiMethods().getDashBoard(baseBodyMap).enqueue(new ApiCallback<DashBoardModel>(getActivity()) {
             @Override
             public void onApiResponse(Response<DashBoardModel> response, boolean isSuccess, String message) {
-                Log.e("", response.toString());
-                data = response.body().getData();
-                bannerList = data.getBanners();
-                bind.homeAutoSlideViewpager.setAdapter(new SlidingImageAdapter(context, bannerList));
-
-                bind.homeTestimonialsViewpager.setAdapter(new TestimonalAdapter(context, data.getTestinomials()));
+                if (isSuccess) {
 
 
-                SharedPrefUtils.putData(getActivity(), PROFILE_IMAGE, data.getProfile_link());
-                SharedPrefUtils.putData(getActivity(), NOTIFICATION_COUNT, data.getNotification_count());
+                    Log.e("", response.toString());
+                    data = response.body().getData();
+                    bannerList = data.getBanners();
+                    bind.homeAutoSlideViewpager.setAdapter(new SlidingImageAdapter(context, bannerList));
+
+                    bind.homeTestimonialsViewpager.setAdapter(new TestimonalAdapter(context, data.getTestinomials()));
+
+
+                    SharedPrefUtils.putData(getActivity(), PROFILE_IMAGE, data.getProfile_link());
+                    SharedPrefUtils.putData(getActivity(), NOTIFICATION_COUNT, data.getNotification_count());
+                }
                 dismissProgress();
 
             }

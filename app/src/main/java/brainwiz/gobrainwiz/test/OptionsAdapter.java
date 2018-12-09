@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -35,7 +37,7 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
     private int selectedOption = -1;
     private OptionListener listener;
     private boolean reviewMode;
-    private TestModel.Datum selectedData;
+    private TestModel.Data.Datum selectedData;
 
 
     public int getSelectedOption() {
@@ -125,11 +127,11 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
         return reviewMode;
     }
 
-    public void setSelectedData(TestModel.Datum selectedData) {
+    public void setSelectedData(TestModel.Data.Datum selectedData) {
         this.selectedData = selectedData;
     }
 
-    public TestModel.Datum getSelectedData() {
+    public TestModel.Data.Datum getSelectedData() {
         return selectedData;
     }
 
@@ -142,23 +144,34 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
             super(itemView);
             bind = DataBindingUtil.bind(itemView);
             if (!isReviewMode()) {
-                bind.optionLayout.setOnClickListener(this);
+                bind.selectionArea.setOnClickListener(this);
             }
-            bind.optionText.setWebViewClient(new WebViewClient() {
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    // do your handling codes here, which url is the requested url
-                    // probably you need to open that url rather than redirect:
-//                    view.loadUrl(url);
-                    return false; // then it is not handled by default action
-                }
-            });
-//            bind.optionText.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-//            bind.optionText.getSettings().setJavaScriptEnabled(true);
-//            bind.optionText.getSettings().setDomStorageEnabled(true);
+//            bind.optionText.setWebViewClient(new WebViewClient() {
+//                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                    // do your handling codes here, which url is the requested url
+//                    // probably you need to open that url rather than redirect:
+////                    view.loadUrl(url);
+//                    return false; // then it is not handled by default action
+//                }
+//            });
 
+            bind.optionText.setEnabled(false);
+
+//            bind.optionText.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            bind.optionText.getSettings().setJavaScriptEnabled(true);
+            bind.optionText.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+            bind.optionText.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+            bind.optionText.getSettings().setAppCacheEnabled(true);
+            bind.optionText.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+            bind.optionText.getSettings().setDomStorageEnabled(true);
+            bind.optionText.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
             bind.optionText.getSettings().setUseWideViewPort(true);
-            bind.optionText.setOnTouchListener(this);
+            bind.optionText.getSettings().setSavePassword(true);
+            bind.optionText.getSettings().setSaveFormData(true);
+//            bind.optionText.setOnTouchListener(this);
             bind.optionText.setScrollbarFadingEnabled(true);
+            bind.optionText.getSettings().setEnableSmoothTransition(true);
+            bind.optionText.setWebChromeClient(new WebChromeClient());
         }
 
         @Override

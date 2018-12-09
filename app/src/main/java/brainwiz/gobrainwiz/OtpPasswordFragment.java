@@ -173,7 +173,7 @@ public class OtpPasswordFragment extends BaseFragment {
         Bundle arguments = getArguments();
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("mobile", arguments.getString("mobile"));
-        hashMap.put("verify_otp", bind.otp.getText().toString());
+        hashMap.put("otp_verify", bind.otp.getText().toString());
         hashMap.put("password", bind.password.getText().toString());
 
 
@@ -187,6 +187,7 @@ public class OtpPasswordFragment extends BaseFragment {
 //                        activity.finish();
 //                        startActivity(new Intent(activity, MainActivity.class));
                 } else {
+                    DDAlerts.showResponseError(getActivity(), response.body());
 
                 }
 //                }
@@ -226,8 +227,9 @@ public class OtpPasswordFragment extends BaseFragment {
         RetrofitManager.getRestApiMethods().register(hashMap).enqueue(new ApiCallback<RegistrationModel>(getActivity()) {
             @Override
             public void onApiResponse(Response<RegistrationModel> response, boolean isSuccess, String message) {
+                dismissProgress();
                 if (isSuccess) {
-                    String message1 = response.body().getData().getData().getMessage();
+                    String message1 = response.body().getData().getMessage();
                     if (message1.equalsIgnoreCase("")) {
                         userLogin();
 //                        activity.finish();

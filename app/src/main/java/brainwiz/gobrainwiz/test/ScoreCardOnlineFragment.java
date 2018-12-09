@@ -148,6 +148,7 @@ public class ScoreCardOnlineFragment extends BaseFragment {
         bind.scoreCardCorrect.setText(StringUtills.getSpanMarks(String.format(getString(R.string.correct), object.getCorrectAnswers())));
         bind.scoreCardWrong.setText(StringUtills.getSpanMarks(String.format(getString(R.string.wrong), object.getIncorrectAnswers())));
         bind.scoreCardQuestionsAttempted.setText(StringUtills.getSpanMarks(String.format(getString(R.string.questions_attempted), object.getAttemptedQuestions())));
+        bind.scoreCardQuestionsUnAttempted.setText(StringUtills.getSpanMarks(String.format(getString(R.string.questions_unattempted), object.getUnattemptedQuestions())));
         bind.scoreCardTotalQuestions.setText(StringUtills.getSpanMarks(String.format(getString(R.string.total_questions), object.getTotalQuestions())));
         float i = (float) object.getCorrectAnswers() / object.getTotalQuestions();
         int round = Math.round(i * 100f);

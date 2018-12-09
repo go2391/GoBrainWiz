@@ -63,5 +63,13 @@
             android:text="option1"
             android:textSize="@dimen/font_18" />
 
+        <View
+            android:id="@+id/selection_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/option_text"
+            android:layout_alignTop="@id/option_text"
+            android:background="@android:color/transparent" />
+
     </RelativeLayout>
 </layout>

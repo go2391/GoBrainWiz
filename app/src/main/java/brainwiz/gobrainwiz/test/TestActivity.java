@@ -114,7 +114,9 @@ public class TestActivity extends BaseActivity
         isCompanyTest = extras.getBoolean(BaseFragment.IS_COMPANY_TEST);
         isReview = extras.getBoolean(BaseFragment.IS_REVIEW);
         String string = extras.getString(BaseFragment.DURATION);
+
         targetTime = Integer.parseInt(string) * 60;
+//        bre = extras.getString(BaseFragment.BREAK_TIME);
 
 
         if (isCompanyTest) {
@@ -232,6 +234,12 @@ public class TestActivity extends BaseActivity
                 DDAlerts.showAlert(this, "You can't go back at this movement, Please submit you test to finish.", getString(R.string.ok));
                 return;
             }
+
+            if (fragmentById instanceof InstructionsFragment && !((InstructionsFragment) fragmentById).getNextAutoSelectionID().isEmpty()) {
+                DDAlerts.showAlert(this, "You can't go back at this movement, Please finish all tests.", getString(R.string.ok));
+                return;
+            }
+
             if (((fragmentById instanceof ScoreCardFragment && !((ScoreCardFragment) fragmentById).isReview()) || (fragmentById instanceof ScoreCardOnlineFragment) && !((ScoreCardOnlineFragment) fragmentById).isReview())) {
                 finish();
                 return;
@@ -259,7 +267,7 @@ public class TestActivity extends BaseActivity
                 boolean review = ((TestQuestionFragment) fragmentById).isReview();
                 submitView.setVisibility(review ? View.INVISIBLE : View.VISIBLE);
 //                timerTextView.setVisibility(review ? View.INVISIBLE : View.VISIBLE);
-                timerTextView.setText(getString(R.string.review));
+                timerTextView.setText(isReview ? getString(R.string.review) : "");
             } else if (fragmentById instanceof ScoreCardFragment || fragmentById instanceof ScoreCardOnlineFragment) {
                 submitView.setVisibility(View.INVISIBLE);
                 timerTextView.setText(R.string.score_card);

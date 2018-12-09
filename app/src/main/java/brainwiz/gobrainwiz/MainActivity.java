@@ -3,9 +3,12 @@ package brainwiz.gobrainwiz;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
@@ -17,6 +20,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -29,11 +33,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.BaseModel;
+import brainwiz.gobrainwiz.api.model.ImageUploadModel;
+import brainwiz.gobrainwiz.api.model.LoginModel;
 import brainwiz.gobrainwiz.notifications.NotificationsFragment;
 import brainwiz.gobrainwiz.profile.ProfileFragment;
 import brainwiz.gobrainwiz.sidemenu.TestHistoryFragment;
@@ -43,6 +51,12 @@ import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 import retrofit2.Response;
 
 import static brainwiz.gobrainwiz.utils.SharedPrefUtils.IS_LOGIN;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_COLLEGE;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_EMAIL;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_ID;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_MOBILE;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_NAME;
+import static brainwiz.gobrainwiz.utils.SharedPrefUtils.USER_TOKEN;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +73,7 @@ public class MainActivity extends BaseActivity
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private RoundishImageView roundishImageView;
     boolean doubleBackToExitPressedOnce = false;
+    private TextView notifications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +95,12 @@ public class MainActivity extends BaseActivity
         roundishImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dispatchTakePictureIntent();
+                selectImage();
             }
         });
+
+        notifications = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.nav_notifications));
+        initializeCountDrawer();
 
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -109,6 +127,49 @@ public class MainActivity extends BaseActivity
 
         findViewById(R.id.logo).setOnClickListener(onClickListener);
         fragmentTransaction(new HomeFragment(), R.id.content_frame, false);
+    }
+
+    private void initializeCountDrawer() {
+        //Gravity property aligns the text
+        notifications.setGravity(Gravity.CENTER_VERTICAL);
+        notifications.setTypeface(null, Typeface.BOLD);
+        notifications.setTextColor(getResources().getColor(R.color.colorAccent));
+        String notificationCount = SharedPrefUtils.getNotificationCount(this);
+        notifications.setText(notificationCount);
+        notifications.setVisibility(Integer.parseInt(notificationCount) > 0 ? View.VISIBLE : View.INVISIBLE);
+
+    }
+
+    private void selectImage() {
+
+
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+        builder.setTitle("Add Photo!");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+            @Override
+
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals("Take Photo")) {
+                    dispatchTakePictureIntent();
+                } else if (options[item].equals("Choose from Gallery")) {
+                    Intent intent = new Intent(/*Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI*/);
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+//                    startActivityForResult(intent, PICK_IMAGE_GALLERY);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_GALLERY);
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 
     @Override
@@ -159,6 +220,10 @@ public class MainActivity extends BaseActivity
 
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_IMAGE_GALLERY);
         if (takePictureIntent.resolveActivity(context.getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
@@ -179,16 +244,36 @@ public class MainActivity extends BaseActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case PIC_CROP:
-                    if (data != null) {
-                        // get the returned data
-                        Bundle extras = data.getExtras();
-                        // get the cropped bitmap
-                        Bitmap srcBmp = extras.getParcelable("data");
-                        Bitmap dstBmp;
+                case PICK_IMAGE_GALLERY:
 
-                        src(srcBmp);
+//                    Bitmap photo = (Bitmap) data.getData().getPath();
+//                    Uri imagename = data.getData();
+//                    Uri selectedImageUri = data.getData();
+//                    imagepath = getPath(selectedImageUri);
+//                    Bitmap bitmap = BitmapFactory.decodeFile(imagepath);
+//                    imageview.setImageBitmap(bitmap);
+//                    messageText.setText("Uploading file path:" + imagepath);
+
+
+                    Uri uri = data.getData();
+
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        // Log.d(TAG, String.valueOf(bitmap));
+
+                        src(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+//                    if (data != null) {
+//                        // get the returned data
+//                        Bundle extras = data.getExtras();
+//                        // get the cropped bitmap
+//                        Bitmap srcBmp = extras.getParcelable("data");
+//                        Bitmap dstBmp;
+//
+//                        src(srcBmp);
+//                    }
                     break;
                 case REQUEST_IMAGE_CAPTURE:
                     Bundle extras = data.getExtras();
@@ -201,6 +286,7 @@ public class MainActivity extends BaseActivity
 
         }
     }
+
 
     private void src(Bitmap srcBmp) {
         Bitmap dstBmp;
@@ -228,11 +314,12 @@ public class MainActivity extends BaseActivity
         roundishImageView.setImageBitmap(dstBmp);
         HashMap<String, String> baseBodyMap = getBaseBodyMap();
         baseBodyMap.put("image", getEncoded64ImageStringFromBitmap(dstBmp));
-        RetrofitManager.getRestApiMethods().uploadImage(baseBodyMap).enqueue(new ApiCallback<BaseModel>(MainActivity.this) {
+        RetrofitManager.getRestApiMethods().uploadImage(baseBodyMap).enqueue(new ApiCallback<ImageUploadModel>(MainActivity.this) {
             @Override
-            public void onApiResponse(Response<BaseModel> response, boolean isSuccess, String message) {
+            public void onApiResponse(Response<ImageUploadModel> response, boolean isSuccess, String message) {
                 if (isSuccess) {
                     LogUtils.e(response.body().getMessage());
+                    roundishImageView.setUrl(response.body().getData().getUrl());
                 }
             }
 
@@ -357,7 +444,7 @@ public class MainActivity extends BaseActivity
             case PERMISSIONS_REQUEST_CAMERA:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    dispatchTakePictureIntent();
+                    selectImage();
                 } else {
 
                 }
@@ -402,7 +489,7 @@ public class MainActivity extends BaseActivity
                 fragmentTransaction(new JoinFragment(), R.id.content_frame, true);
                 break;
             case R.id.nav_logout:
-                SharedPrefUtils.putData(this, IS_LOGIN, false);
+                clearUserData(MainActivity.this);
                 finish();
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
@@ -414,6 +501,7 @@ public class MainActivity extends BaseActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     public void share() {
 

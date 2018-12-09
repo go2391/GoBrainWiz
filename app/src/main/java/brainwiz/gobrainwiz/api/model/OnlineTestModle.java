@@ -81,6 +81,12 @@ public class OnlineTestModle extends BaseModel {
         private int status;
 
 
+        @SerializedName("break_time")
+        @Expose
+        private String break_time;
+
+
+
         public String getBrainTestId() {
             return brainTestId;
         }
@@ -127,6 +133,14 @@ public class OnlineTestModle extends BaseModel {
 
         public void setStatus(int status) {
             this.status = status;
+        }
+
+        public String getBreak_time() {
+            return break_time;
+        }
+
+        public void setBreak_time(String break_time) {
+            this.break_time = break_time;
         }
     }
 }

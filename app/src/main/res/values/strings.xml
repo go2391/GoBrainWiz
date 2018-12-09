@@ -104,6 +104,7 @@ sections
     <string name="submit">Submit</string>
     <string name="total_questions">%d  Total </string>
     <string name="questions_attempted">%d  Attempted </string>
+    <string name="questions_unattempted">%d  UnAttempted </string>
     <string name="correct">%d  Correct </string>
     <string name="welcome">Welcome</string>
     <string name="your_score">Your Score</string>
@@ -155,5 +156,18 @@ sections
 
     </string>
     <string name="no_tests_found">No tests found.</string>
+    <string name="related_videos">Related Videos</string>
+    <string name="your_message_has_been_sent">Your message has been sent.</string>
+    <string name="we_have_received_your_inquiry_and_will_respond_n_thank_you_for_your_interest">We have received your inquiry and will respond Thank you for your interest.</string>
+    <string name="success">Success!</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="my_tests">My Tests</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="notifications">Notifications</string>
+    <string name="join_brainwiz">Join Brainwiz</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="about_us">About Us</string>
+    <string name="share_with_friends">Share with friends</string>
 
 </resources>

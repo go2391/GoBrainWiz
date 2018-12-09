@@ -7,6 +7,7 @@ import brainwiz.gobrainwiz.api.model.BaseModel;
 import brainwiz.gobrainwiz.api.model.DashBoardModel;
 import brainwiz.gobrainwiz.api.model.HistoryOnlineTestModel;
 import brainwiz.gobrainwiz.api.model.HistoryPractiseTestModel;
+import brainwiz.gobrainwiz.api.model.ImageUploadModel;
 import brainwiz.gobrainwiz.api.model.LoginModel;
 import brainwiz.gobrainwiz.api.model.NotificationsModel;
 import brainwiz.gobrainwiz.api.model.OnlineTestModle;
@@ -86,7 +87,7 @@ public interface APIService {
 
     //    upload_image
     @POST("upload_image" + URL)
-    Call<BaseModel> uploadImage(@Body HashMap<String, String> baseBodyMap);
+    Call<ImageUploadModel> uploadImage(@Body HashMap<String, String> baseBodyMap);
 
 
     @POST("forgot_password" + URL)
@@ -105,4 +106,8 @@ public interface APIService {
 
     @POST("get_notifications_list" + URL)
     Call<NotificationsModel> getNotifications(@Body HashMap<String, String> baseBodyMap);
+
+
+    @POST("get_notifications_list" + URL)
+    Call<BaseModel> updateNotifications(@Body HashMap<String, String> baseBodyMap);
 }

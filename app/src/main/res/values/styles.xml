@@ -301,7 +301,7 @@
         <item name="android:layout_width">100dp</item>
         <item name="android:layout_height">100dp</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_marginEnd">@dimen/dimen_20</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_30</item>
     </style>
 
     <style name="marks_style" parent="WrapWrap">

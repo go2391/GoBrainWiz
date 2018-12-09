@@ -138,12 +138,12 @@ public class TimerService extends Service {
                 .setContentText("Please return to the Test")
                 .setSmallIcon(R.mipmap.ic_launcher);
 
-        /*Intent resultIntent = new Intent(this, TestActivity.class);
+        Intent resultIntent = new Intent(this, TestActivity.class);
+        resultIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(this, 0, resultIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultPendingIntent);
-*/
         return builder.build();
     }
 

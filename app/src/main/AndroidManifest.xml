@@ -61,8 +61,13 @@
                 android:value="brainwiz.gobrainwiz.MainActivity" />
         </activity>
         <activity
+            android:name=".VideoActivity"
+            android:screenOrientation="unspecified"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".test.TestActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service

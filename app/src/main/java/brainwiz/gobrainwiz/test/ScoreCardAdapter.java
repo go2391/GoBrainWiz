@@ -78,6 +78,7 @@ public class ScoreCardAdapter extends RecyclerView.Adapter<ScoreCardAdapter.Scor
         holder.bind.scoreCardCorrect.setText(StringUtills.getSpanMarks(String.format(context.getString(R.string.correct), Integer.parseInt(source.getCorrectAnswers()))));
         holder.bind.scoreCardWrong.setText(StringUtills.getSpanMarks(String.format(context.getString(R.string.wrong), Integer.parseInt(source.getIncorrectAnswers()))));
         holder.bind.scoreCardQuestionsAttempted.setText(StringUtills.getSpanMarks(String.format(context.getString(R.string.questions_attempted), Integer.parseInt(source.getAttemptedQues()))));
+        holder.bind.scoreCardQuestionsUnAttempted.setText(StringUtills.getSpanMarks(String.format(context.getString(R.string.questions_unattempted), Integer.parseInt(source.getUnattemptedQues()))));
         holder.bind.scoreCardTotalQuestions.setText(StringUtills.getSpanMarks(String.format(context.getString(R.string.total_questions), Integer.parseInt(source.getAllQuestions()))));
         final float progress = (Integer.parseInt(source.getCorrectAnswers()) / Float.parseFloat(source.getAllQuestions())) * 100f;
 

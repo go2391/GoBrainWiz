@@ -38,6 +38,7 @@ public class PracticeTestCategoryFragment extends BaseFragment {
     public static final String TOPIC_ID = "TopicID";
     public static final String TOPIC_NAME = "TopicName";
     public static final String TYPE = "type";
+    private View inflate;
 
     @Override
     public void onAttach(Context context) {
@@ -50,11 +51,15 @@ public class PracticeTestCategoryFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View inflate = inflater.inflate(R.layout.fragment_test_category, container, false);
-        bind = DataBindingUtil.bind(inflate);
-        initViews();
+        if (inflate == null) {
+            inflate = inflater.inflate(R.layout.fragment_test_category, container, false);
+            bind = DataBindingUtil.bind(inflate);
+            initViews();
 
-        getCategories();
+            getCategories();
+        }
+
+
         return inflate;
     }
 

@@ -27,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/dimen_20"
                 android:text="@string/no_tests_found"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/font_16"

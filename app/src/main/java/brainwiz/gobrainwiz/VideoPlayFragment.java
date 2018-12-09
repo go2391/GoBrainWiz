@@ -32,6 +32,12 @@ public class VideoPlayFragment extends com.google.android.youtube.player.YouTube
     //    private ViewDataBinding dataBinding;
 
 
+    @Override
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
+        setRetainInstance(true);
+    }
+
     public static VideoPlayFragment newInstance(String videoID) {
 
         Bundle args = new Bundle();

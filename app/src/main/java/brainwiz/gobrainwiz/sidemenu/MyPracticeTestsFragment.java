@@ -70,7 +70,7 @@ public class MyPracticeTestsFragment extends BaseFragment {
                     testTestsAdapter.notifyDataSetChanged();
                 }
 
-//                testTestsAdapter.getItemCount() = 0;
+                bind.emptyView.setVisibility(testTestsAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
             }
 
             @Override

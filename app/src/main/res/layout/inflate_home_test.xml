@@ -73,7 +73,7 @@
                     android:gravity="center"
                     android:text="Placed in TCS"
                     android:textColor="@color/colorSecondaryText"
-                    android:textSize="@dimen/font_10" />
+                    android:textSize="@dimen/font_12" />
 
             </RelativeLayout>
 

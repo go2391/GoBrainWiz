@@ -47,6 +47,7 @@ public class PractiseTestHistoryAdapter extends RecyclerView.Adapter<PractiseTes
         holder.bind.testItemTitle.setText(testList.getTestName());
         holder.bind.testQuestions.setText(String.format(context.getString(R.string.total_questions), Integer.parseInt(testList.getTotalQuestions())));
         holder.bind.testMins.setText(String.format(context.getString(R.string.questions_attempted), Integer.parseInt(testList.getAttempted())));
+
     }
 
     @Override

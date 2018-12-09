@@ -51,7 +51,7 @@ public class TestQuestionFragment extends BaseFragment {
     private ViewPagerAdapter viewPagerAdapter;
     private QuestionNoAdapter questionNoAdapter;
     private RecyclerView indicatorRecycler;
-    private List<TestModel.Datum> data;
+    private TestModel.Data data;
     private int fragmentCurrentPosition = -1;
     private boolean isReview;
     private Context context;
@@ -118,7 +118,7 @@ public class TestQuestionFragment extends BaseFragment {
                 if (isSuccess) {
                     TestModel body = response.body();
                     data = body.getData();
-                    if (!data.isEmpty()) {
+                    if (data.getQuestions() != null && !data.getQuestions().isEmpty()) {
                         setViews(data);
                     } else {
                         DDAlerts.showAlert(getActivity(), "You have already attempted these question.", getString(R.string.ok), new DDAlerts.AlertListener() {
@@ -166,15 +166,20 @@ public class TestQuestionFragment extends BaseFragment {
 
     }
 
-    private void setViews(List<TestModel.Datum> data) {
-        if (!isReview)
+    private void setViews(TestModel.Data data) {
+        if (!isReview) {
+            if(isCompanyTest)
+            {
+                ((TestActivity) getActivity()).setTargetTime(Long.parseLong(data.getTime()) * 60);
+            }
             ((TestActivity) getActivity()).startTest();
+        }
 
         questionNoAdapter.setReviewMode(isReview);
-        questionNoAdapter.setOptions(getQuestionsObjects(data.size()));
+        questionNoAdapter.setOptions(getQuestionsObjects(data.getQuestions().size()));
         questionNoAdapter.notifyDataSetChanged();
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
-        viewPagerAdapter.setData(data);
+        viewPagerAdapter.setData(data.getQuestions());
         viewPager.setAdapter(viewPagerAdapter);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -308,6 +313,7 @@ public class TestQuestionFragment extends BaseFragment {
         }
 
         if (isCompanyTest) {
+            ((TestActivity) getActivity()).stopTest();
             showProgress();
             RetrofitManager.getRestApiMethods().postOnlineTest(getOnlineTestData(viewPagerAdapter.getData())).enqueue(new ApiCallback<ScoreCardModel>(getActivity()) {
                 @Override
@@ -374,7 +380,7 @@ public class TestQuestionFragment extends BaseFragment {
     }
 
     @SuppressLint("HardwareIds")
-    private OnlineTestPostModel getOnlineTestData(List<TestModel.Datum> data) {
+    private OnlineTestPostModel getOnlineTestData(List<TestModel.Data.Datum> data) {
         OnlineTestPostModel onlineTestPostModel = new OnlineTestPostModel();
         onlineTestPostModel.setToken(SharedPrefUtils.getToken(getActivity()));
         onlineTestPostModel.setStudentId(Integer.parseInt(SharedPrefUtils.getStudentID(getActivity())));
@@ -385,7 +391,7 @@ public class TestQuestionFragment extends BaseFragment {
 
         ArrayList<OnlineTestPostModel.Question> questions = new ArrayList<>();
 
-        for (TestModel.Datum datum : data) {
+        for (TestModel.Data.Datum datum : data) {
             OnlineTestPostModel.Question question = new OnlineTestPostModel.Question();
             question.setQId(datum.getQuestionId());
             String selectedOption = datum.getSelectedOption();
@@ -401,7 +407,7 @@ public class TestQuestionFragment extends BaseFragment {
     }
 
     @SuppressLint("HardwareIds")
-    private PractiseTestPostModel getPraticeTestData(List<TestModel.Datum> data) {
+    private PractiseTestPostModel getPraticeTestData(List<TestModel.Data.Datum> data) {
         PractiseTestPostModel practiseTestPostModel = new PractiseTestPostModel();
         practiseTestPostModel.setToken(SharedPrefUtils.getToken(getActivity()));
         practiseTestPostModel.setStudent_id(Integer.parseInt(SharedPrefUtils.getStudentID(getActivity())));
@@ -411,7 +417,7 @@ public class TestQuestionFragment extends BaseFragment {
 
         ArrayList<PractiseTestPostModel.Question> questions = new ArrayList<>();
 
-        for (TestModel.Datum datum : data) {
+        for (TestModel.Data.Datum datum : data) {
             PractiseTestPostModel.Question question = new PractiseTestPostModel.Question();
             question.setQId(datum.getQuestionId());
             String selectedOption = datum.getSelectedOption();
@@ -433,7 +439,7 @@ public class TestQuestionFragment extends BaseFragment {
 
 
     public boolean isBookMark() {
-        List<TestModel.Datum> data = viewPagerAdapter.getData();
+        List<TestModel.Data.Datum> data = viewPagerAdapter.getData();
         return data != null && data.get(viewPager.getCurrentItem()).isBookMark();
     }
 
@@ -447,7 +453,7 @@ public class TestQuestionFragment extends BaseFragment {
 
     private final class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-        private List<TestModel.Datum> data;
+        private List<TestModel.Data.Datum> data;
         SparseArray<QuestionFragment> questionFragments = new SparseArray<>();
 //        QuestionFragment[] questionFragments;
 
@@ -487,7 +493,7 @@ public class TestQuestionFragment extends BaseFragment {
             return String.valueOf(position + 1);
         }
 */
-        public void setData(List<TestModel.Datum> data) {
+        public void setData(List<TestModel.Data.Datum> data) {
             this.data = data;
 //            questionFragments = new QuestionFragment[data.size()];
             for (int i = 0; i < data.size(); i++) {
@@ -495,7 +501,7 @@ public class TestQuestionFragment extends BaseFragment {
             }
         }
 
-        public List<TestModel.Datum> getData() {
+        public List<TestModel.Data.Datum> getData() {
             return data;
         }
     }

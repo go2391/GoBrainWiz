@@ -18,11 +18,13 @@ import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
+import brainwiz.gobrainwiz.api.model.BaseModel;
 import brainwiz.gobrainwiz.api.model.HistoryPractiseTestModel;
 import brainwiz.gobrainwiz.api.model.NotificationsModel;
 import brainwiz.gobrainwiz.databinding.FragmentNotificationsBinding;
 import brainwiz.gobrainwiz.sidemenu.PractiseTestHistoryAdapter;
 import brainwiz.gobrainwiz.test.TestActivity;
+import brainwiz.gobrainwiz.utils.AppUtils;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import brainwiz.gobrainwiz.utils.SharedPrefUtils;
@@ -83,6 +85,42 @@ public class NotificationsFragment extends BaseFragment {
         });
     }
 
+    private void updateNotifications(NotificationsModel.Datum datum) {
+
+        if (!NetWorkUtil.isConnected(context)) {
+            DDAlerts.showNetworkAlert(activity);
+            return;
+        }
+
+        showProgress();
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("android_id", AppUtils.getDeviceID(getActivity()));
+        hashMap.put("token", SharedPrefUtils.getToken(getActivity()));
+        hashMap.put("used_id", SharedPrefUtils.getStudentID(getActivity()));
+        hashMap.put("notification_id", datum.getNotificationId());
+
+
+        HashMap<String, String> baseBodyMap = getBaseBodyMap();
+//        (getArguments().getString(TOPIC_ID))
+        RetrofitManager.getRestApiMethods().updateNotifications(hashMap).enqueue(new ApiCallback<BaseModel>(activity) {
+            @Override
+            public void onApiResponse(Response<BaseModel> response, boolean isSuccess, String message) {
+                dismissProgress();
+                if (isSuccess) {
+//                    notificationsAdapter.setData(response.body().getData());
+//                    notificationsAdapter.notifyDataSetChanged();
+//                    SharedPrefUtils.putData(context, SharedPrefUtils.NOTIFICATION_COUNT, "0");
+//                    getActivity().invalidateOptionsMenu();
+                }
+            }
+
+            @Override
+            public void onApiFailure(boolean isSuccess, String message) {
+                dismissProgress();
+            }
+        });
+    }
+
 
     private void initViews() {
 
@@ -91,6 +129,13 @@ public class NotificationsFragment extends BaseFragment {
 
 
         bind.recycleNotifications.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
+
+        notificationsAdapter.setNotificationListener(new NotificationsAdapter.NotificationListener() {
+            @Override
+            public void onViewNotification(int position) {
+                updateNotifications(notificationsAdapter.getData().get(position));
+            }
+        });
 
 //        notificationsAdapter.set(testListener);
 //        bind.recycleTopics.addItemDecoration(new DividerItemDecoration(context, RecyclerView.VERTICAL));

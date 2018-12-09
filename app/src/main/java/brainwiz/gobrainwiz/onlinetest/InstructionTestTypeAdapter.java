@@ -52,9 +52,10 @@ public class InstructionTestTypeAdapter extends RecyclerView.Adapter<Instruction
         holder.bind.testType.setChecked(testSet.isSelected());
 
         if (!isReview) {
-            holder.bind.testType.setEnabled(!testSet.isCompleted());
-            holder.bind.getRoot().setEnabled(!testSet.isCompleted());
-            if (testSet.isCompleted()) {
+            boolean completed = testSet.isCompleted() || testSet.getTestStatus() != 0;
+            holder.bind.testType.setEnabled(!completed);
+            holder.bind.getRoot().setEnabled(!completed);
+            if (completed) {
                 holder.bind.testType.setPaintFlags(holder.bind.testType.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             } else holder.bind.testType.setPaintFlags(0);
 

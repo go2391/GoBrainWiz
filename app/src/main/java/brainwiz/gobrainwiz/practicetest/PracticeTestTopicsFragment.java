@@ -156,9 +156,9 @@ public class PracticeTestTopicsFragment extends BaseFragment {
 
         try {
 
-            minutes += Double.parseDouble(split[0]) * 60;
-            minutes += Double.parseDouble(split[1]);
-            minutes += Double.parseDouble(split[2]) / 60;
+//            minutes += Double.parseDouble(split[0]) * 60;
+            minutes += Double.parseDouble(split[0]);
+            minutes += Double.parseDouble(split[1]) / 60;
             return minutes;
 
         } catch (Exception e) {

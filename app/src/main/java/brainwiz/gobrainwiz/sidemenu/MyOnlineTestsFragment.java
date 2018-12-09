@@ -68,6 +68,8 @@ public class MyOnlineTestsFragment extends BaseFragment {
                     testTestsAdapter.setData(response.body().getData());
                     testTestsAdapter.notifyDataSetChanged();
                 }
+
+                bind.emptyView.setVisibility(testTestsAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
             }
 
             @Override

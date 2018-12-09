@@ -65,7 +65,7 @@ public class ForgotPasswordFragment extends BaseFragment {
 
 
         if (isEmpty(bind.emailMobileNo)) {
-            DDAlerts.showToast(getActivity(), "enter valid mobile no or email id.");
+            DDAlerts.showToast(getActivity(), "enter valid mobile no.");
             return false;
         }
 
@@ -74,6 +74,7 @@ public class ForgotPasswordFragment extends BaseFragment {
     }
 
     private void resetPassword() {
+
         HashMap<String, String> hashMap = getBaseBodyMap();
         hashMap.put("forgot_password", bind.emailMobileNo.getText().toString());
 
@@ -91,6 +92,7 @@ public class ForgotPasswordFragment extends BaseFragment {
                     newFragment.setArguments(bundle);
                     ((RegistrationActivity) getActivity()).fragmentTransaction(newFragment, R.id.login_frame);
                 } else {
+                    DDAlerts.showResponseError(getActivity(), response.body());
 
                 }
 //                }
@@ -98,7 +100,7 @@ public class ForgotPasswordFragment extends BaseFragment {
 
             @Override
             public void onApiFailure(boolean isSuccess, String message) {
-
+                dismissProgress();
             }
         });
 

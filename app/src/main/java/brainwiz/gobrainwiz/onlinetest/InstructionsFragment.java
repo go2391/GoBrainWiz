@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -43,6 +45,11 @@ public class InstructionsFragment extends BaseFragment {
     private boolean isReview;
     TextView breakTime;
     int TEST_REQUESTCODE = 100;
+    private String nextAutoSelectionID;
+    private Button start_Review_btn;
+    private boolean breakTimeDone;
+    private CountDownTimer countDownTimer;
+    private boolean isShowing;
 
     public static InstructionsFragment getInstance(Bundle bundle) {
         InstructionsFragment instructionsFragment = new InstructionsFragment();
@@ -86,12 +93,12 @@ public class InstructionsFragment extends BaseFragment {
         adapter.setReview(isReview);
         adapter.setListener(listener);
         recyclerView.setAdapter(adapter);
-        TextView start_Review_btn = inflate.findViewById(R.id.start);
+        start_Review_btn = inflate.findViewById(R.id.start);
         start_Review_btn.setText(isReview ? getString(R.string.review) : getString(R.string.start));
         start_Review_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                breakTimeDone = false;
                 if (selectedCatId.isEmpty()) {
                     DDAlerts.showAlert(getActivity(), getString(R.string.select_section), getString(R.string.ok));
                     return;
@@ -100,9 +107,19 @@ public class InstructionsFragment extends BaseFragment {
                     ((TestActivity) activity).startTest();
                 TestQuestionFragment instance = TestQuestionFragment.getInstance(testID, selectedCatId, true, isReview);
                 instance.setTargetFragment(InstructionsFragment.this, TEST_REQUESTCODE);
-                ((TestActivity) activity).fragmentTransaction(instance);
+                ((TestActivity) activity).fragmentTransactionStateLoss(instance);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isShowing = true;
+        if (breakTimeDone) {
+            selectedCatId = nextAutoSelectionID;
+            start_Review_btn.performClick();
+        }
     }
 
     @Override
@@ -110,12 +127,19 @@ public class InstructionsFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == TEST_REQUESTCODE) {
             if (data != null) {
+                nextAutoSelectionID = "";
                 List<OnlineTestSetModel.TestSet> options = adapter.getOptions();
                 for (OnlineTestSetModel.TestSet option : options) {
                     if (option.getCatId().equalsIgnoreCase(data.getStringExtra(CAT_ID))) {
                         option.setCompleted(true);
                     }
+
+                    if (!option.isCompleted() && nextAutoSelectionID.isEmpty()) {
+                        nextAutoSelectionID = option.getCatId();
+//                        adapter.setSelectedOption();
+                    }
                 }
+
                 adapter.notifyDataSetChanged();
 
 //                breakTime.setVisibility(View.VISIBLE);
@@ -133,19 +157,70 @@ public class InstructionsFragment extends BaseFragment {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                ScoreCardOnlineFragment instance = ScoreCardOnlineFragment.getInstance(parcelableExtra,isReview,testID);
+                                ScoreCardOnlineFragment instance = ScoreCardOnlineFragment.getInstance(parcelableExtra, isReview, testID);
                                 ((TestActivity) getActivity()).fragmentTransaction(instance);
 
                             }
-                        }, 2000);
+                        }, 1000);
 
-                    }
+                    } else
+                        startBreakTime();
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    public String getNextAutoSelectionID() {
+        return nextAutoSelectionID;
+    }
+
+    public void setNextAutoSelectionID(String nextAutoSelectionID) {
+        this.nextAutoSelectionID = nextAutoSelectionID;
+    }
+
+
+    private void startBreakTime() {
+        if (nextAutoSelectionID.isEmpty()) {
+            return;
+        }
+        breakTime.setVisibility(View.VISIBLE);
+        final int breakTimeMinutes = Integer.parseInt(getArguments().getString(BREAK_TIME));
+        breakTimeDone = false;
+        breakTime.setText(String.format(getString(R.string.break_time), breakTimeMinutes));
+
+        countDownTimer = new CountDownTimer((breakTimeMinutes * 60) * 1000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                InstructionsFragment.this.breakTime.setText(String.format(getString(R.string.break_time), millisUntilFinished / 1000));
+                //here you can have your logic to set text to edittext
+            }
+
+            public void onFinish() {
+                breakTimeDone = true;
+                if (getActivity() != null && isShowing) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            InstructionsFragment.this.breakTime.setText("Done!");
+                            selectedCatId = nextAutoSelectionID;
+                            start_Review_btn.performClick();
+                        }
+                    });
+
+                }
+            }
+        };
+        countDownTimer.start();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isShowing = false;
     }
 
     private void getCompanySets() {

@@ -100,6 +100,7 @@ public class OnlineTestFragment extends BaseFragment {
             Bundle bundle = new Bundle();
             bundle.putString(COMPANY_NAME, test.getTestName());
             bundle.putString(DURATION, test.getDuration());
+            bundle.putString(BREAK_TIME, test.getBreak_time());
             bundle.putString(ID, test.getBrainTestId());
             bundle.putString(CAT_ID, "");
             bundle.putBoolean(IS_COMPANY_TEST, true);
@@ -116,6 +117,7 @@ public class OnlineTestFragment extends BaseFragment {
             Bundle bundle = new Bundle();
             bundle.putString(COMPANY_NAME, test.getTestName());
             bundle.putString(DURATION, test.getDuration());
+            bundle.putString(BREAK_TIME, test.getBreak_time());
             bundle.putString(ID, test.getBrainTestId());
             bundle.putString(CAT_ID, "");
             bundle.putBoolean(IS_COMPANY_TEST, true);

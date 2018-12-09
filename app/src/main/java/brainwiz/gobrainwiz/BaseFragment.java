@@ -8,6 +8,7 @@ import android.widget.EditText;
 import java.util.HashMap;
 
 import brainwiz.gobrainwiz.test.TestActivity;
+import brainwiz.gobrainwiz.utils.AppUtils;
 import brainwiz.gobrainwiz.utils.SharedPrefUtils;
 
 @SuppressLint("ValidFragment")
@@ -18,6 +19,7 @@ public class BaseFragment extends Fragment {
     public static final String CAT_ID = "catId";
     public static final String IS_REVIEW = "isReview";
     public static final String DURATION = "Duration";
+    public static final String BREAK_TIME = "BreakTime";
     public static final String COMPANY_NAME = "CompanyName";
 
 
@@ -57,6 +59,7 @@ public class BaseFragment extends Fragment {
 
     public HashMap<String, String> getBaseBodyMap() {
         HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("android_id", AppUtils.getDeviceID(getActivity()));
         hashMap.put("token", SharedPrefUtils.getToken(getActivity()));
         hashMap.put("student_id", SharedPrefUtils.getStudentID(getActivity()));
 

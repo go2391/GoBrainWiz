@@ -56,6 +56,11 @@
                     android:drawableStart="@drawable/ic_pencil_attempt" />
 
                 <TextView
+                    android:id="@+id/score_card_questions_un_attempted"
+                    style="@style/marks_style"
+                    android:drawableStart="@drawable/ic_warning" />
+
+                <TextView
                     android:id="@+id/score_card_correct"
                     style="@style/marks_style"
                     android:drawableStart="@drawable/ic_tick_answer" />

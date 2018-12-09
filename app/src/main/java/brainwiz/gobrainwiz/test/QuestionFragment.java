@@ -11,6 +11,9 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 
 import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
@@ -22,7 +25,7 @@ import brainwiz.gobrainwiz.utils.StringUtills;
 import brainwiz.gobrainwiz.utils.URLImageParserNew;
 
 public class QuestionFragment extends BaseFragment implements TestQuestionFragment.FragmentStateListener {
-    private TestModel.Datum data;
+    private TestModel.Data.Datum data;
     private TestQuestionFragment.QuestionStatusListener listener;
     private long startTime;
     private long endTime;
@@ -35,7 +38,7 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
     }
 
 
-    public static QuestionFragment getInstance(TestModel.Datum datum, Bundle bundle) {
+    public static QuestionFragment getInstance(TestModel.Data.Datum datum, Bundle bundle) {
         QuestionFragment questionFragment = new QuestionFragment();
         Bundle args = new Bundle();
 
@@ -83,7 +86,7 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
 
         contentBinding.testVideoExplanationLayout.setOnClickListener(onClickListener);
 
-        data = ((TestModel.Datum) getArguments().getParcelable("object"));
+        data = ((TestModel.Data.Datum) getArguments().getParcelable("object"));
         contentBinding.answerOptionsRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         OptionsAdapter adapter = new OptionsAdapter(getActivity(), data.getOptions());
         adapter.setHasStableIds(true);
@@ -114,6 +117,11 @@ public class QuestionFragment extends BaseFragment implements TestQuestionFragme
 //            contentBinding.testQuestion.setText(Html.fromHtml(data.getQuestion(), new URLImageParserNew(contentBinding.testQuestion, getActivity()), null));
 //            contentBinding.testExplanation.setText(Html.fromHtml(data.getExplanation(), new URLImageParserNew(contentBinding.testExplanation, getActivity()), null));
 //        }
+
+        Animation fadeIn = new AlphaAnimation(0.5f, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator()); //add this
+        fadeIn.setDuration(1000);
+        contentBinding.getRoot().startAnimation(fadeIn);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {

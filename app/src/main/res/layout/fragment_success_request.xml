@@ -1,0 +1,64 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableTop="@drawable/ic_round_done_button"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:padding="@dimen/dimen_5"
+            android:text="@string/success"
+            android:textColor="@color/bluePrimary"
+            android:textSize="@dimen/font_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:fontFamily="@font/bold"
+            android:gravity="center"
+            android:padding="@dimen/dimen_5"
+            android:text="@string/your_message_has_been_sent"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/font_14" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/semibold"
+            android:gravity="center"
+            android:padding="@dimen/dimen_5"
+            android:text="@string/we_have_received_your_inquiry_and_will_respond_n_thank_you_for_your_interest"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/font_10" />
+
+        <Button
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:background="@drawable/button_bg_green"
+            android:fontFamily="@font/bold"
+            android:minHeight="@dimen/dimen_30"
+            android:padding="@dimen/dimen_5"
+            android:text="@string/done"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:translationZ="@dimen/dimen_5" />
+    </LinearLayout>
+
+
+</layout>

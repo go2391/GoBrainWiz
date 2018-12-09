@@ -21,6 +21,16 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoViewH
     List<VideoListModel.VideosList> videosLists = new ArrayList<>();
     private VideoSelectedListener listener;
 
+    int selectedPosition = 0;
+
+    public void setSelectedPosition(int selectedPosition) {
+        this.selectedPosition = selectedPosition;
+    }
+
+
+    public int getSelectedPosition() {
+        return selectedPosition;
+    }
 
     public List<VideoListModel.VideosList> getVideosLists() {
         return videosLists;
@@ -47,6 +57,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoViewH
         holder.bind.videoItemThumb.setUrl(video.getVImage());
         holder.bind.videoItemTitle.setText(video.getVideoTitle());
         holder.bind.videoItemDesc.setText(video.getVideoDesc());
+        holder.bind.videoItemPlayPause.setImageResource(position == selectedPosition ? R.drawable.ic_pause : R.drawable.ic_play);
     }
 
     @Override
@@ -73,8 +84,10 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoViewH
 
         @Override
         public void onClick(View v) {
-            if (listener != null) {
+            if (listener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
                 listener.onVideoSelected(getAdapterPosition());
+                selectedPosition = getAdapterPosition();
+                notifyDataSetChanged();
             }
         }
     }

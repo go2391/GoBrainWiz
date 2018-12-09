@@ -101,6 +101,7 @@ public class ScoreCardFragment extends BaseFragment {
         bind.scoreCardWrong.setText(StringUtills.getSpanMarks(String.format(getString(R.string.wrong), object.getIncorrect())));
         bind.scoreCardQuestionsAttempted.setText(StringUtills.getSpanMarks(String.format(getString(R.string.questions_attempted), object.getAttemptedQuestions())));
         bind.scoreCardTotalQuestions.setText(StringUtills.getSpanMarks(String.format(getString(R.string.total_questions), object.getTotalQuestions())));
+        bind.scoreCardQuestionsUnAttempted.setText(String.format(context.getString(R.string.questions_unattempted), object.getNonattemptedQuestions()));
         float progress = (float) object.getCorrect() / object.getTotalQuestions();
         bind.scoreCardProgress.setProgress(Math.round(progress * 100f));
 

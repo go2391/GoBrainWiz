@@ -82,9 +82,10 @@ public class JoinFragment extends BaseFragment {
                             public void onApiResponse(Response<BaseModel> response, boolean isSuccess, String message) {
                                 dismissProgress();
                                 if (isSuccess) {
-                                    bind.name.setText("");
+//                                    bind.name.setText("");
                                     bind.message.setText("");
-                                    DDAlerts.showAlert(getActivity(), "Your request has been sent, We will contact you soon. Thank you for your interest.", getString(R.string.ok));
+                                    JoinSuccessFragment joinSuccessFragment = new JoinSuccessFragment();
+                                    joinSuccessFragment.show(getChildFragmentManager(), joinSuccessFragment.getTag());
                                 }
                             }
 
@@ -117,7 +118,7 @@ public class JoinFragment extends BaseFragment {
                         if (info.activityInfo.packageName.equals("com.google.android.gm")) {
                             className = info.activityInfo.name;
 
-                            if(className != null && !className.isEmpty()){
+                            if (className != null && !className.isEmpty()) {
                                 break;
                             }
                         }

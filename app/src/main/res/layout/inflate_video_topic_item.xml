@@ -16,8 +16,11 @@
                 android:id="@+id/video_item_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
+                android:layout_toStartOf="@id/video_item_play_pause"
                 android:fontFamily="@font/semibold"
+                android:maxLines="2"
                 android:text="Title"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/font_14" />
@@ -35,10 +38,12 @@
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/video_item_play_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dimen_60"
+                android:layout_height="@dimen/dimen_60"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                android:tint="@color/blueSecondary"
                 app:srcCompat="@drawable/ic_arrow_right" />
 
 

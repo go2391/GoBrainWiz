@@ -140,13 +140,13 @@ public class CircularProgressBar extends ProgressBar {
         mBackgroundColorPaint.setStyle(Style.STROKE);
         mBackgroundColorPaint.setStrokeWidth(mStrokeWidth);
 
-        mTitlePaint.setTextSize(60);
+        mTitlePaint.setTextSize(80);
         mTitlePaint.setStyle(Style.FILL);
         mTitlePaint.setAntiAlias(true);
         mTitlePaint.setTypeface(Typeface.create("Roboto-Thin", Typeface.NORMAL));
         mTitlePaint.setShadowLayer(0.1f, 0, 1, Color.GRAY);
 
-        mSubtitlePaint.setTextSize(20);
+        mSubtitlePaint.setTextSize(30);
         mSubtitlePaint.setStyle(Style.FILL);
         mSubtitlePaint.setAntiAlias(true);
         mSubtitlePaint.setTypeface(Typeface.create("Roboto-Thin", Typeface.BOLD));

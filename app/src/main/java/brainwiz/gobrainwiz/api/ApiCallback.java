@@ -3,6 +3,7 @@ package brainwiz.gobrainwiz.api;
 import android.app.Activity;
 import android.util.Log;
 
+import brainwiz.gobrainwiz.BaseActivity;
 import brainwiz.gobrainwiz.api.model.BaseModel;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import retrofit2.Call;
@@ -32,6 +33,9 @@ public abstract class ApiCallback<T> implements Callback<T> {
                 if (response.code() == 400) {
                     onApiFailure(false, "Server not responding");
                     DDAlerts.showToast(context, "Server not responding");
+                }
+                if (((BaseModel) response.body()).getCode() == 601) {
+                    ((BaseActivity) context).onUserError(context,((BaseModel) response.body()).getMessage());
                 } else {
                     Log.i("API Response", response.toString());
                     onApiResponse(response, ((BaseModel) response.body()).getCode() == 200, "");

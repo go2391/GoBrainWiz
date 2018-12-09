@@ -25,6 +25,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dimen_26dp"
                     android:src="@drawable/score_card_fg_icon" />
 
             </RelativeLayout>
@@ -48,6 +49,7 @@
                         android:layout_marginTop="@dimen/dimen_16"
                         android:fontFamily="@font/semibold"
                         android:text="Rank"
+                        android:visibility="gone"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/font_16" />
 
@@ -127,6 +129,10 @@
                             android:id="@+id/score_card_questions_attempted"
                             style="@style/marks_style"
                             android:drawableStart="@drawable/ic_pencil_attempt" />
+                        <TextView
+                            android:id="@+id/score_card_questions_un_attempted"
+                            style="@style/marks_style"
+                            android:drawableStart="@drawable/ic_warning" />
 
                         <TextView
                             android:id="@+id/score_card_correct"

@@ -49,6 +49,12 @@ public class VideosFragment extends BaseFragment {
         activity = getActivity();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,8 +62,10 @@ public class VideosFragment extends BaseFragment {
         View inflate = inflater.inflate(R.layout.fragment_videos, container, false);
         bind = DataBindingUtil.bind(inflate);
         initViews();
+
         return inflate;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -72,7 +80,7 @@ public class VideosFragment extends BaseFragment {
         bind.recycleVideosList.setAdapter(videosAdapter);
 
         categoryName = getArguments().getString(CAT_ID);
-        bind.videosTopic.setText(categoryName);
+//        bind.videosTopic.setText(categoryName);
 //        bind.videosCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //            @Override
 //            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -128,11 +136,13 @@ public class VideosFragment extends BaseFragment {
     private void loadList(List<VideoListModel.VideosList> videosList) {
 
         videosAdapter.setVideosLists(videosList);
-        videosAdapter.notifyDataSetChanged();
+
 
         if (!videosList.isEmpty()) {
+            videosAdapter.setSelectedPosition(0);
             playVideo(videosList.get(0));
         }
+        videosAdapter.notifyDataSetChanged();
 
 
     }

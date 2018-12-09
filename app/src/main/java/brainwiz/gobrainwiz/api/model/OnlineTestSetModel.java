@@ -30,6 +30,20 @@ public class OnlineTestSetModel extends BaseModel {
         @SerializedName("cat_id")
         @Expose
         private String catId;
+
+        @SerializedName("TestStatus")
+        @Expose
+        private int TestStatus;
+
+        public int getTestStatus() {
+            return TestStatus;
+        }
+
+        public void setTestStatus(int testStatus) {
+            TestStatus = testStatus;
+        }
+
+
         private boolean completed;
         private boolean selected;
 

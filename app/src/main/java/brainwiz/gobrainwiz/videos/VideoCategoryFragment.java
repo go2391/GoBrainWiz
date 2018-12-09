@@ -1,6 +1,7 @@
 package brainwiz.gobrainwiz.videos;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import java.util.List;
 import brainwiz.gobrainwiz.BaseActivity;
 import brainwiz.gobrainwiz.BaseFragment;
 import brainwiz.gobrainwiz.R;
+import brainwiz.gobrainwiz.VideoActivity;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.VideoListModel;
@@ -32,6 +34,7 @@ import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import retrofit2.Response;
 
 public class VideoCategoryFragment extends BaseFragment {
+    public static final String CATEGORY = "Category";
     private FragmentVideoCategoryBinding bind;
     private Context context;
     private FragmentActivity activity;
@@ -113,11 +116,14 @@ public class VideoCategoryFragment extends BaseFragment {
     VideosTopicAdapter.VideoTopicSelectedListener videoTopicSelectedListener = new VideosTopicAdapter.VideoTopicSelectedListener() {
         @Override
         public void onTopicSelected(int position) {
-            VideosFragment videosFragment = new VideosFragment();
-            Bundle args = new Bundle();
-            args.putString(CAT_ID, videosTopicAdapter.getVideosLists().get(position).getTopicName());
-            videosFragment.setArguments(args);
-            ((BaseActivity) getActivity()).fragmentTransaction(videosFragment, R.id.content_frame, true);
+
+            Intent intent = new Intent(getActivity(), VideoActivity.class);
+            intent.putExtra(CAT_ID, videosTopicAdapter.getVideosLists().get(position).getTopicName());
+
+            startActivity(intent);
+
+
+//            ((BaseActivity) getActivity()).fragmentTransaction(videosFragment, R.id.content_frame, true);
 
         }
 

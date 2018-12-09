@@ -17,6 +17,9 @@ import brainwiz.gobrainwiz.utils.KeyBoardUtils
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.WindowManager
+import brainwiz.gobrainwiz.utils.DDAlerts
+import brainwiz.gobrainwiz.utils.SharedPrefUtils
+import brainwiz.gobrainwiz.utils.SharedPrefUtils.*
 
 
 /**
@@ -47,6 +50,26 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+    fun onUserError(context: Activity, message: String) {
+        context.finish()
+        clearUserData(this@BaseActivity)
+        finish()
+        DDAlerts.showAlert(this@BaseActivity, message, getString(R.string.ok))
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+
+    }
+
+    public fun clearUserData(context: Context) {
+        SharedPrefUtils.putData(context, IS_LOGIN, false)
+        SharedPrefUtils.putData(context, USER_EMAIL, "")
+        SharedPrefUtils.putData(context, USER_ID, "")
+        SharedPrefUtils.putData(context, USER_MOBILE, "")
+        SharedPrefUtils.putData(context, USER_NAME, "")
+        SharedPrefUtils.putData(context, USER_TOKEN, "")
+        SharedPrefUtils.putData(context, USER_COLLEGE, "")
+    }
+
 
     fun fragmentTransaction(newFragment: Fragment, container: Int, addToStack: Boolean) {
         val transaction = supportFragmentManager.beginTransaction()
@@ -70,6 +93,13 @@ open class BaseActivity : AppCompatActivity() {
         transaction.replace(R.id.content_frame, newFragment)
         transaction.addToBackStack(newFragment.javaClass.simpleName);
         transaction.commit()
+    }
+
+    fun fragmentTransactionStateLoss(newFragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.content_frame, newFragment)
+        transaction.addToBackStack(newFragment.javaClass.simpleName);
+        transaction.commitAllowingStateLoss()
     }
 
     /**
@@ -154,7 +184,6 @@ open class BaseActivity : AppCompatActivity() {
             }
         }
     }
-
 
 
     fun configureProgress(dialog: Dialog) {

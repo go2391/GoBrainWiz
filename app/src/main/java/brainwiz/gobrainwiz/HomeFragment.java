@@ -165,9 +165,7 @@ public class HomeFragment extends BaseFragment {
                     break;
 
                 case R.id.tv_weekly_schedule_layout:
-                    Intent intent = new Intent(activity, FullscreenActivity.class);
-                    intent.putExtra("URL", data.getWeekSchedule().getImage());
-                    startActivity(intent);
+                    openWeeklySchedule(data.getWeekSchedule().getImage());
                     break;
                 case R.id.video_play_icon:
                     Intent intent1 = new Intent(getActivity(), YoutubeVideoActivity.class);
@@ -183,4 +181,9 @@ public class HomeFragment extends BaseFragment {
         }
     };
 
+    public void openWeeklySchedule(String imageUrl) {
+        Intent intent = new Intent(activity, FullscreenActivity.class);
+        intent.putExtra("URL", imageUrl);
+        startActivity(intent);
+    }
 }

@@ -44,7 +44,7 @@ public class OnlineTestHistoryAdapter extends RecyclerView.Adapter<OnlineTestHis
         HistoryOnlineTestModel.TestHistory testList = data.get(position);
         holder.bind.testItemTitle.setText(testList.getTestName());
         holder.bind.testQuestions.setText(String.format(context.getString(R.string.sets), testList.getTotalSets()));
-        holder.bind.testMins.setText(String.format(context.getString(R.string.mins), ""));
+        holder.bind.testMins.setText(String.format(context.getString(R.string.mins), testList.getDuration()));
     }
 
     @Override

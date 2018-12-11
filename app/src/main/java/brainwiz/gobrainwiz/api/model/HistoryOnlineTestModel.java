@@ -32,6 +32,11 @@ public class HistoryOnlineTestModel extends BaseModel {
         @Expose
         private String testName;
 
+        @SerializedName("duration")
+        @Expose
+        private String duration = "";
+
+
         public String getTestId() {
             return testId;
         }
@@ -56,5 +61,12 @@ public class HistoryOnlineTestModel extends BaseModel {
             this.testName = testName;
         }
 
+        public String getDuration() {
+            return duration;
+        }
+
+        public void setDuration(String duration) {
+            this.duration = duration;
+        }
     }
 }

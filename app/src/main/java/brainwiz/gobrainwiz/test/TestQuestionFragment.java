@@ -168,8 +168,7 @@ public class TestQuestionFragment extends BaseFragment {
 
     private void setViews(TestModel.Data data) {
         if (!isReview) {
-            if(isCompanyTest)
-            {
+            if (isCompanyTest) {
                 ((TestActivity) getActivity()).setTargetTime(Long.parseLong(data.getTime()) * 60);
             }
             ((TestActivity) getActivity()).startTest();

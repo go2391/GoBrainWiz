@@ -110,4 +110,8 @@ public interface APIService {
 
     @POST("get_notifications_list" + URL)
     Call<BaseModel> updateNotifications(@Body HashMap<String, String> baseBodyMap);
+
+    @POST("change_pwd" + URL)
+    Call<BaseModel> changePassword(@Body HashMap<String, String> baseBodyMap);
+
 }

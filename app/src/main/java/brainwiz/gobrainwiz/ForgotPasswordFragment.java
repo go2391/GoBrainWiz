@@ -1,10 +1,13 @@
 package brainwiz.gobrainwiz;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +21,12 @@ import brainwiz.gobrainwiz.api.model.BaseModel;
 import brainwiz.gobrainwiz.api.model.RegistrationModel;
 import brainwiz.gobrainwiz.databinding.FragmentForgotPasswordBinding;
 import brainwiz.gobrainwiz.utils.DDAlerts;
+import brainwiz.gobrainwiz.utils.NetWorkUtil;
 import retrofit2.Response;
 
 public class ForgotPasswordFragment extends BaseFragment {
 
+    private static final int REQUEST_CODE_READ_SMS = 100;
     private Context context;
     private FragmentActivity activity;
     private FragmentForgotPasswordBinding bind;
@@ -46,6 +51,27 @@ public class ForgotPasswordFragment extends BaseFragment {
 
         bind.confirm.setOnClickListener(onClickListener);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_READ_SMS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    resetPassword();
+                } else {
+                    resetPassword();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
 
     private final View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
@@ -74,6 +100,27 @@ public class ForgotPasswordFragment extends BaseFragment {
     }
 
     private void resetPassword() {
+
+
+        if (!NetWorkUtil.isConnected(getActivity())) {
+            DDAlerts.showNetworkAlert(getActivity());
+            return;
+        }
+
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                    Manifest.permission.CALL_PHONE)) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.RECEIVE_SMS},
+                    REQUEST_CODE_READ_SMS);
+            return;
+            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+            // app-defined int constant. The callback method gets the
+            // result of the request.
+//            }
+        }
 
         HashMap<String, String> hashMap = getBaseBodyMap();
         hashMap.put("forgot_password", bind.emailMobileNo.getText().toString());

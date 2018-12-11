@@ -1,12 +1,15 @@
 package brainwiz.gobrainwiz;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +63,28 @@ public class OtpPasswordFragment extends BaseFragment {
 
         isRegistration = getArguments().getBoolean(LoginFragment.KEY_ISREGISTRATION, true);
         bind.confirm.setOnClickListener(onClickListener);
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
+            SMSListener.bindListener(new Common.OTPListener() {
+                @Override
+                public void onOTPReceived(String extractedOTP) {
+                    bind.otp.setText(extractedOTP);
+                }
+            });
+        }
+
+    }
+
+    @Override
+    public void onDestroy() {
+        SMSListener.unbindListener();
+        super.onDestroy();
     }
 
     private final View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -246,6 +271,13 @@ public class OtpPasswordFragment extends BaseFragment {
             }
         });
 
+    }
+
+
+    public interface Common {
+        interface OTPListener {
+            void onOTPReceived(String otp);
+        }
     }
 
 

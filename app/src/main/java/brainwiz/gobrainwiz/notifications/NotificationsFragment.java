@@ -1,7 +1,6 @@
 package brainwiz.gobrainwiz.notifications;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,11 +18,8 @@ import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.BaseModel;
-import brainwiz.gobrainwiz.api.model.HistoryPractiseTestModel;
 import brainwiz.gobrainwiz.api.model.NotificationsModel;
 import brainwiz.gobrainwiz.databinding.FragmentNotificationsBinding;
-import brainwiz.gobrainwiz.sidemenu.PractiseTestHistoryAdapter;
-import brainwiz.gobrainwiz.test.TestActivity;
 import brainwiz.gobrainwiz.utils.AppUtils;
 import brainwiz.gobrainwiz.utils.DDAlerts;
 import brainwiz.gobrainwiz.utils.NetWorkUtil;
@@ -75,6 +71,7 @@ public class NotificationsFragment extends BaseFragment {
                     notificationsAdapter.notifyDataSetChanged();
                     SharedPrefUtils.putData(context, SharedPrefUtils.NOTIFICATION_COUNT, "0");
                     getActivity().invalidateOptionsMenu();
+                    bind.emptyView.setVisibility(notificationsAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
                 }
             }
 

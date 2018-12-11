@@ -23,7 +23,6 @@ import java.lang.ref.WeakReference;
 
 import brainwiz.gobrainwiz.BaseActivity;
 import brainwiz.gobrainwiz.BaseFragment;
-import brainwiz.gobrainwiz.MainActivity;
 import brainwiz.gobrainwiz.R;
 import brainwiz.gobrainwiz.TimerService;
 import brainwiz.gobrainwiz.onlinetest.InstructionsFragment;
@@ -235,7 +234,7 @@ public class TestActivity extends BaseActivity
                 return;
             }
 
-            if (fragmentById instanceof InstructionsFragment && !((InstructionsFragment) fragmentById).getNextAutoSelectionID().isEmpty()) {
+            if (fragmentById instanceof InstructionsFragment && !((InstructionsFragment) fragmentById).getSelectionID().isEmpty()) {
                 DDAlerts.showAlert(this, "You can't go back at this movement, Please finish all tests.", getString(R.string.ok));
                 return;
             }
@@ -267,7 +266,7 @@ public class TestActivity extends BaseActivity
                 boolean review = ((TestQuestionFragment) fragmentById).isReview();
                 submitView.setVisibility(review ? View.INVISIBLE : View.VISIBLE);
 //                timerTextView.setVisibility(review ? View.INVISIBLE : View.VISIBLE);
-                timerTextView.setText(isReview ? getString(R.string.review) : "");
+                timerTextView.setText(review ? getString(R.string.review) : "");
             } else if (fragmentById instanceof ScoreCardFragment || fragmentById instanceof ScoreCardOnlineFragment) {
                 submitView.setVisibility(View.INVISIBLE);
                 timerTextView.setText(R.string.score_card);

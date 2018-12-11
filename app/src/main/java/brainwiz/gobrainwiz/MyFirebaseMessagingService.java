@@ -27,6 +27,7 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -40,6 +41,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
+import java.util.Set;
 
 import brainwiz.gobrainwiz.MainActivity;
 import brainwiz.gobrainwiz.R;
@@ -165,6 +167,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     private void sendNotification(Map<String, String> messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
+        Set<String> strings = messageBody.keySet();
+        Bundle bundle = new Bundle();
+        for (String key : strings) {
+            bundle.putString(key, messageBody.get(key));
+        }
+        intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

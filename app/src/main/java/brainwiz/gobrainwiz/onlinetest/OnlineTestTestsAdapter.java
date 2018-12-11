@@ -49,12 +49,13 @@ public class OnlineTestTestsAdapter extends RecyclerView.Adapter<OnlineTestTests
         String type = "";
         switch (data.get(position).getStatus()) {
             case 0:
+            case 1:
                 type = context.getString(R.string.start);
                 break;
-            case 1:
+            case 2:
                 type = context.getString(R.string.inprogress);
                 break;
-            case 2:
+            case 3:
                 type = context.getString(R.string.review);
                 break;
         }
@@ -82,9 +83,10 @@ public class OnlineTestTestsAdapter extends RecyclerView.Adapter<OnlineTestTests
                 switch (data.get(getAdapterPosition()).getStatus()) {
                     case 0:
                     case 1:
+                    case 2:
                         testListener.onTestStart(data.get(getAdapterPosition()));
                         break;
-                    case 2:
+                    case 3:
                         testListener.onReviewTest(data.get(getAdapterPosition()));
                         break;
                 }

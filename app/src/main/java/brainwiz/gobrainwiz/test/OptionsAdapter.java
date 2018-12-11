@@ -135,17 +135,14 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
         return selectedData;
     }
 
-    class OptionHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnTouchListener, Handler.Callback {
-        private static final int CLICK_ON_WEBVIEW = 10;
+    class OptionHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         InflateAnswerOptionBinding bind;
-        private final Handler handler = new Handler(this);
 
         public OptionHolder(View itemView) {
             super(itemView);
             bind = DataBindingUtil.bind(itemView);
-            if (!isReviewMode()) {
-                bind.selectionArea.setOnClickListener(this);
-            }
+            bind.selectionArea.setOnClickListener(this);
+//            bind.selectionArea.setEnabled(!isReviewMode());
 //            bind.optionText.setWebViewClient(new WebViewClient() {
 //                public boolean shouldOverrideUrlLoading(WebView view, String url) {
 //                    // do your handling codes here, which url is the requested url
@@ -174,36 +171,23 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.OptionHo
             bind.optionText.setWebChromeClient(new WebChromeClient());
         }
 
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                handler.sendEmptyMessageDelayed(CLICK_ON_WEBVIEW, 200);
-            }
-            return false;
-        }
 
         @Override
         public void onClick(View v) {
-            if (getAdapterPosition() != RecyclerView.NO_POSITION) {
 
-                selectedOption = getAdapterPosition();
-                selectedData.setSelectedOption(String.valueOf(selectedOption));
-                if (listener != null) {
-                    listener.onOptionSelected(selectedOption);
+            if (!isReviewMode()) {
+                if (getAdapterPosition() != RecyclerView.NO_POSITION) {
+
+                    selectedOption = getAdapterPosition();
+                    selectedData.setSelectedOption(String.valueOf(selectedOption));
+                    if (listener != null) {
+                        listener.onOptionSelected(selectedOption);
+                    }
+                    notifyDataSetChanged();
                 }
-                notifyDataSetChanged();
             }
         }
 
-        @Override
-        public boolean handleMessage(Message msg) {
-//            Toast.makeText(this, "WebView clicked", Toast.LENGTH_SHORT).show();
-            if (msg.what == CLICK_ON_WEBVIEW) {
-                bind.optionLayout.performClick();
-                return true;
-            }
-            return true;
-        }
     }
 
     interface OptionListener {

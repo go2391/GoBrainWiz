@@ -35,6 +35,19 @@
                 android:orientation="vertical"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
+
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/empty_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:text="No new notifications are available"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/font_16"
+                android:visibility="visible" />
+
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

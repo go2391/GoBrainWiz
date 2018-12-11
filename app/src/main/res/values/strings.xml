@@ -125,8 +125,8 @@ sections
     <string name="watch_this_video_explination_for_better_understanding">Watch this video explination for better understanding.</string>
     <string name="name_">Name : %s</string>
     <string name="email_">Email : %s</string>
-    <string name="mobile_number_">Mobile Number : %s</string>
-    <string name="location_">Location : %s</string>
+    <string name="mobile_number_">Mobile : %s</string>
+    <string name="location_">College : %s</string>
     <string name="wrong">%d  Wrong </string>
     <string name="pick_image_intent_text">Pick your profile image</string>
     <string name="choose_photo_title">Choose Photos</string>
@@ -165,9 +165,10 @@ sections
     <string name="my_tests">My Tests</string>
     <string name="subscribe">Subscribe</string>
     <string name="notifications">Notifications</string>
-    <string name="join_brainwiz">Join Brainwiz</string>
+    <string name="join_brainwiz">Join BRAINWIZ</string>
     <string name="contact_us">Contact Us</string>
     <string name="about_us">About Us</string>
-    <string name="share_with_friends">Share with friends</string>
+    <string name="new_password">New Password</string>
+    <string name="current_password">Current Password</string>
 
 </resources>

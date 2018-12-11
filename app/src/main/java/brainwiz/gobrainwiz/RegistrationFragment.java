@@ -1,10 +1,15 @@
 package brainwiz.gobrainwiz;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
@@ -31,6 +36,7 @@ import static brainwiz.gobrainwiz.R.color.colorAccent;
 
 public class RegistrationFragment extends BaseFragment {
 
+    private static final int REQUEST_CODE_READ_SMS = 100;
     private Context context;
     private FragmentActivity activity;
     private FragmentRegistrationBinding bind;
@@ -80,12 +86,47 @@ public class RegistrationFragment extends BaseFragment {
         }
     };
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_READ_SMS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    registerUser();
+                } else {
+                    registerUser();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
+
     private void registerUser() {
 //        {
 //"name":"werty",
 //"mobile":8769054576,
 //"mail_id":"alet@gmail.com",
 //"college_name":"sampleNAme"
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                    Manifest.permission.CALL_PHONE)) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.RECEIVE_SMS},
+                    REQUEST_CODE_READ_SMS);
+            return;
+            // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+            // app-defined int constant. The callback method gets the
+            // result of the request.
+//            }
+        }
+
 
         if (!NetWorkUtil.isConnected(context)) {
             DDAlerts.showNetworkAlert(activity);
@@ -120,10 +161,8 @@ public class RegistrationFragment extends BaseFragment {
                     } else {
                         DDAlerts.showToast(context, message1);
                     }
-                }
-                else
-                {
-                    DDAlerts.showResponseError(context,response.body());
+                } else {
+                    DDAlerts.showResponseError(context, response.body());
                 }
             }
 

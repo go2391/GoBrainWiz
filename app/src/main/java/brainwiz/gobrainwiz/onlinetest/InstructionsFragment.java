@@ -45,7 +45,7 @@ public class InstructionsFragment extends BaseFragment {
     private boolean isReview;
     TextView breakTime;
     int TEST_REQUESTCODE = 100;
-    private String nextAutoSelectionID;
+    private String nextAutoSelectionID = "";
     private Button start_Review_btn;
     private boolean breakTimeDone;
     private CountDownTimer countDownTimer;
@@ -98,6 +98,8 @@ public class InstructionsFragment extends BaseFragment {
         start_Review_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                cancelBreakTime();
                 breakTimeDone = false;
                 if (selectedCatId.isEmpty()) {
                     DDAlerts.showAlert(getActivity(), getString(R.string.select_section), getString(R.string.ok));
@@ -110,6 +112,13 @@ public class InstructionsFragment extends BaseFragment {
                 ((TestActivity) activity).fragmentTransactionStateLoss(instance);
             }
         });
+    }
+
+    private void cancelBreakTime() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+
+        }
     }
 
     @Override
@@ -129,14 +138,16 @@ public class InstructionsFragment extends BaseFragment {
             if (data != null) {
                 nextAutoSelectionID = "";
                 List<OnlineTestSetModel.TestSet> options = adapter.getOptions();
-                for (OnlineTestSetModel.TestSet option : options) {
+                for (int i = 0; i < options.size(); i++) {
+                    OnlineTestSetModel.TestSet option = options.get(i);
                     if (option.getCatId().equalsIgnoreCase(data.getStringExtra(CAT_ID))) {
                         option.setCompleted(true);
                     }
 
                     if (!option.isCompleted() && nextAutoSelectionID.isEmpty()) {
                         nextAutoSelectionID = option.getCatId();
-//                        adapter.setSelectedOption();
+                        adapter.getOptions().get(i).setSelected(true);
+                        adapter.notifyDataSetChanged();
                     }
                 }
 
@@ -152,6 +163,7 @@ public class InstructionsFragment extends BaseFragment {
                     final ArrayList<ScoreCardModel.Sets> resultList = new ArrayList<>(parcelableExtra.getSets());
 
                     if (!resultList.isEmpty()) {
+                        cancelBreakTime();
                         ((TestActivity) activity).stopTest();
 
                         new Handler().postDelayed(new Runnable() {
@@ -173,7 +185,8 @@ public class InstructionsFragment extends BaseFragment {
         }
     }
 
-    public String getNextAutoSelectionID() {
+
+    public String getSelectionID() {
         return nextAutoSelectionID;
     }
 

@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -127,6 +128,29 @@ public class MainActivity extends BaseActivity
 
         findViewById(R.id.logo).setOnClickListener(onClickListener);
         fragmentTransaction(new HomeFragment(), R.id.content_frame, false);
+
+        handleNotifications(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleNotifications(intent);
+    }
+
+    private void handleNotifications(Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras != null && extras.containsKey("type")) {
+            switch (extras.getString("type")) {
+                case "0":
+                    //open weekly schedule
+                    Fragment fragmentById = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+                    if (fragmentById != null && fragmentById instanceof HomeFragment) {
+                        ((HomeFragment) fragmentById).openWeeklySchedule(extras.getString("image"));
+                    }
+                    break;
+            }
+        }
     }
 
     private void initializeCountDrawer() {
@@ -411,7 +435,7 @@ public class MainActivity extends BaseActivity
     public void call() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
 
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//            if (ActivityCompat.shouldShowRequestPermissionRatio`nale(this,
 //                    Manifest.permission.CALL_PHONE)) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.CALL_PHONE},

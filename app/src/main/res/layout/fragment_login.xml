@@ -49,8 +49,7 @@
                     android:id="@+id/mobile"
                     style="@style/EditTextStyle"
                     android:drawablePadding="@dimen/dimen_10"
-                    android:drawableStart="@drawable/ic_phone"
-                    android:drawableTint="@color/blueSecondary"
+                    android:drawableStart="@drawable/ic_phone_blue"
                     android:hint="mobile"
                     android:inputType="number"
                     android:maxLength="10"
@@ -69,7 +68,6 @@
                         style="@style/EditTextStyle"
                         android:drawablePadding="@dimen/dimen_10"
                         android:drawableStart="@drawable/ic_lock"
-                        android:drawableTint="@color/blueSecondary"
                         android:hint="@string/password"
                         android:inputType="textPassword"
                         android:text="" />

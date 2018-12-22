@@ -81,6 +81,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     private void initViews() {
+        bind.profileImageView.setPlaceHolder(R.drawable.ic_profile_default);
         bind.profileImageView.setUrl(SharedPrefUtils.getString(getActivity(), SharedPrefUtils.PROFILE_IMAGE, ""));
         bind.profileUserName.setText(SharedPrefUtils.getUserName(context));
         bind.profileName.setText(String.format(getString(R.string.name_), SharedPrefUtils.getUserName(context)));

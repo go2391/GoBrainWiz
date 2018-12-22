@@ -1,6 +1,7 @@
 package brainwiz.gobrainwiz.notifications;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +15,9 @@ import android.view.ViewGroup;
 import java.util.HashMap;
 
 import brainwiz.gobrainwiz.BaseFragment;
+import brainwiz.gobrainwiz.FullscreenActivity;
 import brainwiz.gobrainwiz.R;
+import brainwiz.gobrainwiz.VideoActivity;
 import brainwiz.gobrainwiz.api.ApiCallback;
 import brainwiz.gobrainwiz.api.RetrofitManager;
 import brainwiz.gobrainwiz.api.model.BaseModel;
@@ -82,7 +85,7 @@ public class NotificationsFragment extends BaseFragment {
         });
     }
 
-    private void updateNotifications(NotificationsModel.Datum datum) {
+    private void updateNotifications(final NotificationsModel.Datum datum) {
 
         if (!NetWorkUtil.isConnected(context)) {
             DDAlerts.showNetworkAlert(activity);
@@ -104,6 +107,34 @@ public class NotificationsFragment extends BaseFragment {
             public void onApiResponse(Response<BaseModel> response, boolean isSuccess, String message) {
                 dismissProgress();
                 if (isSuccess) {
+
+                    switch (datum.getType()) {
+                        case 1:
+                            openWeeklySchedule(datum.getImage());
+                            break;
+                        case 2:
+                            Intent intent = new Intent(getActivity(), VideoActivity.class);
+                            intent.putExtra(CAT_ID, datum.getCatname());
+                            intent.putExtra(YOUTUBE_LINK, datum.getUrl());
+
+                            startActivity(intent);
+                            break;
+
+                        case 4:
+//                            imgresourse = R.drawable.online_tests;
+                            break;
+                        case 3:
+//                            imgresourse = R.drawable.practice_tests;
+                            break;
+                        default:
+//                            imgresourse = R.drawable.logo;
+                            break;
+                    }
+
+
+                    notificationsAdapter.getData().remove(datum);
+                    notificationsAdapter.notifyDataSetChanged();
+
 //                    notificationsAdapter.setData(response.body().getData());
 //                    notificationsAdapter.notifyDataSetChanged();
 //                    SharedPrefUtils.putData(context, SharedPrefUtils.NOTIFICATION_COUNT, "0");
@@ -118,6 +149,12 @@ public class NotificationsFragment extends BaseFragment {
         });
     }
 
+
+    public void openWeeklySchedule(String imageUrl) {
+        Intent intent = new Intent(activity, FullscreenActivity.class);
+        intent.putExtra("URL", imageUrl);
+        startActivity(intent);
+    }
 
     private void initViews() {
 

@@ -119,6 +119,7 @@ public class VideoCategoryFragment extends BaseFragment {
 
             Intent intent = new Intent(getActivity(), VideoActivity.class);
             intent.putExtra(CAT_ID, videosTopicAdapter.getVideosLists().get(position).getTopicName());
+            intent.putExtra(YOUTUBE_LINK, "");
 
             startActivity(intent);
 

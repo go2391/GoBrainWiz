@@ -5,6 +5,9 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+
+import brainwiz.gobrainwiz.R;
 
 public class NetworkImageView extends android.support.v7.widget.AppCompatImageView {
 
@@ -28,10 +31,12 @@ public class NetworkImageView extends android.support.v7.widget.AppCompatImageVi
 
 
     public void setUrl(String url) {
+
         if (url == null) {
             return;
         }
-        Glide.with(getContext()).load(url).into(this);
+
+        Glide.with(getContext()).load(url).placeholder(getPlaceHolder()).into(this);
     }
 
     public int getPlaceHolder() {

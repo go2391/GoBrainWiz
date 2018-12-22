@@ -49,14 +49,14 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
         int imgresourse;
         switch (datum.getType()) {
-            case 0:
+            case 1:
                 imgresourse = R.drawable.ic_calendar;
                 break;
-            case 1:
+            case 2:
                 imgresourse = R.drawable.video_gallery;
                 break;
 
-            case 2:
+            case 4:
                 imgresourse = R.drawable.online_tests;
                 break;
             case 3:

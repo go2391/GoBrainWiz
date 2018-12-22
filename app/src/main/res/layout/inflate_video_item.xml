@@ -16,7 +16,7 @@
                 android:layout_width="@dimen/dimen_90"
                 android:layout_height="@dimen/dimen_90"
                 android:layout_marginEnd="@dimen/dimen_20"
-                android:scaleType="center"
+                android:scaleType="centerInside"
                 android:src="@drawable/ic_launcher_background" />
 
             <TextView

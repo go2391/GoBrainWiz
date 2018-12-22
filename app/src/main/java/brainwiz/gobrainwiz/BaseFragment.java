@@ -21,6 +21,7 @@ public class BaseFragment extends Fragment {
     public static final String DURATION = "Duration";
     public static final String BREAK_TIME = "BreakTime";
     public static final String COMPANY_NAME = "CompanyName";
+    public static final String YOUTUBE_LINK = "YoutubeLink";
 
 
     public void showProgress() {

@@ -12,6 +12,7 @@ import brainwiz.gobrainwiz.videos.VideoCategoryFragment;
 import brainwiz.gobrainwiz.videos.VideosFragment;
 
 import static brainwiz.gobrainwiz.BaseFragment.CAT_ID;
+import static brainwiz.gobrainwiz.BaseFragment.YOUTUBE_LINK;
 
 public class VideoActivity extends BaseActivity {
     private AlertDialog alertDialog;
@@ -48,6 +49,7 @@ public class VideoActivity extends BaseActivity {
         Bundle args = getIntent().getExtras();
 
         args.putString(CAT_ID, getIntent().getStringExtra(CAT_ID));
+        args.putString(YOUTUBE_LINK, getIntent().getStringExtra(YOUTUBE_LINK));
         videosFragment.setArguments(args);
         fragmentTransaction(videosFragment, R.id.video_frame);
     }

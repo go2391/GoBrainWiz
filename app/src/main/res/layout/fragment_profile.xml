@@ -12,7 +12,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blueSecondary"
+            android:background="@drawable/app_profile_bg"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -45,13 +45,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_marginBottom="@dimen/dimen_10"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:fontFamily="@font/bold"
                 android:gravity="center"
                 android:text="User"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_20" />
+
+            <TextView
+                android:id="@+id/profile_user_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:fontFamily="@font/medium"
+                android:gravity="center"
+                android:text="Tap to change picture"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/font_10" />
 
         </LinearLayout>
 
@@ -72,42 +84,71 @@
                 android:id="@+id/profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_16"
+                android:layout_margin="@dimen/dimen_10"
+                android:drawablePadding="@dimen/dimen_5"
+                android:drawableStart="@drawable/ic_person_blue"
                 android:fontFamily="@font/semibold"
                 android:gravity="start"
                 android:text="@string/name_"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider" />
+
             <TextView
                 android:id="@+id/profile_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_16"
+                android:layout_margin="@dimen/dimen_10"
+                android:drawablePadding="@dimen/dimen_5"
+                android:drawableStart="@drawable/ic_mail_blue"
                 android:fontFamily="@font/semibold"
                 android:text="@string/email_"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider" />
+
             <TextView
                 android:id="@+id/profile_mobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_16"
+                android:layout_margin="@dimen/dimen_10"
+                android:drawablePadding="@dimen/dimen_5"
+                android:drawableStart="@drawable/ic_phone_blue"
                 android:fontFamily="@font/semibold"
                 android:text="@string/mobile_number_"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider" />
+
+
             <TextView
                 android:id="@+id/profile_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_16"
+                android:layout_margin="@dimen/dimen_10"
+                android:drawablePadding="@dimen/dimen_5"
+                android:drawableStart="@drawable/ic_college_blue"
                 android:fontFamily="@font/semibold"
-                android:text="@string/location_"
                 android:textColor="@color/black"
                 android:textSize="@dimen/font_16" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider" />
+
 
         </LinearLayout>
 
@@ -122,8 +163,12 @@
             <Button
                 android:id="@+id/profile_update"
                 style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="@dimen/dimen_16"
+                android:minWidth="200dp"
                 android:text="@string/change_password"
+                android:textSize="@dimen/font_12"
                 android:visibility="visible" />
 
         </LinearLayout>

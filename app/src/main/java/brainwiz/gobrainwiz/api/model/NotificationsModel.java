@@ -46,8 +46,23 @@ public class NotificationsModel extends BaseModel {
         @SerializedName("time_update")
         @Expose
         private String timeUpdate;
+        @SerializedName("notify_type")
         @Expose
         private int type;
+        @SerializedName("catid")
+        @Expose
+        private String catid;
+        @SerializedName("url")
+        @Expose
+        private String url;
+
+        @SerializedName("image")
+        @Expose
+        private String image;
+
+        @SerializedName("catname")
+        @Expose
+        private String catname;
 
         public String getLogId() {
             return logId;
@@ -119,6 +134,38 @@ public class NotificationsModel extends BaseModel {
 
         public void setType(int type) {
             this.type = type;
+        }
+
+        public String getCatid() {
+            return catid;
+        }
+
+        public void setCatid(String catid) {
+            this.catid = catid;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        public String getCatname() {
+            return catname;
+        }
+
+        public void setCatname(String catname) {
+            this.catname = catname;
         }
     }
 }

@@ -88,6 +88,7 @@ public class MainActivity extends BaseActivity
         View header = navigationView.getHeaderView(0);
 
         roundishImageView = (RoundishImageView) header.findViewById(R.id.imageView);
+        roundishImageView.setPlaceHolder(R.drawable.ic_profile_default);
         roundishImageView.setUrl(SharedPrefUtils.getString(this, SharedPrefUtils.PROFILE_IMAGE, ""));
         ((TextView) header.findViewById(R.id.textView_user_name)).setText(SharedPrefUtils.getUserName(this));
         ((TextView) header.findViewById(R.id.textView_user_email)).setText(SharedPrefUtils.getUserEmail(this));

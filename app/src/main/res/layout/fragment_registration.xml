@@ -39,8 +39,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/name"
                     style="@style/EditTextStyle"
-                    android:drawableStart="@drawable/ic_person"
-                    android:drawableTint="@color/blueSecondary"
+                    android:drawableStart="@drawable/ic_person_blue"
                     android:hint="@string/name" />
 
             </android.support.design.widget.TextInputLayout>
@@ -53,8 +52,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/email"
                     style="@style/EditTextStyle"
-                    android:drawableStart="@drawable/ic_mail"
-                    android:drawableTint="@color/blueSecondary"
+                    android:drawableStart="@drawable/ic_mail_blue"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress" />
 
@@ -68,8 +66,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/mobile"
                     style="@style/EditTextStyle"
-                    android:drawableStart="@drawable/ic_phone"
-                    android:drawableTint="@color/blueSecondary"
+                    android:drawableStart="@drawable/ic_phone_blue"
                     android:hint="@string/mobile"
                     android:inputType="number"
                     android:maxLength="10" />
@@ -83,8 +80,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/location"
                     style="@style/EditTextStyle"
-                    android:drawableStart="@drawable/ic_college"
-                    android:drawableTint="@color/blueSecondary"
+                    android:drawableStart="@drawable/ic_college_blue"
                     android:hint="@string/college_name" />
 
             </android.support.design.widget.TextInputLayout>

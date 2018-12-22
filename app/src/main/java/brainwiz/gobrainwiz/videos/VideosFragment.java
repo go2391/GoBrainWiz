@@ -139,8 +139,13 @@ public class VideosFragment extends BaseFragment {
 
 
         if (!videosList.isEmpty()) {
-            videosAdapter.setSelectedPosition(0);
-            playVideo(videosList.get(0));
+
+            if (getArguments().containsKey(YOUTUBE_LINK) && !getArguments().getString(YOUTUBE_LINK).isEmpty()) {
+                playVideo(getArguments().getString(YOUTUBE_LINK));
+            } else {
+                videosAdapter.setSelectedPosition(0);
+                playVideo(videosList.get(0).getYoutubeLink());
+            }
         }
         videosAdapter.notifyDataSetChanged();
 
@@ -157,10 +162,10 @@ public class VideosFragment extends BaseFragment {
 
     }
 
-    private void playVideo(VideoListModel.VideosList videosList) {
+    private void playVideo(String youtubeLink) {
 
 
-        String youtubeLink = videosList.getYoutubeLink();
+//        String youtubeLink = videosList.getYoutubeLink();
         youtubeLink = youtubeLink.substring(youtubeLink.lastIndexOf("/") + 1, youtubeLink.length());
 
         getChildFragmentManager().beginTransaction().replace(R.id.video_frame, VideoPlayFragment.newInstance(youtubeLink), "").commit();
@@ -170,7 +175,7 @@ public class VideosFragment extends BaseFragment {
     VideosAdapter.VideoSelectedListener videoSelectedListener = new VideosAdapter.VideoSelectedListener() {
         @Override
         public void onVideoSelected(int position) {
-            playVideo(videosAdapter.getVideosLists().get(position));
+            playVideo(videosAdapter.getVideosLists().get(position).getYoutubeLink());
         }
     };
 }
